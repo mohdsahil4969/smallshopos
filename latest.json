@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.1",
-  "versionCode": 2,
+  "latestVersion": "1.0.2",
+  "versionCode": 3,
   "minimumSupportedVersion": "1.0",
   "releaseDate": 1730000000000,
-  "releaseNotes": "• Complete Khatabook Customer Ledger & Timeline History\n• One-Tap Update System Verification\n• Ultra-lightweight 2.8 MB Release APK",
+  "releaseNotes": "• 10 Indian Languages Added (Hindi, Telugu, Kannada, Malayalam, Punjabi, Tamil, Marathi, Gujarati, Bengali, English)\n• Dynamic Instant In-App Language Switching\n• Daily Cash Closing Reconciler Floating-Point Math Fixed\n• 100% UI String Localization across all screens\n• Optimized 2.89 MB Compact Production Build",
   "android": {
-    "url": "https://github.com/mohdsahil4969/smallshopos/releases/download/v1.0.1/SyntaxaKhata-v1.0.1-release.apk",
-    "sha256": "427f7e270d86cbb6df7582320869c0061e0ae00531d8e6f37e7591d0950c9eb3",
-    "sizeBytes": 2853755
+    "url": "https://github.com/mohdsahil4969/smallshopos/releases/download/v1.0.2/SyntaxaKhata-v1.0.2-release.apk",
+    "sha256": "bf25cf8fff89af4476f033bf5d06b32879cba7801803fadc0dbd6d323b4481d0",
+    "sizeBytes": 3034187
   }
 }
