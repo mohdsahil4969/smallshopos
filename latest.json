@@ -5,7 +5,7 @@
   "releaseDate": 1730000000000,
   "releaseNotes": "• 10 Indian Languages Added (Hindi, Telugu, Kannada, Malayalam, Punjabi, Tamil, Marathi, Gujarati, Bengali, English)\n• Dynamic Instant In-App Language Switching\n• Daily Cash Closing Reconciler Floating-Point Math Fixed\n• 100% UI String Localization across all screens\n• Optimized 2.89 MB Compact Production Build",
   "android": {
-    "url": "https://github.com/mohdsahil4969/smallshopos/releases/download/v1.0.2/SyntaxaKhata-v1.0.2-release.apk",
+    "url": "https://raw.githubusercontent.com/mohdsahil4969/smallshopos/main/apk/SyntaxaKhata-v1.0.2-release.apk",
     "sha256": "bf25cf8fff89af4476f033bf5d06b32879cba7801803fadc0dbd6d323b4481d0",
     "sizeBytes": 3034187
   }
