@@ -1,0 +1,317 @@
+<resources>
+    <string name="app_name">സിന്റാക്സ ഖാത</string>
+    <string name="tagline">ഓഫ്‌ലൈൻ കട സഹായി</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">ഹോം</string>
+    <string name="nav_khata">ഖാത</string>
+    <string name="nav_records">രേഖകൾ</string>
+    <string name="nav_more">കൂടുതൽ</string>
+
+    <!-- Home Dashboard -->
+    <string name="today_sales">ഇന്നത്തെ വിൽപ്പന</string>
+    <string name="today_cash">ലഭിച്ച പണം</string>
+    <string name="today_upi">ലഭിച്ച UPI</string>
+    <string name="today_expenses">ഇന്നത്തെ ചെലവുകൾ</string>
+    <string name="outstanding_udhaar">ആകെ ബാക്കി കടം</string>
+    <string name="net_cash_movement">മൊത്തം പണമിടപാട്</string>
+    <string name="quick_actions">വേഗത്തിലുള്ള പ്രവർത്തനങ്ങൾ</string>
+    <string name="recent_transactions">സമീപകാല ഇടപാടുകൾ</string>
+    <string name="view_all">എല്ലാം കാണുക</string>
+    <string name="no_transactions_today">ഇന്ന് ഇടപാടുകളൊന്നും നടന്നിട്ടില്ല</string>
+
+    <!-- Quick Actions -->
+    <string name="action_add_customer">ഉപഭോക്താവിനെ ചേർക്കുക</string>
+    <string name="action_add_udhaar">കടം നൽകുക</string>
+    <string name="action_receive_payment">പണം സ്വീകരിക്കുക</string>
+    <string name="action_create_bill">ബിൽ ഉണ്ടാക്കുക</string>
+    <string name="action_add_expense">ചെലവ് രേഖപ്പെടുത്തുക</string>
+    <string name="action_share_receipt">രസീത് അയക്കുക</string>
+
+    <!-- Customer & Khata -->
+    <string name="customers">ഉപഭോക്താക്കൾ</string>
+    <string name="search_customer">പേരോ ഫോൺ നമ്പറോ തിരയുക</string>
+    <string name="customer_name">ഉപഭോക്താവിന്റെ പേര്</string>
+    <string name="phone_number">ഫോൺ നമ്പർ (നിർബന്ധമില്ല)</string>
+    <string name="notes">കുറിപ്പുകൾ</string>
+    <string name="customer_balance">ബാക്കി തുക</string>
+    <string name="no_dues">ബാക്കിയില്ല</string>
+    <string name="advance_balance">മുൻകൂർ നൽകിയത്</string>
+    <string name="udhaar_given">കടം കൊടുത്തത്</string>
+    <string name="payment_received">പണം ലഭിച്ചത്</string>
+    <string name="reversal">തിരുത്തൽ രേഖപ്പെടുത്തൽ</string>
+    <string name="reverse_transaction">ഇടപാട് റദ്ദാക്കുക</string>
+    <string name="reverse_confirm_title">റദ്ദാക്കൽ സ്ഥിരീകരണം</string>
+    <string name="reverse_confirm_msg">ഈ ഇടപാട് റദ്ദാക്കാൻ തീർച്ചയാണോ? ലെഡ്ജറിൽ ഒരു തിരുത്തൽ രേഖപ്പെടുത്തുന്നതാണ്.</string>
+    <string name="archive_customer">ആർക്കൈവ് ചെയ്യുക</string>
+    <string name="restore_customer">പുനഃസ്ഥാപിക്കുക</string>
+    <string name="archived_customers">ആർക്കൈവ് ചെയ്തവർ</string>
+    <string name="customer_statement">അക്കൗണ്ട് സ്റ്റേറ്റ്മെന്റ്</string>
+
+    <!-- Financial Inputs & Common -->
+    <string name="enter_amount">തുക നൽകുക</string>
+    <string name="amount_in_rupees">തുക (₹)</string>
+    <string name="description">വിവരണം / സാധനത്തിന്റെ പേര്</string>
+    <string name="payment_method">പേയ്‌മെന്റ് രീതി</string>
+    <string name="method_cash">പണം (Cash)</string>
+    <string name="method_upi">UPI</string>
+    <string name="method_other">മറ്റുള്ളവ</string>
+    <string name="confirm_and_save">ഉറപ്പിച്ചു സേവ് ചെയ്യുക</string>
+    <string name="save">സേവ്</string>
+    <string name="cancel">റദ്ദാക്കുക</string>
+    <string name="done">പൂർത്തിയായി</string>
+    <string name="delete">ഡിലീറ്റ്</string>
+    <string name="success_saved">വിജയകരമായി സേവ് ചെയ്തു</string>
+    <string name="error_invalid_amount">0-ൽ കൂടുതൽ ഉള്ള ശരിയായ തുക നൽകുക</string>
+    <string name="error_customer_name_required">ഉപഭോക്താവിന്റെ പേര് ആവശ്യമാണ്</string>
+    <string name="duplicate_phone_warning">ഈ ഫോൺ നമ്പറിൽ ഉപഭോക്താവ് നിലവിലുണ്ട്.</string>
+
+    <!-- Billing -->
+    <string name="new_bill">പുതിയ ബിൽ</string>
+    <string name="quick_amount_mode">വേഗത്തിലുള്ള ബിൽ</string>
+    <string name="itemized_mode">സാധനങ്ങൾ ചേർത്തുള്ള ബിൽ</string>
+    <string name="select_customer">ഉപഭോക്താവിനെ തിരഞ്ഞെടുക്കുക</string>
+    <string name="walk_in_customer">നേരിട്ടെത്തിയ ഉപഭോക്താവ്</string>
+    <string name="add_item">സാധനം ചേർക്കുക</string>
+    <string name="item_name">സാധനത്തിന്റെ പേര്</string>
+    <string name="quantity">അളവ്</string>
+    <string name="unit_price">വില (₹)</string>
+    <string name="line_total">ആകെ: ₹%s</string>
+    <string name="subtotal">ഉപതുക</string>
+    <string name="discount">കിഴിവ് (₹)</string>
+    <string name="total_bill">ആകെ ബിൽ തുക</string>
+    <string name="amount_received_label">ലഭിച്ച തുക</string>
+    <string name="unpaid_balance">ബാക്കി കടം</string>
+    <string name="generate_bill">ബിൽ ഉണ്ടാക്കുക</string>
+    <string name="bill_summary">ബിൽ വിവരങ്ങൾ</string>
+
+    <!-- Receipts & Sharing -->
+    <string name="receipt">രസീത്</string>
+    <string name="receipt_number">രസീത് നമ്പർ</string>
+    <string name="share_via_whatsapp">WhatsApp-ൽ അയക്കുക</string>
+    <string name="share_pdf">PDF അയക്കുക</string>
+    <string name="print_receipt">പ്രിന്റ് ചെയ്യുക</string>
+    <string name="reminder_message">ബാക്കി ഓർമ്മപ്പെടുത്തൽ</string>
+    <string name="send_reminder">ഓർമ്മപ്പെടുത്തൽ അയക്കുക</string>
+    <string name="copy_text">കോപ്പി ചെയ്യുക</string>
+    <string name="copied_to_clipboard">ക്ലിപ്പ്ബോർഡിലേക്ക് കോപ്പി ചെയ്തു</string>
+    <string name="whatsapp_not_installed">WhatsApp ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല</string>
+
+    <!-- Expenses -->
+    <string name="expenses">ചെലവുകൾ</string>
+    <string name="add_expense">ചെലവ് രേഖപ്പെടുത്തുക</string>
+    <string name="expense_category">വിഭാഗം</string>
+    <string name="cat_stock">സാധനങ്ങൾ വാങ്ങിയത്</string>
+    <string name="cat_transport">യാത്രാക്കൂലി / ട്രാൻസ്പോർട്ട്</string>
+    <string name="cat_rent">വാടക</string>
+    <string name="cat_electricity">വൈദ്യുതി ബിൽ</string>
+    <string name="cat_wages">കൂലി / ശമ്പളം</string>
+    <string name="cat_other">മറ്റു ചെലവുകൾ</string>
+
+    <!-- Reports -->
+    <string name="reports">റിപ്പോർട്ടുകൾ</string>
+    <string name="today">ഇന്ന്</string>
+    <string name="last_7_days">കഴിഞ്ഞ 7 ദിവസം</string>
+    <string name="this_month">ഈ മാസം</string>
+    <string name="custom_range">തീയതി തിരഞ്ഞെടുക്കുക</string>
+    <string name="sales_summary">വിൽപ്പന വിവരങ്ങൾ</string>
+    <string name="collections_summary">ലഭിച്ച പണത്തിന്റെ വിവരങ്ങൾ</string>
+    <string name="export_csv">CSV ഡൗൺലോഡ്</string>
+    <string name="export_pdf">PDF റിപ്പോർട്ട് ഡൗൺലോഡ്</string>
+
+    <!-- Printing -->
+    <string name="bluetooth_printer">ബ്ലൂടൂത്ത് പ്രിന്റർ</string>
+    <string name="connect_printer">പ്രിന്റർ ബന്ധിപ്പിക്കുക</string>
+    <string name="test_print">ടെസ്റ്റ് പ്രിന്റ്</string>
+    <string name="printer_status_connected">കണക്റ്റ് ചെയ്തു</string>
+    <string name="printer_status_disconnected">കണക്റ്റ് ചെയ്തിട്ടില്ല</string>
+    <string name="printer_58mm">58 mm (ചെറിയ പ്രിന്റർ)</string>
+    <string name="printer_80mm">80 mm (വലിയ പ്രിന്റർ)</string>
+    <string name="paper_width">പേപ്പർ വീതി</string>
+    <string name="printer_not_connected">പ്രിന്റർ ബന്ധിപ്പിച്ചിട്ടില്ല. ബ്ലൂടൂത്ത് ക്രമീകരണങ്ങളിൽ ജോടിയാക്കുക.</string>
+
+    <!-- Security & Settings -->
+    <string name="settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="shop_profile">കടയുടെ വിവരങ്ങൾ</string>
+    <string name="shop_name">കടയുടെ പേര്</string>
+    <string name="shop_address">മേൽവിലാസം (നിർബന്ധമില്ല)</string>
+    <string name="shop_phone">ഫോൺ നമ്പർ (നിർബന്ധമില്ല)</string>
+    <string name="upi_id">കടയുടെ UPI ID (QR കോഡിനായി)</string>
+    <string name="receipt_footer">രസീതിന്റെ അടിക്കുറിപ്പ്</string>
+    <string name="app_lock">ആപ്പ് ലോക്ക്</string>
+    <string name="enable_pin">4 അക്ക സെക്യൂരിറ്റി പിൻ നൽകുക</string>
+    <string name="enable_biometrics">ഫിംഗർപ്രിന്റ് ഉപയോഗിക്കുക</string>
+    <string name="backup_restore">ബാക്കപ്പും പുനഃസ്ഥാപനവും</string>
+    <string name="create_backup">എൻക്രിപ്റ്റ് ചെയ്ത ബാക്കപ്പ് ഉണ്ടാക്കുക</string>
+    <string name="export_unencrypted_backup">സാധാരണ JSON ബാക്കപ്പ് എടുക്കുക</string>
+    <string name="restore_backup">ബാക്കപ്പിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക</string>
+    <string name="backup_notice">ബാക്കപ്പുകൾ നിങ്ങളുടെ ഫോണിലോ ഗൂഗിൾ ഡ്രൈവിലോ സൂക്ഷിക്കാം. ക്ലൗഡ് സെർവറുകൾ ആവശ്യമില്ല.</string>
+    <string name="backup_password_label">ബാക്കപ്പ് പാസ്‌വേഡ്</string>
+    <string name="backup_password_hint">പാസ്‌വേഡ് നൽകുക (കുറഞ്ഞത് 12 അക്ഷരങ്ങൾ)</string>
+    <string name="backup_password_confirm">പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക</string>
+    <string name="backup_password_restore_title">ബാക്കപ്പ് തുറക്കുക</string>
+    <string name="backup_password_restore_hint">ബാക്കപ്പ് എടുത്തപ്പോൾ നൽകിയ പാസ്‌വേഡ് നൽകുക</string>
+    <string name="backup_success_encrypted">എൻക്രിപ്റ്റ് ചെയ്ത ബാക്കപ്പ് വിജയകരമായി എടുത്തു</string>
+    <string name="backup_success_unencrypted">ബാക്കപ്പ് ഫയൽ വിജയകരമായി സേവ് ചെയ്തു</string>
+    <string name="backup_integrity_failed">ബാക്കപ്പ് പരിശോധന പരാജയപ്പെട്ടു</string>
+    <string name="restore_cancelled">പുനഃസ്ഥാപനം റദ്ദാക്കി</string>
+    <string name="restore_failed_preserved">പുനഃസ്ഥാപനം പരാജയപ്പെട്ടു; നിലവിലെ വിവരങ്ങൾ സുരക്ഷിതമാണ്</string>
+    <string name="restore_success">വിവരങ്ങൾ വിജയകരമായി പുനഃസ്ഥാപിച്ചു!</string>
+    <string name="confirm_restore_title">പുനഃസ്ഥാപന സ്ഥിരീകരണം</string>
+    <string name="confirm_restore_warning">മുന്നറിയിപ്പ്: പുനഃസ്ഥാപിക്കുന്നത് നിലവിലുള്ള വിവരങ്ങൾക്ക് പകരം ഈ ബാക്കപ്പിലെ വിവരങ്ങൾ മാറ്റിവെക്കും.</string>
+    <string name="proceed_overwrite">മുന്നോട്ട് പോവുക &amp; മാറ്റിസ്ഥാപിക്കുക</string>
+    <string name="error_credit_sale_requires_customer">കടം നൽകാൻ ഉപഭോക്താവിനെ തിരഞ്ഞെടുക്കുക.</string>
+    <string name="error_invalid_payment_amount">ശരിയായ പേയ്‌മെന്റ് തുക നൽകുക</string>
+    <string name="error_payment_exceeds_bill">ലഭിച്ച തുക ആകെ ബിൽ തുകയേക്കാൾ കൂടാൻ പാടില്ല</string>
+    <string name="today_other">മറ്റു രീതിയിൽ ലഭിച്ച തുക</string>
+    <string name="language">ഭാഷ / Language</string>
+    <string name="theme">തീം</string>
+    <string name="dark_mode">ഡാർക്ക് തീം</string>
+    <string name="enter_pin">സെക്യൂരിറ്റി പിൻ നൽകുക</string>
+    <string name="confirm_pin">പിൻ സ്ഥിരീകരിക്കുക</string>
+    <string name="pin_mismatch">പിൻ ഒന്നല്ല</string>
+    <string name="pin_incorrect">തെറ്റായ പിൻ</string>
+    <string name="unlock_app">ആപ്പ് അൺലോക്ക് ചെയ്യുക</string>
+    <string name="software_updates">സോഫ്റ്റ്‌വെയർ അപ്‌ഡേറ്റുകൾ</string>
+    <string name="app_version_label">പതിപ്പ്: v%1$s (ബിൽഡ് %2$d)</string>
+    <string name="auto_check_updates">അപ്‌ഡേറ്റുകൾ പരിശോധിക്കുക</string>
+    <string name="check_for_updates">അപ്‌ഡേറ്റുകൾ തിരയുക</string>
+    <string name="checking_updates">പരിശോധിക്കുന്നു...</string>
+    <string name="up_to_date_message">നിങ്ങൾ ഏറ്റവും പുതിയ പതിപ്പാണ് ഉപയോഗിക്കുന്നത്.</string>
+    <string name="one_tap_update">അപ്‌ഡേറ്റ് ചെയ്യുക</string>
+    <string name="data_safe_notice">ഡാറ്റ സുരക്ഷ: അപ്‌ഡേറ്റ് ചെയ്യുന്നതിന് മുൻപ് റെക്കോർഡുകളുടെ ബാക്കപ്പ് സ്വയമേവ എടുക്കുന്നതാണ്.</string>
+
+    <!-- User Guide -->
+    <string name="user_guide_title">ഉപയോക്തൃ സഹായി</string>
+    <string name="user_guide_subtitle">ലളിതമായ നിർദ്ദേശങ്ങളും വഴികളും</string>
+    <string name="user_guide_help">സഹായം</string>
+    <string name="open_shop_manual">സഹായ പുസ്തകം തുറക്കുക</string>
+    <string name="replay_walkthrough">ആമുഖം വീണ്ടും കാണുക</string>
+    <string name="walkthrough_step_count">ഘട്ടം %1$d / %2$d</string>
+    <string name="walkthrough_skip">ഒഴിവാക്കുക</string>
+    <string name="walkthrough_next">അടുത്തത്</string>
+    <string name="walkthrough_back">പുറകോട്ട്</string>
+    <string name="walkthrough_finish">തുടങ്ങുക</string>
+    <string name="search_guide_placeholder">സഹായിയിൽ തിരയുക...</string>
+    <string name="pro_tip_label">സഹായക്കുറിപ്പ്:</string>
+    <string name="switch_language">ഭാഷ / Language</string>
+
+    <!-- Customer Ledger & Purchase History -->
+    <string name="ledger_total_purchases">ആകെ വാങ്ങിയത്</string>
+    <string name="ledger_payments_received">ലഭിച്ച പണം</string>
+    <string name="ledger_outstanding_balance">നിലവിലെ ബാക്കി</string>
+    <string name="ledger_transactions_count">ഇടപാടുകൾ</string>
+    <string name="filter_all_time">മുഴുവൻ വിവരങ്ങൾ</string>
+    <string name="filter_last_30_days">കഴിഞ്ഞ 30 ദിവസം</string>
+    <string name="filter_last_3_months">കഴിഞ്ഞ 3 മാസം</string>
+    <string name="filter_last_year">കഴിഞ്ഞ 1 വർഷം</string>
+    <string name="filter_custom_range">തീയതി തിരഞ്ഞെടുക്കുക</string>
+    <string name="bill_status_paid">പണം നൽകി</string>
+    <string name="bill_status_partially_paid">ഭാഗികമായി നൽകി</string>
+    <string name="bill_status_credit_unpaid">കടം / ബാക്കി</string>
+    <string name="bill_status_cancelled">റദ്ദാക്കിയത്</string>
+    <string name="bill_view_full">മുഴുവൻ ബിൽ കാണുക</string>
+    <string name="bill_share_pdf">PDF അയക്കുക</string>
+    <string name="bill_print_thermal">രസീത് പ്രിന്റ് ചെയ്യുക</string>
+    <string name="bill_items_count">%1$d സാധനങ്ങൾ</string>
+    <string name="share_via_sms">SMS അയക്കുക</string>
+    <string name="share_via_email">ഇമെയിൽ അയക്കുക</string>
+    <string name="printer_guidance_title">പ്രിന്റർ ബന്ധിപ്പിച്ചിട്ടില്ല</string>
+    <string name="printer_guidance_msg">ബ്ലൂടൂത്ത് ക്രമീകരണങ്ങളിൽ 58mm അല്ലെങ്കിൽ 80mm പ്രിന്റർ കണക്റ്റ് ചെയ്ത ശേഷം വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="printer_guidance_open_settings">ബ്ലൂടൂത്ത് തുറക്കുക</string>
+    <string name="custom_date_range_title">തീയതികൾ തിരഞ്ഞെടുക്കുക</string>
+    <string name="from_date">ആരംഭ തീയതി (YYYY-MM-DD)</string>
+    <string name="to_date">അവസാന തീയതി (YYYY-MM-DD)</string>
+    <string name="apply">സ്ഥിരീകരിക്കുക</string>
+    <string name="all_interactions">ഇടപാടുകളുടെ വിവരങ്ങൾ</string>
+    <string name="bill_details">ബിൽ വിവരങ്ങൾ</string>
+    <string name="payment_details">പേയ്‌മെന്റ് വിവരങ്ങൾ</string>
+    <string name="direct_udhaar">നേരിട്ടുള്ള കടം</string>
+    <string name="reversal_entry">തിരുത്തൽ രേഖപ്പെടുത്തൽ</string>
+
+    <!-- Suppliers & Wholesalers -->
+    <string name="suppliers">വിതരണക്കാർ / മൊത്തവ്യാപാരികൾ</string>
+    <string name="search_suppliers_hint">വിതരണക്കാരെ തിരയുക</string>
+    <string name="supplier_statement">സ്റ്റേറ്റ്മെന്റ്</string>
+    <string name="pay_supplier_btn">പണം നൽകുക (നഗദ്/UPI)</string>
+    <string name="add_supplier_title">വിതരണക്കാരനെ ചേർക്കുക</string>
+    <string name="supplier_name_label">വിതരണക്കാരന്റെ / കമ്പനിയുടെ പേര് *</string>
+    <string name="notes_goods_label">സാധനങ്ങളുടെ വിവരങ്ങൾ</string>
+    <string name="record_purchase">വാങ്ങിയത് രേഖപ്പെടുത്തുക</string>
+    <string name="record_purchase_title">വാങ്ങിയത് രേഖപ്പെടുത്തുക: %s</string>
+    <string name="supplier_invoice_label">ഇൻവോയ്‌സ് / ബിൽ നമ്പർ</string>
+    <string name="items_desc_label">സാധനങ്ങളുടെ വിവരണം</string>
+    <string name="add_to_payable">കൊടുക്കാനുള്ള തുകയിലേക്ക് ചേർക്കുക</string>
+    <string name="pay_supplier_title">പണം നൽകുക: %s</string>
+    <string name="total_payable">ആകെ നൽകാനുള്ളത്</string>
+    <string name="purchases">വാങ്ങിയത്</string>
+    <string name="payments">നൽകിയത്</string>
+    <string name="no_suppliers_recorded">വിതരണക്കാരെ ചേർത്തിട്ടില്ല</string>
+    <string name="action_add_supplier">വിതരണക്കാരനെ ചേർക്കുക</string>
+
+    <!-- Stock & Inventory -->
+    <string name="stock_inventory">സ്റ്റോക്ക്</string>
+    <string name="search_products_hint">സാധനം അല്ലെങ്കിൽ ബാർകോഡ് തിരയുക</string>
+    <string name="all_products_count">ആകെ സാധനങ്ങൾ (%1$d)</string>
+    <string name="low_stock_count">സ്റ്റോക്ക് കുറവ് അറിയിപ്പ് (%1$d)</string>
+    <string name="add_product_title">സാധനം ചേർക്കുക</string>
+    <string name="edit_product_title">സാധനം തിരുത്തുക</string>
+    <string name="adjust_stock_title">സ്റ്റോക്ക് മാറ്റുക: %s</string>
+    <string name="product_name_label">സാധനത്തിന്റെ പേര് *</string>
+    <string name="unit_label">അളവ് യൂണിറ്റ് (പീസ്/കിലോഗ്രാം/ലിറ്റർ)</string>
+    <string name="barcode_label">ബാർകോഡ് / കോഡ്</string>
+    <string name="selling_price_label">വിൽപ്പന വില (₹)</string>
+    <string name="cost_price_label">വാങ്ങിയ വില (₹)</string>
+    <string name="initial_stock_label">തുടക്കത്തിലുള്ള സ്റ്റോക്ക്</string>
+    <string name="low_stock_threshold_label">കുറഞ്ഞ സ്റ്റോക്ക് പരിധി</string>
+    <string name="stock_quantity_label">അളവ് (%s)</string>
+    <string name="add_stock_mode">സ്റ്റോക്ക് കൂട്ടുക (+)</string>
+    <string name="remove_stock_mode">സ്റ്റോക്ക് കുറയ്ക്കുക (-)</string>
+    <string name="set_exact_stock_mode">സ്റ്റോക്ക് നിശ്ചയിക്കുക (=)</string>
+    <string name="in_stock">സ്റ്റോക്കുണ്ട്</string>
+    <string name="out_of_stock">സ്റ്റോക്ക് തീർന്നു</string>
+    <string name="low_stock_badge">സ്റ്റോക്ക് കുറവ്</string>
+    <string name="no_products_recorded">സാധനങ്ങൾ ചേർത്തിട്ടില്ല</string>
+    <string name="action_add_product">സാധനം ചേർക്കുക</string>
+
+    <!-- Daily Cash Closing -->
+    <string name="daily_cash_closing_title">ദിവസേനയുള്ള പണമിടപാട് കണക്കുകൂട്ടൽ</string>
+    <string name="expected_cash_label">പെട്ടിയിൽ ഉണ്ടാകേണ്ട തുക</string>
+    <string name="counted_cash_label">എണ്ണിത്തിട്ടപ്പെടുത്തിയ തുക</string>
+    <string name="cash_matched">തുക കൃത്യമായി ഒത്തുപോയി</string>
+    <string name="cash_excess">കൂടുതലായ തുക</string>
+    <string name="cash_shortage">കുറവായ തുക</string>
+    <string name="save_closing">ക്ലോസിംഗ് സേവ് ചെയ്യുക</string>
+    <string name="reconcile_notes">കുറിപ്പുകൾ</string>
+    <string name="difference">വ്യത്യാസം</string>
+    <string name="closing_saved_success">ക്ലോസിംഗ് വിവരങ്ങൾ സേവ് ചെയ്തു!</string>
+
+    <!-- Billing extras -->
+    <string name="total_due">ആകെ നൽകാനുള്ളത്:</string>
+    <string name="full_paid">മുഴുവൻ തുക നൽകി (%s)</string>
+    <string name="full_udhaar">മുഴുവൻ തുക കടം (₹0)</string>
+    <string name="method_split">വിഭജിച്ച് (നഗദ്+UPI)</string>
+
+    <!-- Cash Closing & Supplier & Status Additions -->
+    <string name="cash_closing_formula_label">ഡ്രോയറിലെ പ്രതീക്ഷിക്കുന്ന പണത്തിന്റെ ഫോർമുല:</string>
+    <string name="opening_cash_label">തുടക്കത്തിലെ പണം:</string>
+    <string name="cash_sales_today_label">ഇന്നത്തെ പണ വില്പന:</string>
+    <string name="old_udhaar_collected_label">പിരിച്ചെടുത്ത പഴയ കടം:</string>
+    <string name="cash_expenses_paid_label">നൽകിയ പണ ചിലവുകൾ:</string>
+    <string name="expected_total_cash_label">പ്രതീക്ഷിക്കുന്ന ആകെ പണം:</string>
+    <string name="direct_bank_upi_info">നേരിട്ടുള്ള ബാങ്ക് UPI (പെട്ടിയിലില്ല): %s</string>
+    <string name="morning_opening_cash_label">രാവിലത്തെ തുടക്ക പണം (₹)</string>
+    <string name="physical_cash_counted_label">പെട്ടിയിൽ എണ്ണിയ പണം (₹)</string>
+    <string name="cash_drawer_balanced">പെട്ടിയിലെ പണം കൃത്യമായി ഒത്തുപോയി!</string>
+    <string name="cash_surplus_detail">കൂടുതൽ: പെട്ടിയിൽ %s അധികമുണ്ട്</string>
+    <string name="cash_shortage_detail">കുറവ്: പെട്ടിയിൽ %s കുറവാണ്</string>
+    <string name="cash_counted_expected_summary">എണ്ണിയത്: %1$s | പ്രതീക്ഷിക്കുന്നത്: %2$s</string>
+    <string name="save_and_close_drawer">സേവ് ചെയ്തു പെട്ടി ക്ലോസ് ചെയ്യുക</string>
+    <string name="supplier_to_pay">കൊടുക്കാനുള്ളത് (കടം)</string>
+    <string name="supplier_settled">തീർപ്പാക്കി</string>
+    <string name="adjust_stock">സ്റ്റോക്ക് ക്രമീകരിക്കുക</string>
+    <string name="offline_mode_badge">ഓഫ്‌ലൈൻ മോഡ്</string>
+    <string name="reverse_entry_btn">റദ്ദാക്കുക (റിവേഴ്സ്)</string>
+    <string name="record_payment">പേയ്മെന്റ് രേഖപ്പെടുത്തുക</string>
+    <string name="close">അടയ്ക്കുക</string>
+</resources>

@@ -1,0 +1,317 @@
+<resources>
+    <string name="app_name">ਸਿੰਟੈਕਸਾ ਖਾਤਾ</string>
+    <string name="tagline">ਔਫਲਾਈਨ ਦੁਕਾਨਦਾਰ ਸਹਾਇਕ</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">ਹੋਮ</string>
+    <string name="nav_khata">ਖਾਤਾ</string>
+    <string name="nav_records">ਰਿਕਾਰਡ</string>
+    <string name="nav_more">ਹੋਰ</string>
+
+    <!-- Home Dashboard -->
+    <string name="today_sales">ਅੱਜ ਦੀ ਵਿਕਰੀ</string>
+    <string name="today_cash">ਨਕਦ ਜਮ੍ਹਾ</string>
+    <string name="today_upi">UPI ਵਸੂਲੀ</string>
+    <string name="today_expenses">ਅੱਜ ਦੇ ਖਰਚੇ</string>
+    <string name="outstanding_udhaar">ਕੁੱਲ ਉਧਾਰ ਬਾਕੀ</string>
+    <string name="net_cash_movement">ਕੁੱਲ ਨਕਦ ਆਮਦ-ਖਰਚ</string>
+    <string name="quick_actions">ਤੁਰੰਤ ਕੰਮ</string>
+    <string name="recent_transactions">ਤਾਜ਼ਾ ਲੈਣ-ਦੇਣ</string>
+    <string name="view_all">ਸਾਰੇ ਵੇਖੋ</string>
+    <string name="no_transactions_today">ਅੱਜ ਕੋਈ ਲੈਣ-ਦੇਣ ਨਹੀਂ ਹੋਇਆ</string>
+
+    <!-- Quick Actions -->
+    <string name="action_add_customer">ਗਾਹਕ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="action_add_udhaar">ਉਧਾਰ ਦਿਓ</string>
+    <string name="action_receive_payment">ਭੁਗਤਾਨ ਪ੍ਰਾਪਤ ਕਰੋ</string>
+    <string name="action_create_bill">ਬਿੱਲ ਬਣਾਓ</string>
+    <string name="action_add_expense">ਖਰਚਾ ਦਰਜ ਕਰੋ</string>
+    <string name="action_share_receipt">ਰਸੀਦ ਭੇਜੋ</string>
+
+    <!-- Customer & Khata -->
+    <string name="customers">ਗਾਹਕ ਸੂਚੀ</string>
+    <string name="search_customer">ਗਾਹਕ ਦਾ ਨਾਮ ਜਾਂ ਫੋਨ ਨੰਬਰ ਲੱਭੋ</string>
+    <string name="customer_name">ਗਾਹਕ ਦਾ ਨਾਮ</string>
+    <string name="phone_number">ਫੋਨ ਨੰਬਰ (ਵਿਕਲਪਿਕ)</string>
+    <string name="notes">ਨੋਟ (ਵਿਕਲਪਿਕ)</string>
+    <string name="customer_balance">ਬਾਕੀ ਰਕਮ</string>
+    <string name="no_dues">ਕੋਈ ਬਾਕੀ ਨਹੀਂ</string>
+    <string name="advance_balance">ਐਡਵਾਂਸ ਭੁਗਤਾਨ</string>
+    <string name="udhaar_given">ਉਧਾਰ ਦਿੱਤਾ</string>
+    <string name="payment_received">ਭੁਗਤਾਨ ਮਿਲਿਆ</string>
+    <string name="reversal">ਐਂਟਰੀ ਰੱਦ</string>
+    <string name="reverse_transaction">ਲੈਣ-ਦੇਣ ਰੱਦ ਕਰੋ</string>
+    <string name="reverse_confirm_title">ਰੱਦ ਕਰਨ ਦੀ ਪੁਸ਼ਟੀ</string>
+    <string name="reverse_confirm_msg">ਕੀ ਤੁਸੀਂ ਸੱਚਮੁੱਚ ਇਸ ਲੈਣ-ਦੇਣ ਨੂੰ ਰੱਦ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ? ਲੇਜ਼ਰ ਵਿੱਚ ਇੱਕ ਸੋਧ ਐਂਟਰੀ ਦਰਜ ਕੀਤੀ ਜਾਵੇਗੀ।</string>
+    <string name="archive_customer">ਗਾਹਕ ਆਰਕਾਈਵ ਕਰੋ</string>
+    <string name="restore_customer">ਗਾਹਕ ਬਹਾਲ ਕਰੋ</string>
+    <string name="archived_customers">ਆਰਕਾਈਵ ਕੀਤੇ ਗਾਹਕ</string>
+    <string name="customer_statement">ਗਾਹਕ ਖਾਤਾ ਸਟੇਟਮੈਂਟ</string>
+
+    <!-- Financial Inputs & Common -->
+    <string name="enter_amount">ਰਕਮ ਦਰਜ ਕਰੋ</string>
+    <string name="amount_in_rupees">ਰਕਮ (₹)</string>
+    <string name="description">ਵੇਰਵਾ / ਸਮਾਨ ਦਾ ਨਾਮ</string>
+    <string name="payment_method">ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ</string>
+    <string name="method_cash">ਨਕਦ (Cash)</string>
+    <string name="method_upi">UPI</string>
+    <string name="method_other">ਹੋਰ</string>
+    <string name="confirm_and_save">ਪੁਸ਼ਟੀ ਕਰੋ ਅਤੇ ਸੰਭਾਲੋ</string>
+    <string name="save">ਸੇਵ ਕਰੋ</string>
+    <string name="cancel">ਰੱਦ ਕਰੋ</string>
+    <string name="done">ਪੂਰਾ ਹੋਇਆ</string>
+    <string name="delete">ਮਿਟਾਓ</string>
+    <string name="success_saved">ਸਫਲਤਾਪੂਰਵਕ ਸੇਵ ਹੋ ਗਿਆ</string>
+    <string name="error_invalid_amount">ਕਿਰਪਾ ਕਰਕੇ 0 ਤੋਂ ਵੱਧ ਸਹੀ ਰਕਮ ਦਰਜ ਕਰੋ</string>
+    <string name="error_customer_name_required">ਗਾਹਕ ਦਾ ਨਾਮ ਲੋੜੀਂਦਾ ਹੈ</string>
+    <string name="duplicate_phone_warning">ਇਸ ਫੋਨ ਨੰਬਰ ਦਾ ਗਾਹਕ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।</string>
+
+    <!-- Billing -->
+    <string name="new_bill">ਨਵਾਂ ਬਿੱਲ</string>
+    <string name="quick_amount_mode">ਸਿੱਧਾ ਕੁੱਲ ਬਿੱਲ</string>
+    <string name="itemized_mode">ਸਮਾਨ ਅਨੁਸਾਰ ਬਿੱਲ</string>
+    <string name="select_customer">ਗਾਹਕ ਚੁਣੋ (ਵਿਕਲਪਿਕ)</string>
+    <string name="walk_in_customer">ਨਕਦ ਗਾਹਕ</string>
+    <string name="add_item">ਸਮਾਨ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="item_name">ਸਮਾਨ ਦਾ ਨਾਮ</string>
+    <string name="quantity">ਮਾਤਰਾ</string>
+    <string name="unit_price">ਰੇਟ (₹)</string>
+    <string name="line_total">ਕੁੱਲ: ₹%s</string>
+    <string name="subtotal">ਸਬ-ਟੋਟਲ</string>
+    <string name="discount">ਛੋਟ (₹)</string>
+    <string name="total_bill">ਕੁੱਲ ਬਿੱਲ</string>
+    <string name="amount_received_label">ਮਿਲੀ ਰਕਮ</string>
+    <string name="unpaid_balance">ਬਾਕੀ ਉਧਾਰ</string>
+    <string name="generate_bill">ਬਿੱਲ ਬਣਾਓ</string>
+    <string name="bill_summary">ਬਿੱਲ ਸਾਰਾਂਸ਼</string>
+
+    <!-- Receipts & Sharing -->
+    <string name="receipt">ਰਸੀਦ</string>
+    <string name="receipt_number">ਰਸੀਦ ਨੰਬਰ</string>
+    <string name="share_via_whatsapp">WhatsApp \'ਤੇ ਭੇਜੋ</string>
+    <string name="share_pdf">PDF ਸਾਂਝੀ ਕਰੋ</string>
+    <string name="print_receipt">ਰਸੀਦ ਪ੍ਰਿੰਟ ਕਰੋ</string>
+    <string name="reminder_message">ਉਧਾਰ ਯਾਦ-ਪੱਤਰ</string>
+    <string name="send_reminder">ਯਾਦ-ਪੱਤਰ ਭੇਜੋ</string>
+    <string name="copy_text">ਕਾਪੀ ਕਰੋ</string>
+    <string name="copied_to_clipboard">ਕਲਿੱਪਬੋਰਡ \'ਤੇ ਕਾਪੀ ਹੋ ਗਿਆ</string>
+    <string name="whatsapp_not_installed">ਇਸ ਫ਼ੋਨ ਵਿੱਚ WhatsApp ਇੰਸਟਾਲ ਨਹੀਂ ਹੈ</string>
+
+    <!-- Expenses -->
+    <string name="expenses">ਖਰਚੇ</string>
+    <string name="add_expense">ਖਰਚਾ ਦਰਜ ਕਰੋ</string>
+    <string name="expense_category">ਕੈਟਾਗਰੀ</string>
+    <string name="cat_stock">ਸਟਾਕ ਦੀ ਖਰੀਦ</string>
+    <string name="cat_transport">ਢੋਆ-ਢੁਆਈ / ਭਾੜਾ</string>
+    <string name="cat_rent">ਦੁਕਾਨ ਦਾ ਕਿਰਾਇਆ</string>
+    <string name="cat_electricity">ਬਿਜਲੀ ਦਾ ਬਿੱਲ</string>
+    <string name="cat_wages">ਦਿਹਾੜੀ / ਤਨਖਾਹ</string>
+    <string name="cat_other">ਹੋਰ ਖਰਚੇ</string>
+
+    <!-- Reports -->
+    <string name="reports">ਰਿਪੋਰਟਾਂ</string>
+    <string name="today">ਅੱਜ</string>
+    <string name="last_7_days">ਪਿਛਲੇ 7 ਦਿਨ</string>
+    <string name="this_month">ਇਹ ਮਹੀਨਾ</string>
+    <string name="custom_range">ਚੁਣੀਆਂ ਤਰੀਕਾਂ</string>
+    <string name="sales_summary">ਵਿਕਰੀ ਸਾਰਾਂਸ਼</string>
+    <string name="collections_summary">ਵਸੂਲੀ ਸਾਰਾਂਸ਼</string>
+    <string name="export_csv">CSV ਡਾਊਨਲੋਡ ਕਰੋ</string>
+    <string name="export_pdf">PDF ਰਿਪੋਰਟ ਡਾਊਨਲੋਡ ਕਰੋ</string>
+
+    <!-- Printing -->
+    <string name="bluetooth_printer">ਬਲੂਟੁੱਥ ਪ੍ਰਿੰਟਰ</string>
+    <string name="connect_printer">ਪ੍ਰਿੰਟਰ ਕਨੈਕਟ ਕਰੋ</string>
+    <string name="test_print">ਟੈਸਟ ਪ੍ਰਿੰਟ</string>
+    <string name="printer_status_connected">ਕਨੈਕਟ ਹੈ</string>
+    <string name="printer_status_disconnected">ਕਨੈਕਟ ਨਹੀਂ ਹੈ</string>
+    <string name="printer_58mm">58 mm (ਛੋਟਾ ਪ੍ਰਿੰਟਰ)</string>
+    <string name="printer_80mm">80 mm (ਵੱਡਾ ਪ੍ਰਿੰਟਰ)</string>
+    <string name="paper_width">ਕਾਗਜ਼ ਦੀ ਚੌੜਾਈ</string>
+    <string name="printer_not_connected">ਪ੍ਰਿੰਟਰ ਕਨੈਕਟ ਨਹੀਂ ਹੈ। ਬਲੂਟੁੱਥ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਜੋੜੋ।</string>
+
+    <!-- Security & Settings -->
+    <string name="settings">ਸੈਟਿੰਗਾਂ</string>
+    <string name="shop_profile">ਦੁਕਾਨ ਦੇ ਵੇਰਵੇ</string>
+    <string name="shop_name">ਦੁਕਾਨ ਦਾ ਨਾਮ</string>
+    <string name="shop_address">ਦੁਕਾਨ ਦਾ ਪਤਾ (ਵਿਕਲਪਿਕ)</string>
+    <string name="shop_phone">ਦੁਕਾਨ ਦਾ ਫੋਨ (ਵਿਕਲਪਿਕ)</string>
+    <string name="upi_id">ਦੁਕਾਨ ਦੀ UPI ID (QR ਕੋਡ ਲਈ)</string>
+    <string name="receipt_footer">ਰਸੀਦ ਦਾ ਸੁਨੇਹਾ</string>
+    <string name="app_lock">ਐਪ ਲਾਕ</string>
+    <string name="enable_pin">4-ਅੰਕਾਂ ਦਾ ਸੁਰੱਖਿਆ ਪਿੰਨ ਲਗਾਓ</string>
+    <string name="enable_biometrics">ਫਿੰਗਰਪ੍ਰਿੰਟ ਵਰਤੋ</string>
+    <string name="backup_restore">ਬੈਕਅੱਪ ਅਤੇ ਰੀਸਟੋਰ</string>
+    <string name="create_backup">ਸੁਰੱਖਿਅਤ ਬੈਕਅੱਪ ਬਣਾਓ</string>
+    <string name="export_unencrypted_backup">ਸਧਾਰਨ JSON ਬੈਕਅੱਪ ਲਓ</string>
+    <string name="restore_backup">ਬੈਕਅੱਪ ਤੋਂ ਬਹਾਲ ਕਰੋ</string>
+    <string name="backup_notice">ਬੈਕਅੱਪ ਤੁਹਾਡੇ ਫੋਨ ਜਾਂ ਗੂਗਲ ਡਰਾਈਵ ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਰਹਿੰਦਾ ਹੈ। ਕਿਸੇ ਕਲਾਉਡ ਸਰਵਰ ਦੀ ਲੋੜ ਨਹੀਂ।</string>
+    <string name="backup_password_label">ਬੈਕਅੱਪ ਪਾਸਵਰਡ</string>
+    <string name="backup_password_hint">ਪਾਸਵਰਡ ਦਰਜ ਕਰੋ (ਘੱਟੋ-ਘੱਟ 12 ਅੱਖਰ)</string>
+    <string name="backup_password_confirm">ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ</string>
+    <string name="backup_password_restore_title">ਬੈਕਅੱਪ ਅਨਲੌਕ ਕਰੋ</string>
+    <string name="backup_password_restore_hint">ਬੈਕਅੱਪ ਬਣਾਉਣ ਸਮੇਂ ਵਾਲਾ ਪਾਸਵਰਡ ਭਰੋ</string>
+    <string name="backup_success_encrypted">ਸੁਰੱਖਿਅਤ ਬੈਕਅੱਪ ਸਫਲਤਾਪੂਰਵਕ ਬਣ ਗਿਆ</string>
+    <string name="backup_success_unencrypted">ਬੈਕਅੱਪ ਫਾਈਲ ਸਫਲਤਾਪੂਰਵਕ ਸੇਵ ਹੋ ਗਈ</string>
+    <string name="backup_integrity_failed">ਬੈਕਅੱਪ ਫਾਈਲ ਅਵੈਧ ਹੈ</string>
+    <string name="restore_cancelled">ਰੀਸਟੋਰ ਰੱਦ ਕੀਤਾ ਗਿਆ</string>
+    <string name="restore_failed_preserved">ਰੀਸਟੋਰ ਅਸਫਲ ਰਿਹਾ; ਪੁਰਾਣਾ ਡਾਟਾ ਸੁਰੱਖਿਅਤ ਹੈ</string>
+    <string name="restore_success">ਡਾਟਾ ਸਫਲਤਾਪੂਰਵਕ ਬਹਾਲ ਹੋ ਗਿਆ!</string>
+    <string name="confirm_restore_title">ਰੀਸਟੋਰ ਦੀ ਪੁਸ਼ਟੀ</string>
+    <string name="confirm_restore_warning">ਚੇਤਾਵਨੀ: ਰੀਸਟੋਰ ਕਰਨ ਨਾਲ ਮੌਜੂਦਾ ਡਾਟਾ ਇਸ ਬੈਕਅੱਪ ਨਾਲ ਬਦਲ ਦਿੱਤਾ ਜਾਵੇਗਾ।</string>
+    <string name="proceed_overwrite">ਅੱਗੇ ਵਧੋ ਅਤੇ ਬਦਲੋ</string>
+    <string name="error_credit_sale_requires_customer">ਉਧਾਰ ਵਿਕਰੀ ਲਈ ਗਾਹਕ ਦੀ ਚੋਣ ਕਰਨੀ ਲਾਜ਼ਮੀ ਹੈ।</string>
+    <string name="error_invalid_payment_amount">ਕਿਰਪਾ ਕਰਕੇ ਸਹੀ ਭੁਗਤਾਨ ਰਕਮ ਦਰਜ ਕਰੋ</string>
+    <string name="error_payment_exceeds_bill">ਮਿਲੀ ਰਕਮ ਕੁੱਲ ਬਿੱਲ ਤੋਂ ਵੱਧ ਨਹੀਂ ਹੋ ਸਕਦੀ</string>
+    <string name="today_other">ਹੋਰ ਤਰੀਕਿਆਂ ਨਾਲ ਵਸੂਲੀ</string>
+    <string name="language">ਭਾਸ਼ਾ / Language</string>
+    <string name="theme">ਥੀਮ</string>
+    <string name="dark_mode">ਡਾਰਕ ਥੀਮ</string>
+    <string name="enter_pin">ਸੁਰੱਖਿਆ ਪਿੰਨ ਭਰੋ</string>
+    <string name="confirm_pin">ਪਿੰਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ</string>
+    <string name="pin_mismatch">ਪਿੰਨ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ</string>
+    <string name="pin_incorrect">ਗਲਤ ਪਿੰਨ</string>
+    <string name="unlock_app">ਐਪ ਅਨਲੌਕ ਕਰੋ</string>
+    <string name="software_updates">ਸਾਫਟਵੇਅਰ ਅਪਡੇਟ</string>
+    <string name="app_version_label">ਮੌਜੂਦਾ ਵਰਜਨ: v%1$s (ਬਿਲਡ %2$d)</string>
+    <string name="auto_check_updates">ਅਪਡੇਟਾਂ ਦੀ ਆਪਣੇ ਆਪ ਜਾਂਚ ਕਰੋ</string>
+    <string name="check_for_updates">ਅਪਡੇਟ ਚੈੱਕ ਕਰੋ</string>
+    <string name="checking_updates">ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...</string>
+    <string name="up_to_date_message">ਤੁਸੀਂ ਸਭ ਤੋਂ ਨਵਾਂ ਵਰਜਨ ਵਰਤ ਰਹੇ ਹੋ।</string>
+    <string name="one_tap_update">ਇੱਕ ਟੈਪ ਨਾਲ ਅਪਡੇਟ ਕਰੋ</string>
+    <string name="data_safe_notice">ਡਾਟਾ ਸੁਰੱਖਿਆ: ਅਪਡੇਟ ਤੋਂ ਪਹਿਲਾਂ ਰਿਕਾਰਡਾਂ ਦਾ ਆਟੋਮੈਟਿਕ ਬੈਕਅੱਪ ਬਣਦਾ ਹੈ।</string>
+
+    <!-- User Guide -->
+    <string name="user_guide_title">ਵਰਤੋਂਕਾਰ ਗਾਈਡ</string>
+    <string name="user_guide_subtitle">ਸੌਖੀਆਂ ਹਦਾਇਤਾਂ ਅਤੇ ਸੇਧਾਂ</string>
+    <string name="user_guide_help">ਮਦਦ &amp; ਗਾਈਡ</string>
+    <string name="open_shop_manual">ਪੂਰੀ ਗਾਈਡ ਖੋਲ੍ਹੋ</string>
+    <string name="replay_walkthrough">ਜਾਣ-ਪਛਾਣ ਦੁਬਾਰਾ ਵੇਖੋ</string>
+    <string name="walkthrough_step_count">ਕਦਮ %1$d / %2$d</string>
+    <string name="walkthrough_skip">ਛੱਡੋ</string>
+    <string name="walkthrough_next">ਅੱਗੇ</string>
+    <string name="walkthrough_back">ਪਿੱਛੇ</string>
+    <string name="walkthrough_finish">ਸ਼ੁਰੂ ਕਰੋ</string>
+    <string name="search_guide_placeholder">ਗਾਈਡ ਵਿੱਚ ਖੋਜੋ...</string>
+    <string name="pro_tip_label">ਨੁਕਤਾ:</string>
+    <string name="switch_language">ਭਾਸ਼ਾ / Language</string>
+
+    <!-- Customer Ledger & Purchase History -->
+    <string name="ledger_total_purchases">ਕੁੱਲ ਖਰੀਦਾਰੀ</string>
+    <string name="ledger_payments_received">ਮਿਲਿਆ ਭੁਗਤਾਨ</string>
+    <string name="ledger_outstanding_balance">ਮੌਜੂਦਾ ਬਾਕੀ</string>
+    <string name="ledger_transactions_count">ਲੈਣ-ਦੇਣ</string>
+    <string name="filter_all_time">ਸਾਰਾ ਇਤਿਹਾਸ</string>
+    <string name="filter_last_30_days">ਪਿਛਲੇ 30 ਦਿਨ</string>
+    <string name="filter_last_3_months">ਪਿਛਲੇ 3 ਮਹੀਨੇ</string>
+    <string name="filter_last_year">ਪਿਛਲਾ 1 ਸਾਲ</string>
+    <string name="filter_custom_range">ਚੁਣੀਆਂ ਤਰੀਕਾਂ</string>
+    <string name="bill_status_paid">ਭੁਗਤਾਨ ਹੋ ਚੁੱਕਾ</string>
+    <string name="bill_status_partially_paid">ਅੱਧਾ ਭੁਗਤਾਨ</string>
+    <string name="bill_status_credit_unpaid">ਉਧਾਰ / ਬਾਕੀ</string>
+    <string name="bill_status_cancelled">ਰੱਦ ਕੀਤਾ ਗਿਆ</string>
+    <string name="bill_view_full">ਪੂਰਾ ਬਿੱਲ ਵੇਖੋ</string>
+    <string name="bill_share_pdf">PDF ਭੇਜੋ</string>
+    <string name="bill_print_thermal">ਰਸੀਦ ਪ੍ਰਿੰਟ ਕਰੋ</string>
+    <string name="bill_items_count">%1$d ਸਮਾਨ</string>
+    <string name="share_via_sms">SMS ਭੇਜੋ</string>
+    <string name="share_via_email">ਈਮੇਲ ਭੇਜੋ</string>
+    <string name="printer_guidance_title">ਪ੍ਰਿੰਟਰ ਕਨੈਕਟ ਨਹੀਂ ਹੈ</string>
+    <string name="printer_guidance_msg">ਕਿਰਪਾ ਕਰਕੇ ਬਲੂਟੁੱਥ ਸੈਟਿੰਗਾਂ ਵਿੱਚ 58mm ਜਾਂ 80mm ਪ੍ਰਿੰਟਰ ਜੋੜੋ ਅਤੇ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
+    <string name="printer_guidance_open_settings">ਬਲੂਟੁੱਥ ਖੋਲ੍ਹੋ</string>
+    <string name="custom_date_range_title">ਤਰੀਕਾਂ ਚੁਣੋ</string>
+    <string name="from_date">ਸ਼ੁਰੂਆਤੀ ਤਰੀਕ (YYYY-MM-DD)</string>
+    <string name="to_date">ਆਖਰੀ ਤਰੀਕ (YYYY-MM-DD)</string>
+    <string name="apply">ਲਾਗੂ ਕਰੋ</string>
+    <string name="all_interactions">ਇਤਿਹਾਸ ਅਤੇ ਖਰੀਦਦਾਰੀ</string>
+    <string name="bill_details">ਬਿੱਲ ਦਾ ਵੇਰਵਾ</string>
+    <string name="payment_details">ਭੁਗਤਾਨ ਦਾ ਵੇਰਵਾ</string>
+    <string name="direct_udhaar">ਸਿੱਧਾ ਉਧਾਰ</string>
+    <string name="reversal_entry">ਸੋਧ / ਰੱਦ ਐਂਟਰੀ</string>
+
+    <!-- Suppliers & Wholesalers -->
+    <string name="suppliers">ਸਪਲਾਇਰ / ਥੋਕ ਵਪਾਰੀ</string>
+    <string name="search_suppliers_hint">ਸਪਲਾਇਰ ਲੱਭੋ</string>
+    <string name="supplier_statement">ਖਾਤਾ ਸਟੇਟਮੈਂਟ</string>
+    <string name="pay_supplier_btn">ਭੁਗਤਾਨ ਕਰੋ (ਨਕਦ/UPI)</string>
+    <string name="add_supplier_title">ਸਪਲਾਇਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="supplier_name_label">ਸਪਲਾਇਰ / ਕੰਪਨੀ ਦਾ ਨਾਮ *</string>
+    <string name="notes_goods_label">ਸਮਾਨ ਦੇ ਵੇਰਵੇ</string>
+    <string name="record_purchase">ਖਰੀਦ ਦਰਜ ਕਰੋ</string>
+    <string name="record_purchase_title">ਖਰੀਦ ਦਰਜ ਕਰੋ: %s</string>
+    <string name="supplier_invoice_label">ਬਿੱਲ / ਇਨਵੌਇਸ ਨੰਬਰ</string>
+    <string name="items_desc_label">ਸਮਾਨ ਦਾ ਵੇਰਵਾ / ਨੋਟ</string>
+    <string name="add_to_payable">ਦੇਣਦਾਰੀ ਵਿੱਚ ਜੋੜੋ</string>
+    <string name="pay_supplier_title">ਭੁਗਤਾਨ ਕਰੋ: %s</string>
+    <string name="total_payable">ਕੁੱਲ ਦੇਣਦਾਰੀ</string>
+    <string name="purchases">ਖਰੀਦਦਾਰੀ</string>
+    <string name="payments">ਭੁਗਤਾਨ</string>
+    <string name="no_suppliers_recorded">ਕੋਈ ਸਪਲਾਇਰ ਦਰਜ ਨਹੀਂ ਹੈ</string>
+    <string name="action_add_supplier">ਸਪਲਾਇਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+
+    <!-- Stock & Inventory -->
+    <string name="stock_inventory">ਸਟਾਕ</string>
+    <string name="search_products_hint">ਸਮਾਨ ਜਾਂ ਬਾਰਕੋਡ ਲੱਭੋ</string>
+    <string name="all_products_count">ਕੁੱਲ ਸਮਾਨ (%1$d)</string>
+    <string name="low_stock_count">ਘੱਟ ਸਟਾਕ ਚੇਤਾਵਨੀ (%1$d)</string>
+    <string name="add_product_title">ਸਮਾਨ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="edit_product_title">ਸਮਾਨ ਸੋਧੋ</string>
+    <string name="adjust_stock_title">ਸਟਾਕ ਬਦਲੋ: %s</string>
+    <string name="product_name_label">ਸਮਾਨ ਦਾ ਨਾਮ *</string>
+    <string name="unit_label">ਇਕਾਈ (ਨਗ/ਕਿਲੋ/ਲੀਟਰ/ਪੈਕੇਟ)</string>
+    <string name="barcode_label">ਬਾਰਕੋਡ / ਕੋਡ</string>
+    <string name="selling_price_label">ਵੇਚ ਮੁੱਲ (₹)</string>
+    <string name="cost_price_label">ਖਰੀਦ ਮੁੱਲ (₹)</string>
+    <string name="initial_stock_label">ਸ਼ੁਰੂਆਤੀ ਸਟਾਕ ਮਾਤਰਾ</string>
+    <string name="low_stock_threshold_label">ਘੱਟ ਸਟਾਕ ਚੇਤਾਵਨੀ ਸੀਮਾ</string>
+    <string name="stock_quantity_label">ਮਾਤਰਾ (%s)</string>
+    <string name="add_stock_mode">ਸਟਾਕ ਵਧਾਓ (+)</string>
+    <string name="remove_stock_mode">ਸਟਾਕ ਘਟਾਓ (-)</string>
+    <string name="set_exact_stock_mode">ਸਹੀ ਸਟਾਕ ਤੈਅ ਕਰੋ (=)</string>
+    <string name="in_stock">ਸਟਾਕ ਮੌਜੂਦ ਹੈ</string>
+    <string name="out_of_stock">ਸਟਾਕ ਖਤਮ</string>
+    <string name="low_stock_badge">ਘੱਟ ਸਟਾਕ</string>
+    <string name="no_products_recorded">ਕੋਈ ਸਮਾਨ ਦਰਜ ਨਹੀਂ ਹੈ</string>
+    <string name="action_add_product">ਸਮਾਨ ਸ਼ਾਮਲ ਕਰੋ</string>
+
+    <!-- Daily Cash Closing -->
+    <string name="daily_cash_closing_title">ਰੋਜ਼ਾਨਾ ਨਕਦ ਹਿਸਾਬ (ਕਲੋਜ਼ਿੰਗ)</string>
+    <string name="expected_cash_label">ਗੱਲੇ ਵਿੱਚ ਹੋਣੀ ਚਾਹੀਦੀ ਨਕਦੀ</string>
+    <string name="counted_cash_label">ਅਸਲ ਗਿਣੀ ਗਈ ਨਕਦੀ</string>
+    <string name="cash_matched">ਨਕਦੀ ਬਿਲਕੁਲ ਸਹੀ ਮਿਲ ਗਈ</string>
+    <string name="cash_excess">ਵਾਧੂ ਨਕਦੀ (ਜ਼ਿਆਦਾ)</string>
+    <string name="cash_shortage">ਨਕਦੀ ਦੀ ਘਾਟ</string>
+    <string name="save_closing">ਰੋਜ਼ਾਨਾ ਕਲੋਜ਼ਿੰਗ ਸੇਵ ਕਰੋ</string>
+    <string name="reconcile_notes">ਨੋਟ (ਵਿਕਲਪਿਕ)</string>
+    <string name="difference">ਫ਼ਰਕ</string>
+    <string name="closing_saved_success">ਨਕਦ ਹਿਸਾਬ ਸਫਲਤਾਪੂਰਵਕ ਸੇਵ ਹੋ ਗਿਆ!</string>
+
+    <!-- Billing extras -->
+    <string name="total_due">ਕੁੱਲ ਬਾਕੀ:</string>
+    <string name="full_paid">ਪੂਰਾ ਭੁਗਤਾਨ (%s)</string>
+    <string name="full_udhaar">ਪੂਰਾ ਉਧਾਰ (₹0)</string>
+    <string name="method_split">ਵੰਡਿਆ ਹੋਇਆ (ਨਕਦ+UPI)</string>
+
+    <!-- Cash Closing & Supplier & Status Additions -->
+    <string name="cash_closing_formula_label">ਗੱਲੇ ਵਿੱਚ ਅਨੁਮਾਨਿਤ ਨਕਦ ਦਾ ਫਾਰਮੂਲਾ:</string>
+    <string name="opening_cash_label">ਸ਼ੁਰੂਆਤੀ ਨਕਦ:</string>
+    <string name="cash_sales_today_label">ਅੱਜ ਦੀ ਨਕਦ ਵਿਕਰੀ:</string>
+    <string name="old_udhaar_collected_label">ਪੁਰਾਣਾ ਉਧਾਰ ਨਕਦ ਵਸੂਲੀ:</string>
+    <string name="cash_expenses_paid_label">ਨਕਦ ਖਰਚੇ ਦਿੱਤੇ:</string>
+    <string name="expected_total_cash_label">ਅਨੁਮਾਨਿਤ ਕੁੱਲ ਨਕਦ:</string>
+    <string name="direct_bank_upi_info">ਸਿੱਧਾ ਬੈਂਕ ਖਾਤੇ ਵਿੱਚ UPI (ਗੱਲੇ ਵਿੱਚ ਨਹੀਂ): %s</string>
+    <string name="morning_opening_cash_label">ਸਵੇਰ ਦੀ ਸ਼ੁਰੂਆਤੀ ਨਕਦੀ (₹)</string>
+    <string name="physical_cash_counted_label">ਗੱਲੇ ਵਿੱਚ ਗਿਣੀ ਗਈ ਅਸਲ ਨਕਦੀ (₹)</string>
+    <string name="cash_drawer_balanced">ਗੱਲੇ ਦਾ ਹਿਸਾਬ ਬਿਲਕੁਲ ਸਹੀ ਹੈ!</string>
+    <string name="cash_surplus_detail">ਬੱਚਤ: ਗੱਲੇ ਵਿੱਚ %s ਵਾਧੂ ਹਨ</string>
+    <string name="cash_shortage_detail">ਘਾਟ: ਗੱਲੇ ਵਿੱਚੋਂ %s ਘੱਟ ਹਨ</string>
+    <string name="cash_counted_expected_summary">ਗਿਣਿਆ: %1$s | ਹੋਣਾ ਚਾਹੀਦਾ: %2$s</string>
+    <string name="save_and_close_drawer">ਸੇਵ ਕਰੋ ਅਤੇ ਗੱਲਾ ਬੰਦ ਕਰੋ</string>
+    <string name="supplier_to_pay">ਦੇਣਾ ਬਾਕੀ (ਉਧਾਰ)</string>
+    <string name="supplier_settled">ਚੁਕਾਇਆ ਹੋਇਆ</string>
+    <string name="adjust_stock">ਸਟਾਕ ਠੀਕ ਕਰੋ</string>
+    <string name="offline_mode_badge">ਔਫਲਾਈਨ ਮੋਡ</string>
+    <string name="reverse_entry_btn">ਵਾਪਸ ਕਰੋ (ਰਿਵਰਸ)</string>
+    <string name="record_payment">ਭੁਗਤਾਨ ਦਰਜ ਕਰੋ</string>
+    <string name="close">ਬੰਦ ਕਰੋ</string>
+</resources>

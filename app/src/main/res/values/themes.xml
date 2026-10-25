@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.SyntaxaKhata" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/splash_window_background</item>
+        <item name="android:statusBarColor">@color/splash_window_background</item>
+        <item name="android:navigationBarColor">@color/splash_window_background</item>
+    </style>
+</resources>

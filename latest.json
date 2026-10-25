@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.3",
-  "versionCode": 4,
+  "latestVersion": "1.0.4",
+  "versionCode": 5,
   "minimumSupportedVersion": "1.0",
-  "releaseDate": 1730000000000,
-  "releaseNotes": "• Fixed WhatsApp PDF Receipt Sharing (FLAG_ACTIVITY_NEW_TASK & WhatsApp Business support)\n• Fixed 'More' Navigation Button Crash on Android 12+\n• Redesigned UI Component Layouts, Balanced 2x3 Action Grid & Safe Button Sizing\n• Fixed Component & Chip Overlays with FlowRow on Small Screens\n• 10 Indian Regional Languages with Zero Text Clipping\n• Production Release v1.0.3",
+  "releaseDate": 1730005000000,
+  "releaseNotes": "• Permanently fixed 'More' tab crash by explicitly providing LocalActivityResultRegistryOwner and wrapping localized context in ContextWrapper\n• Added Global Crash Catcher & in-app Diagnostic Log Viewer in Settings\n• Guarded Storage Access Framework file pickers for Backup & Restore\n• ProGuard rules hardened for Activity Result Contracts & Activity Compose\n• Production Release v1.0.4 (Build 5)",
   "android": {
-    "url": "https://raw.githubusercontent.com/mohdsahil4969/smallshopos/main/apk/SyntaxaKhata-v1.0.3-release.apk",
-    "sha256": "d027ff0b2f3a06e25ea0f2578cbfc52948b0db2970875799d8326a2eecee1487",
-    "sizeBytes": 3942360
+    "url": "https://raw.githubusercontent.com/mohdsahil4969/smallshopos/main/apk/SyntaxaKhata-v1.0.4-release.apk",
+    "sha256": "f90a6b8bb89fa0e486553b6b7d92e7f8ad35759da81e09ae52d2cf13a3e9ea3e",
+    "sizeBytes": 4336763
   }
 }

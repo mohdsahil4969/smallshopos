@@ -1,0 +1,317 @@
+<resources>
+    <string name="app_name">ಸಿಂಟಾಕ್ಸಾ ಖಾತೆ</string>
+    <string name="tagline">ಆಫ್‌ಲೈನ್ ಕಿರಾಣಿ ಅಂಗಡಿ ಸಹಾಯಕ</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">ಮುಖಪುಟ</string>
+    <string name="nav_khata">ಖಾತೆ</string>
+    <string name="nav_records">ದಾಖಲೆಗಳು</string>
+    <string name="nav_more">ಇನ್ನಷ್ಟು</string>
+
+    <!-- Home Dashboard -->
+    <string name="today_sales">ಇಂದಿನ ಮಾರಾಟ</string>
+    <string name="today_cash">ಸ್ವೀಕರಿಸಿದ ನಗದು</string>
+    <string name="today_upi">UPI ಸಂಗ್ರಹ</string>
+    <string name="today_expenses">ಇಂದಿನ ಖರ್ಚುಗಳು</string>
+    <string name="outstanding_udhaar">ಒಟ್ಟು ಬಾಕಿ ಉದ್ಧರಿ</string>
+    <string name="net_cash_movement">ನಿವ್ವಳ ನಗದು ಹರಿವು</string>
+    <string name="quick_actions">ತ್ವರಿತ ಕ್ರಿಯೆಗಳು</string>
+    <string name="recent_transactions">ಇತ್ತೀಚಿನ ವಹಿವಾಟುಗಳು</string>
+    <string name="view_all">ಎಲ್ಲವನ್ನೂ ವೀಕ್ಷಿಸಿ</string>
+    <string name="no_transactions_today">ಇಂದು ಯಾವುದೇ ವಹಿವಾಟು ನಡೆದಿಲ್ಲ</string>
+
+    <!-- Quick Actions -->
+    <string name="action_add_customer">ಗ್ರಾಹಕರನ್ನು ಸೇರಿಸಿ</string>
+    <string name="action_add_udhaar">ಉದ್ಧರಿ ನೀಡಿ</string>
+    <string name="action_receive_payment">ಪಾವತಿ ಸ್ವೀಕರಿಸಿ</string>
+    <string name="action_create_bill">ಬಿಲ್ ರಚಿಸಿ</string>
+    <string name="action_add_expense">ಖರ್ಚು ದಾಖಲಿಸಿ</string>
+    <string name="action_share_receipt">ರಶೀದಿ ಕಳುಹಿಸಿ</string>
+
+    <!-- Customer & Khata -->
+    <string name="customers">ಗ್ರಾಹಕರು</string>
+    <string name="search_customer">ಹೆಸರು ಅಥವಾ ಫೋನ್ ಸಂಖ್ಯೆಯಿಂದ ಹುಡುಕಿ</string>
+    <string name="customer_name">ಗ್ರಾಹಕರ ಹೆಸರು</string>
+    <string name="phone_number">ಫೋನ್ ಸಂಖ್ಯೆ (ಐಚ್ಛಿಕ)</string>
+    <string name="notes">ಟಿಪ್ಪಣಿಗಳು (ಐಚ್ಛಿಕ)</string>
+    <string name="customer_balance">ಬಾಕಿ ಮೊತ್ತ</string>
+    <string name="no_dues">ಯಾವುದೇ ಬಾಕಿ ಇಲ್ಲ</string>
+    <string name="advance_balance">ಮುಂಗಡ ಪಾವತಿ</string>
+    <string name="udhaar_given">ಉದ್ಧರಿ ನೀಡಿದ್ದು</string>
+    <string name="payment_received">ಪಾವತಿ ಸ್ವೀಕರಿಸಿದ್ದು</string>
+    <string name="reversal">ತಿದ್ದುಪಡಿ ನಮೂದು</string>
+    <string name="reverse_transaction">ವಹಿವಾಟು ರದ್ದುಗೊಳಿಸಿ</string>
+    <string name="reverse_confirm_title">ರದ್ದತಿ ದೃಢೀಕರಣ</string>
+    <string name="reverse_confirm_msg">ನೀವು ಖಚಿತವಾಗಿ ಈ ವಹಿವಾಟನ್ನು ರದ್ದುಗೊಳಿಸಲು ಬಯಸುವಿರಾ? ಲೆಡ್ಜರ್‌ನಲ್ಲಿ ಸರಿಪಡಿಸುವ ನಮೂದನ್ನು ಸೇರಿಸಲಾಗುತ್ತದೆ.</string>
+    <string name="archive_customer">ಗ್ರಾಹಕರನ್ನು ಆರ್ಕೈವ್ ಮಾಡಿ</string>
+    <string name="restore_customer">ಗ್ರಾಹಕರನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="archived_customers">ಆರ್ಕೈವ್ ಮಾಡಿದ ಗ್ರಾಹಕರು</string>
+    <string name="customer_statement">ಗ್ರಾಹಕರ ಖಾತೆ ವಿವರ</string>
+
+    <!-- Financial Inputs & Common -->
+    <string name="enter_amount">ಮೊತ್ತ ನಮೂದಿಸಿ</string>
+    <string name="amount_in_rupees">ಮೊತ್ತ (₹)</string>
+    <string name="description">ವಿವರಣೆ / ವಸ್ತುಗಳ ಹೆಸರು</string>
+    <string name="payment_method">ಪಾವತಿ ವಿಧಾನ</string>
+    <string name="method_cash">ನಗದು (Cash)</string>
+    <string name="method_upi">UPI</string>
+    <string name="method_other">ಇತರ</string>
+    <string name="confirm_and_save">ದೃಢೀಕರಿಸಿ ಮತ್ತು ಉಳಿಸಿ</string>
+    <string name="save">ಉಳಿಸಿ</string>
+    <string name="cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="done">ಮುಗಿಯಿತು</string>
+    <string name="delete">ಅಳಿಸಿ</string>
+    <string name="success_saved">ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>
+    <string name="error_invalid_amount">ದಯವಿಟ್ಟು 0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಸರಿಯಾದ ಮೊತ್ತ ನಮೂದಿಸಿ</string>
+    <string name="error_customer_name_required">ಗ್ರಾಹಕರ ಹೆಸರು ಅಗತ್ಯವಿದೆ</string>
+    <string name="duplicate_phone_warning">ಈ ಫೋನ್ ಸಂಖ್ಯೆಯ ಗ್ರಾಹಕರು ಈಗಾಗಲೇ ಇದ್ದಾರೆ.</string>
+
+    <!-- Billing -->
+    <string name="new_bill">ಹೊಸ ಬಿಲ್</string>
+    <string name="quick_amount_mode">ತ್ವರಿತ ಬಿಲ್</string>
+    <string name="itemized_mode">ವಸ್ತುಗಳ ವಿವರವಾದ ಬಿಲ್</string>
+    <string name="select_customer">ಗ್ರಾಹಕರನ್ನು ಆಯ್ಕೆಮಾಡಿ (ಐಚ್ಛಿಕ)</string>
+    <string name="walk_in_customer">ನಗದು ಗ್ರಾಹಕ</string>
+    <string name="add_item">ವಸ್ತು ಸೇರಿಸಿ</string>
+    <string name="item_name">ವಸ್ತುವಿನ ಹೆಸರು</string>
+    <string name="quantity">ಪ್ರಮಾಣ</string>
+    <string name="unit_price">ಬೆಲೆ (₹)</string>
+    <string name="line_total">ಒಟ್ಟು: ₹%s</string>
+    <string name="subtotal">ಉಪಮೊತ್ತ</string>
+    <string name="discount">ರಿಯಾಯಿತಿ (₹)</string>
+    <string name="total_bill">ಒಟ್ಟು ಬಿಲ್</string>
+    <string name="amount_received_label">ಸ್ವೀಕರಿಸಿದ ಮೊತ್ತ</string>
+    <string name="unpaid_balance">ಉಳಿದ ಉದ್ಧರಿ ಬಾಕಿ</string>
+    <string name="generate_bill">ಬಿಲ್ ರಚಿಸಿ</string>
+    <string name="bill_summary">ಬಿಲ್ ಸಾರಾಂಶ</string>
+
+    <!-- Receipts & Sharing -->
+    <string name="receipt">ರಶೀದಿ</string>
+    <string name="receipt_number">ರಶೀದಿ ಸಂಖ್ಯೆ</string>
+    <string name="share_via_whatsapp">ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="share_pdf">PDF ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="print_receipt">ರಶೀದಿ ಮುದ್ರಿಸಿ</string>
+    <string name="reminder_message">ಪಾವತಿ ಜ್ಞಾಪನೆ</string>
+    <string name="send_reminder">ಜ್ಞಾಪನೆ ಕಳುಹಿಸಿ</string>
+    <string name="copy_text">ಪ್ರತಿಲಿಪಿಸಿ</string>
+    <string name="copied_to_clipboard">ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
+    <string name="whatsapp_not_installed">ಈ ಸಾಧನದಲ್ಲಿ ವಾಟ್ಸಾಪ್ ಸ್ಥಾಪಿಸಲಾಗಿಲ್ಲ</string>
+
+    <!-- Expenses -->
+    <string name="expenses">ಖರ್ಚುಗಳು</string>
+    <string name="add_expense">ಖರ್ಚು ದಾಖಲಿಸಿ</string>
+    <string name="expense_category">ವರ್ಗ</string>
+    <string name="cat_stock">ಸ್ಟಾಕ್ ಖರೀದಿ</string>
+    <string name="cat_transport">ಸಾರಿಗೆ ವೆಚ್ಚ</string>
+    <string name="cat_rent">ಬಾಡಿಗೆ</string>
+    <string name="cat_electricity">ವಿದ್ಯುತ್ ಬಿಲ್</string>
+    <string name="cat_wages">ಕೂಲಿ / ಸಂಬಳ</string>
+    <string name="cat_other">ಇತರ</string>
+
+    <!-- Reports -->
+    <string name="reports">ವರದಿಗಳು &amp; ವಿಶ್ಲೇಷಣೆ</string>
+    <string name="today">ಇಂದು</string>
+    <string name="last_7_days">ಕಳೆದ 7 ದಿನಗಳು</string>
+    <string name="this_month">ಈ ತಿಂಗಳು</string>
+    <string name="custom_range">ಕಸ್ಟಮ್ ದಿನಾಂಕಗಳು</string>
+    <string name="sales_summary">ಮಾರಾಟದ ಸಾರಾಂಶ</string>
+    <string name="collections_summary">ವಸೂಲಾತಿ ಸಾರಾಂಶ</string>
+    <string name="export_csv">CSV ರಫ್ತು ಮಾಡಿ</string>
+    <string name="export_pdf">PDF ವರದಿ ರಫ್ತು ಮಾಡಿ</string>
+
+    <!-- Printing -->
+    <string name="bluetooth_printer">ಬ್ಲೂಟೂತ್ ಪ್ರಿಂಟರ್</string>
+    <string name="connect_printer">ಪ್ರಿಂಟರ್ ಸಂಪರ್ಕಿಸಿ</string>
+    <string name="test_print">ಪರೀಕ್ಷಾ ಮುದ್ರಣ</string>
+    <string name="printer_status_connected">ಸಂಪರ್ಕಗೊಂಡಿದೆ</string>
+    <string name="printer_status_disconnected">ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿದೆ</string>
+    <string name="printer_58mm">58 mm (ಸಣ್ಣ ಪ್ರಿಂಟರ್)</string>
+    <string name="printer_80mm">80 mm (ದೊಡ್ಡ ಪ್ರಿಂಟರ್)</string>
+    <string name="paper_width">ಕಾಗದದ ಅಗಲ</string>
+    <string name="printer_not_connected">ಪ್ರಿಂಟರ್ ಸಂಪರ್ಕಗೊಂಡಿಲ್ಲ. ಬ್ಲೂಟೂತ್ ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಜೋಡಿಸಿ.</string>
+
+    <!-- Security & Settings -->
+    <string name="settings">ಸೆಟ್ಟಿಂಗ್ಸ್</string>
+    <string name="shop_profile">ಅಂಗಡಿಯ ವಿವರ</string>
+    <string name="shop_name">ಅಂಗಡಿಯ ಹೆಸರು</string>
+    <string name="shop_address">ಅಂಗಡಿಯ ವಿಳಾಸ (ಐಚ್ಛಿಕ)</string>
+    <string name="shop_phone">ಅಂಗಡಿಯ ಫೋನ್ (ಐಚ್ಛಿಕ)</string>
+    <string name="upi_id">ಅಂಗಡಿಯ UPI ID (QR ಕೋಡ್‌ಗಾಗಿ)</string>
+    <string name="receipt_footer">ರಶೀದಿಯ ಅಡಿಟಿಪ್ಪಣಿ</string>
+    <string name="app_lock">ಆ್ಯಪ್ ಲಾಕ್</string>
+    <string name="enable_pin">4-ಅಂಕಿಯ ಸೆಕ್ಯುರಿಟಿ ಪಿನ್ ಹೊಂದಿಸಿ</string>
+    <string name="enable_biometrics">ಬಯೋಮೆಟ್ರಿಕ್ ಬಳಸಿ (ಫಿಂಗರ್‌ಪ್ರಿಂಟ್)</string>
+    <string name="backup_restore">ಬ್ಯಾಕಪ್ &amp; ಮರುಸ್ಥಾಪನೆ</string>
+    <string name="create_backup">ಎನ್‌ಕ್ರಿಪ್ಟೆಡ್ ಬ್ಯಾಕಪ್ ರಚಿಸಿ</string>
+    <string name="export_unencrypted_backup">ಸರಳ JSON ಬ್ಯಾಕಪ್ ರಫ್ತು ಮಾಡಿ</string>
+    <string name="restore_backup">ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="backup_notice">ಬ್ಯಾಕಪ್‌ಗಳು ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಅಥವಾ ಗೂಗಲ್ ಡ್ರೈವ್‌ನಲ್ಲಿ ಸುರಕ್ಷಿತವಾಗಿರುತ್ತವೆ. ಕ್ಲೌಡ್ ಸರ್ವರ್‌ಗಳ ಅಗತ್ಯವಿಲ್ಲ.</string>
+    <string name="backup_password_label">ಬ್ಯಾಕಪ್ ಪಾಸ್‌ವರ್ಡ್</string>
+    <string name="backup_password_hint">ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ (ಕನಿಷ್ಠ 12 ಅಕ್ಷರಗಳು)</string>
+    <string name="backup_password_confirm">ಪಾಸ್‌ವರ್ಡ್ ಖಚಿತಪಡಿಸಿ</string>
+    <string name="backup_password_restore_title">ಬ್ಯಾಕಪ್ ಅನ್‌ಲಾಕ್ ಮಾಡಿ</string>
+    <string name="backup_password_restore_hint">ಬ್ಯಾಕಪ್ ರಚಿಸಿದಾಗ ನೀಡಿದ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ</string>
+    <string name="backup_success_encrypted">ಎನ್‌ಕ್ರಿಪ್ಟೆಡ್ ಬ್ಯಾಕಪ್ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
+    <string name="backup_success_unencrypted">ಬ್ಯಾಕಪ್ ಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ರಫ್ತಾಗಿದೆ</string>
+    <string name="backup_integrity_failed">ಬ್ಯಾಕಪ್ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="restore_cancelled">ಮರುಸ್ಥಾಪನೆ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
+    <string name="restore_failed_preserved">ಮರುಸ್ಥಾಪನೆ ವಿಫಲವಾಗಿದೆ; ಹಿಂದಿನ ಡೇಟಾ ಸುರಕ್ಷಿತವಾಗಿದೆ</string>
+    <string name="restore_success">ಡೇಟಾ ಯಶಸ್ವಿಯಾಗಿ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ!</string>
+    <string name="confirm_restore_title">ಮರುಸ್ಥಾಪನೆ ದೃಢೀಕರಣ</string>
+    <string name="confirm_restore_warning">ಎಚ್ಚರಿಕೆ: ಮರುಸ್ಥಾಪನೆಯು ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಡೇಟಾವನ್ನು ಈ ಬ್ಯಾಕಪ್‌ನಿಂದ ಬದಲಾಯಿಸುತ್ತದೆ.</string>
+    <string name="proceed_overwrite">ಮುಂದುವರಿಯಿರಿ &amp; ತಿದ್ದಿ ಬರೆಯಿರಿ</string>
+    <string name="error_credit_sale_requires_customer">ಉದ್ಧರಿ ಮಾರಾಟಕ್ಕೆ ಗ್ರಾಹಕರನ್ನು ಆಯ್ಕೆಮಾಡಿ.</string>
+    <string name="error_invalid_payment_amount">ಸರಿಯಾದ ಪಾವತಿ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="error_payment_exceeds_bill">ಸ್ವೀಕರಿಸಿದ ಮೊತ್ತವು ಒಟ್ಟು ಬಿಲ್ ಮೊತ್ತಕ್ಕಿಂತ ಹೆಚ್ಚಿರಬಾರದು</string>
+    <string name="today_other">ಇತರ ಪಾವತಿಗಳ ಸಂಗ್ರಹ</string>
+    <string name="language">ಭಾಷೆ / Language</string>
+    <string name="theme">ಥೀಮ್</string>
+    <string name="dark_mode">ಡಾರ್ಕ್ ಥೀಮ್</string>
+    <string name="enter_pin">ಸೆಕ್ಯುರಿಟಿ ಪಿನ್ ನಮೂದಿಸಿ</string>
+    <string name="confirm_pin">ಪಿನ್ ಖಚಿತಪಡಿಸಿ</string>
+    <string name="pin_mismatch">ಪಿನ್‌ಗಳು ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ</string>
+    <string name="pin_incorrect">ತಪ್ಪು ಪಿನ್</string>
+    <string name="unlock_app">ಆ್ಯಪ್ ಅನ್‌ಲಾಕ್ ಮಾಡಿ</string>
+    <string name="software_updates">ಸಾಫ್ಟ್‌ವೇರ್ ಅಪ್‌ಡೇಟ್‌ಗಳು</string>
+    <string name="app_version_label">ಪ್ರಸ್ತುತ ಆವೃತ್ತಿ: v%1$s (ಬಿಲ್ಡ್ %2$d)</string>
+    <string name="auto_check_updates">ಅಪ್‌ಡೇಟ್‌ಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪರಿಶೀಲಿಸಿ</string>
+    <string name="check_for_updates">ಅಪ್‌ಡೇಟ್‌ಗಳಿಗಾಗಿ ಪರಿಶೀಲಿಸಿ</string>
+    <string name="checking_updates">ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...</string>
+    <string name="up_to_date_message">ನೀವು ಸಿಂಟಾಕ್ಸಾ ಖಾತೆಯ ಇತ್ತೀಚಿನ ಆವೃತ್ತಿಯನ್ನು ಬಳಸುತ್ತಿದ್ದೀರಿ.</string>
+    <string name="one_tap_update">ಒಂದೇ ಟ್ಯಾಪ್‌ನಲ್ಲಿ ಅಪ್‌ಡೇಟ್</string>
+    <string name="data_safe_notice">ಡೇಟಾ ಸುರಕ್ಷತೆ: ಅಪ್‌ಡೇಟ್‌ಗೆ ಮುನ್ನ ಅಂಗಡಿಯ ದಾಖಲೆಗಳ ಸುರಕ್ಷತಾ ಬ್ಯಾಕಪ್ ರಚಿಸಲಾಗುತ್ತದೆ.</string>
+
+    <!-- User Guide -->
+    <string name="user_guide_title">ಬಳಕೆದಾರರ ಕೈಪಿಡಿ</string>
+    <string name="user_guide_subtitle">ಹಂತ-ಹಂತದ ಸೂಚನೆಗಳು ಮತ್ತು ಮಾರ್ಗದರ್ಶನ</string>
+    <string name="user_guide_help">ಸಹಾಯ &amp; ಮಾರ್ಗದರ್ಶಿ</string>
+    <string name="open_shop_manual">ಸಂಪೂರ್ಣ ಕೈಪಿಡಿ ತೆರೆಯಿರಿ</string>
+    <string name="replay_walkthrough">ಪರಿಚಯವನ್ನು ಮತ್ತೊಮ್ಮೆ ನೋಡಿ</string>
+    <string name="walkthrough_step_count">ಹಂತ %1$d / %2$d</string>
+    <string name="walkthrough_skip">ಬಿಟ್ಟುಬಿಡಿ</string>
+    <string name="walkthrough_next">ಮುಂದೆ</string>
+    <string name="walkthrough_back">ಹಿಂದೆ</string>
+    <string name="walkthrough_finish">ಪ್ರಾರಂಭಿಸಿ</string>
+    <string name="search_guide_placeholder">ಕೈಪಿಡಿಯಲ್ಲಿ ಹುಡುಕಿ (ಉದ್ಧರಿ, ಪ್ರಿಂಟರ್, ಸ್ಟಾಕ್)...</string>
+    <string name="pro_tip_label">ಸಲಹೆ:</string>
+    <string name="switch_language">ಭಾಷೆ / Language</string>
+
+    <!-- Customer Ledger & Purchase History -->
+    <string name="ledger_total_purchases">ಒಟ್ಟು ಖರೀದಿಗಳು</string>
+    <string name="ledger_payments_received">ಸ್ವೀಕರಿಸಿದ ಪಾವತಿಗಳು</string>
+    <string name="ledger_outstanding_balance">ಪ್ರಸ್ತುತ ಬಾಕಿ</string>
+    <string name="ledger_transactions_count">ವಹಿವಾಟುಗಳು</string>
+    <string name="filter_all_time">ಎಲ್ಲಾ ಸಮಯದ</string>
+    <string name="filter_last_30_days">ಕಳೆದ 30 ದಿನಗಳು</string>
+    <string name="filter_last_3_months">ಕಳೆದ 3 ತಿಂಗಳುಗಳು</string>
+    <string name="filter_last_year">ಕಳೆದ 1 ವರ್ಷ</string>
+    <string name="filter_custom_range">ಕಸ್ಟಮ್ ದಿನಾಂಕಗಳು</string>
+    <string name="bill_status_paid">ಪೂರ್ಣ ಪಾವತಿ</string>
+    <string name="bill_status_partially_paid">ಭಾಗಶಃ ಪಾವತಿ</string>
+    <string name="bill_status_credit_unpaid">ಉದ್ಧರಿ / ಬಾಕಿ</string>
+    <string name="bill_status_cancelled">ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
+    <string name="bill_view_full">ಸಂಪೂರ್ಣ ಬಿಲ್ ವೀಕ್ಷಿಸಿ</string>
+    <string name="bill_share_pdf">PDF ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="bill_print_thermal">ಬಿಲ್ ಮುದ್ರಿಸಿ</string>
+    <string name="bill_items_count">%1$d ವಸ್ತುಗಳು</string>
+    <string name="share_via_sms">SMS ಕಳುಹಿಸಿ</string>
+    <string name="share_via_email">ಇಮೇಲ್ ಕಳುಹಿಸಿ</string>
+    <string name="printer_guidance_title">ಪ್ರಿಂಟರ್ ಸಂಪರ್ಕಗೊಂಡಿಲ್ಲ</string>
+    <string name="printer_guidance_msg">ದಯವಿಟ್ಟು ನಿಮ್ಮ ಫೋನ್‌ನ ಬ್ಲೂಟೂತ್ ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ 58mm ಅಥವಾ 80mm ಪ್ರಿಂಟರ್ ಜೋಡಿಸಿ ಮತ್ತು ಪುನಃ ಮುದ್ರಿಸಿ.</string>
+    <string name="printer_guidance_open_settings">ಬ್ಲೂಟೂತ್ ತೆರೆಯಿರಿ</string>
+    <string name="custom_date_range_title">ದಿನಾಂಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="from_date">ಪ್ರಾರಂಭ ದಿನಾಂಕ (YYYY-MM-DD)</string>
+    <string name="to_date">ಮುಕ್ತಾಯ ದಿನಾಂಕ (YYYY-MM-DD)</string>
+    <string name="apply">ಅನ್ವಯಿಸಿ</string>
+    <string name="all_interactions">ಇತಿಹಾಸ &amp; ಖರೀದಿಗಳು</string>
+    <string name="bill_details">ಬಿಲ್ ವಿವರಗಳು</string>
+    <string name="payment_details">ಪಾವತಿ ವಿವರಗಳು</string>
+    <string name="direct_udhaar">ನೇರ ಉದ್ಧರಿ</string>
+    <string name="reversal_entry">ತಿದ್ದುಪಡಿ / ರದ್ದು ನಮೂದು</string>
+
+    <!-- Suppliers & Wholesalers -->
+    <string name="suppliers">ಸರಬರಾಜುದಾರರು / ಸಗಟು ವ್ಯಾಪಾರಿಗಳು</string>
+    <string name="search_suppliers_hint">ಸರಬರಾಜುದಾರರನ್ನು ಹುಡುಕಿ</string>
+    <string name="supplier_statement">ಖಾತೆ ವಿವರ</string>
+    <string name="pay_supplier_btn">ಪಾವತಿಸಿ (ನಗದು/UPI)</string>
+    <string name="add_supplier_title">ಸರಬರಾಜುದಾರರನ್ನು ಸೇರಿಸಿ</string>
+    <string name="supplier_name_label">ಸರಬರಾಜುದಾರ / ಕಂಪನಿ ಹೆಸರು *</string>
+    <string name="notes_goods_label">ವಸ್ತುಗಳ ವಿವರಗಳು</string>
+    <string name="record_purchase">ಖರೀದಿ ದಾಖಲಿಸಿ</string>
+    <string name="record_purchase_title">ಖರೀದಿ ದಾಖಲಿಸಿ: %s</string>
+    <string name="supplier_invoice_label">ಬಿಲ್ / ಇನ್‌ವಾಯ್ಸ್ ಸಂಖ್ಯೆ</string>
+    <string name="items_desc_label">ವಸ್ತುಗಳ ವಿವರಣೆ / ಟಿಪ್ಪಣಿಗಳು</string>
+    <string name="add_to_payable">ಕೊಡಬೇಕಾದ ಮೊತ್ತಕ್ಕೆ ಸೇರಿಸಿ</string>
+    <string name="pay_supplier_title">ಸರಬರಾಜುದಾರರಿಗೆ ಪಾವತಿ: %s</string>
+    <string name="total_payable">ಒಟ್ಟು ಪಾವತಿಸಬೇಕಾದ ಮೊತ್ತ</string>
+    <string name="purchases">ಖರೀದಿಗಳು</string>
+    <string name="payments">ಪಾವತಿಗಳು</string>
+    <string name="no_suppliers_recorded">ಯಾವುದೇ ಸರಬರಾಜುದಾರರು ದಾಖಲಾಗಿಲ್ಲ</string>
+    <string name="action_add_supplier">ಸರಬರಾಜುದಾರರನ್ನು ಸೇರಿಸಿ</string>
+
+    <!-- Stock & Inventory -->
+    <string name="stock_inventory">ದಾಸ್ತಾನು</string>
+    <string name="search_products_hint">ವಸ್ತು ಅಥವಾ ಬಾರ್‌ಕೋಡ್ ಹುಡುಕಿ</string>
+    <string name="all_products_count">ಒಟ್ಟು ವಸ್ತುಗಳು (%1$d)</string>
+    <string name="low_stock_count">ಕಡಿಮೆ ದಾಸ್ತಾನು ಎಚ್ಚರಿಕೆ (%1$d)</string>
+    <string name="add_product_title">ವಸ್ತು ಸೇರಿಸಿ</string>
+    <string name="edit_product_title">ವಸ್ತುವನ್ನು ತಿದ್ದುಪಡಿ ಮಾಡಿ</string>
+    <string name="adjust_stock_title">ದಾಸ್ತಾನು ಸರಿಹೊಂದಿಸಿ: %s</string>
+    <string name="product_name_label">ವಸ್ತುವಿನ ಹೆಸರು *</string>
+    <string name="unit_label">ಅಳತೆ (ಪೀಸ್/ಕೆಜಿ/ಲೀಟರ್/ಪ್ಯಾಕೆಟ್)</string>
+    <string name="barcode_label">ಬಾರ್‌ಕೋಡ್ / ಕೋಡ್</string>
+    <string name="selling_price_label">ಮಾರಾಟ ಬೆಲೆ (₹)</string>
+    <string name="cost_price_label">ಖರೀದಿ ಬೆಲೆ (₹)</string>
+    <string name="initial_stock_label">ಆರಂಭಿಕ ದಾಸ್ತಾನು ಪ್ರಮಾಣ</string>
+    <string name="low_stock_threshold_label">ಕನಿಷ್ಠ ದಾಸ್ತಾನು ಎಚ್ಚರಿಕೆ ಮಿತಿ</string>
+    <string name="stock_quantity_label">ಪ್ರಮಾಣ (%s)</string>
+    <string name="add_stock_mode">ದಾಸ್ತಾನು ಸೇರಿಸಿ (+)</string>
+    <string name="remove_stock_mode">ದಾಸ್ತಾನು ಕಡಿಮೆ ಮಾಡಿ (-)</string>
+    <string name="set_exact_stock_mode">ಖಚಿತ ದಾಸ್ತಾನು ನಿಗದಿಪಡಿಸಿ (=)</string>
+    <string name="in_stock">ದಾಸ್ತಾನು ಲಭ್ಯವಿದೆ</string>
+    <string name="out_of_stock">ದಾಸ್ತಾನು ಮುಗಿದಿದೆ</string>
+    <string name="low_stock_badge">ಕಡಿಮೆ ದಾಸ್ತಾನು</string>
+    <string name="no_products_recorded">ಯಾವುದೇ ವಸ್ತುಗಳು ದಾಖಲಾಗಿಲ್ಲ</string>
+    <string name="action_add_product">ವಸ್ತು ಸೇರಿಸಿ</string>
+
+    <!-- Daily Cash Closing -->
+    <string name="daily_cash_closing_title">ದೈನಂದಿನ ನಗದು ಸಮನ್ವಯ (ಕ್ಲೋಸಿಂಗ್)</string>
+    <string name="expected_cash_label">ಗಲ್ಲಾಪೆಟ್ಟಿಗೆಯಲ್ಲಿ ಇರಬೇಕಾದ ನಗದು</string>
+    <string name="counted_cash_label">ವಾಸ್ತವವಾಗಿ ಎಣಿಸಿದ ನಗದು</string>
+    <string name="cash_matched">ನಗದು ನಿಖರವಾಗಿ ಹೊಂದಿಕೆಯಾಗಿದೆ</string>
+    <string name="cash_excess">ಹೆಚ್ಚುವರಿ ನಗದು</string>
+    <string name="cash_shortage">ಕೊರತೆ ನಗದು</string>
+    <string name="save_closing">ದೈನಂದಿನ ಕ್ಲೋಸಿಂಗ್ ಉಳಿಸಿ</string>
+    <string name="reconcile_notes">ಟಿಪ್ಪಣಿಗಳು (ಐಚ್ಛಿಕ)</string>
+    <string name="difference">ವ್ಯತ್ಯಾಸ</string>
+    <string name="closing_saved_success">ದೈನಂದಿನ ನಗದು ಕ್ಲೋಸಿಂಗ್ ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ!</string>
+
+    <!-- Billing extras -->
+    <string name="total_due">ಒಟ್ಟು ಬಾಕಿ:</string>
+    <string name="full_paid">ಪೂರ್ಣ ಪಾವತಿ (%s)</string>
+    <string name="full_udhaar">ಪೂರ್ಣ ಉದ್ಧರಿ (₹0)</string>
+    <string name="method_split">ವಿಭಜಿತ (ನಗದು+UPI)</string>
+
+    <!-- Cash Closing & Supplier & Status Additions -->
+    <string name="cash_closing_formula_label">ಡ್ರಾಯರ್‌ನಲ್ಲಿ ಇರಬೇಕಾದ ನಿರೀಕ್ಷಿತ ನಗದು ಸೂತ್ರ:</string>
+    <string name="opening_cash_label">ಆರಂಭಿಕ ನಗದು:</string>
+    <string name="cash_sales_today_label">ಇಂದಿನ ನಗದು ಮಾರಾಟ:</string>
+    <string name="old_udhaar_collected_label">ಹಳೆಯ ಉದ್ಧರಿ ನಗದು ವಸೂಲಿ:</string>
+    <string name="cash_expenses_paid_label">ಪಾವತಿಸಿದ ನಗದು ಖರ್ಚುಗಳು:</string>
+    <string name="expected_total_cash_label">ನಿರೀಕ್ಷಿತ ಒಟ್ಟು ನಗದು:</string>
+    <string name="direct_bank_upi_info">ನೇರ ಬ್ಯಾಂಕ್ UPI (ಗಲ್ಲಾದಲ್ಲಿಲ್ಲ): %s</string>
+    <string name="morning_opening_cash_label">ಬೆಳಗಿನ ಆರಂಭಿಕ ನಗದು (₹)</string>
+    <string name="physical_cash_counted_label">ಗಲ್ಲಾದಲ್ಲಿ ಎಣಿಸಿದ ನಿಜವಾದ ನಗದು (₹)</string>
+    <string name="cash_drawer_balanced">ಗಲ್ಲಾ ನಗದು ಸರಿಯಾಗಿ ಹೊಂದಿಕೆಯಾಗಿದೆ!</string>
+    <string name="cash_surplus_detail">ಹೆಚ್ಚುವರಿ: ಗಲ್ಲಾದಲ್ಲಿ %s ಹೆಚ್ಚಿದೆ</string>
+    <string name="cash_shortage_detail">ಕೊರತೆ: ಗಲ್ಲಾದಲ್ಲಿ %s ಕಡಿಮೆಯಾಗಿದೆ</string>
+    <string name="cash_counted_expected_summary">ಎಣಿಸಿದ್ದು: %1$s | ಇರಬೇಕಾಗಿದ್ದು: %2$s</string>
+    <string name="save_and_close_drawer">ಉಳಿಸಿ ಮತ್ತು ಗಲ್ಲಾ ಮುಚ್ಚಿ</string>
+    <string name="supplier_to_pay">ಪಾವತಿಸಬೇಕಾದದ್ದು (ಉದ್ಧರಿ)</string>
+    <string name="supplier_settled">ಪೂರ್ಣ ಪಾವತಿಸಲಾಗಿದೆ</string>
+    <string name="adjust_stock">ಸ್ಟಾಕ್ ಸರಿಹೊಂದಿಸಿ</string>
+    <string name="offline_mode_badge">ಆಫ್‌ಲೈನ್ ಮೋಡ್</string>
+    <string name="reverse_entry_btn">ರಿವರ್ಸ್ ಮಾಡಿ</string>
+    <string name="record_payment">ಪಾವತಿ ದಾಖಲಿಸಿ</string>
+    <string name="close">ಮುಚ್ಚಿ</string>
+</resources>

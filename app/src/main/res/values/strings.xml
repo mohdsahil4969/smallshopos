@@ -1,0 +1,339 @@
+<resources>
+    <string name="app_name">Syntaxa Khata</string>
+    <string name="tagline">Offline Kirana Assistant</string>
+    <string name="splash_secure_badge">100% Offline • Zero Cloud • Private</string>
+    <string name="splash_tap_skip">Tap anywhere to continue</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_khata">Khata</string>
+    <string name="nav_records">Records</string>
+    <string name="nav_more">More</string>
+
+    <!-- Home Dashboard -->
+    <string name="today_sales">Today\'s Sales</string>
+    <string name="today_cash">Cash Collected</string>
+    <string name="today_upi">UPI Collected</string>
+    <string name="today_expenses">Today\'s Expenses</string>
+    <string name="outstanding_udhaar">Total Udhaar Owed</string>
+    <string name="net_cash_movement">Net Cash Movement</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="view_all">View All</string>
+    <string name="no_transactions_today">No transactions recorded today</string>
+
+    <!-- Quick Actions -->
+    <string name="action_add_customer">Add Customer</string>
+    <string name="action_add_udhaar">Give Udhaar</string>
+    <string name="action_receive_payment">Receive Payment</string>
+    <string name="action_create_bill">Create Bill</string>
+    <string name="action_add_expense">Add Expense</string>
+    <string name="action_share_receipt">Share Receipt</string>
+
+    <!-- Customer & Khata -->
+    <string name="customers">Customers</string>
+    <string name="search_customer">Search customer name or phone</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="phone_number">Phone Number (Optional)</string>
+    <string name="notes">Notes (Optional)</string>
+    <string name="customer_balance">Balance Due</string>
+    <string name="no_dues">No Dues</string>
+    <string name="advance_balance">Advance Paid</string>
+    <string name="udhaar_given">Udhaar Given</string>
+    <string name="payment_received">Payment Received</string>
+    <string name="reversal">Reversal Entry</string>
+    <string name="reverse_transaction">Reverse Transaction</string>
+    <string name="reverse_confirm_title">Confirm Reversal</string>
+    <string name="reverse_confirm_msg">Are you sure you want to reverse this transaction? A correcting entry will be added to the ledger to preserve the audit trail.</string>
+    <string name="archive_customer">Archive Customer</string>
+    <string name="restore_customer">Restore Customer</string>
+    <string name="archived_customers">Archived Customers</string>
+    <string name="customer_statement">Customer Statement</string>
+
+    <!-- Financial Inputs & Common -->
+    <string name="enter_amount">Enter Amount</string>
+    <string name="amount_in_rupees">Amount (₹)</string>
+    <string name="description">Description / Item note</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="method_cash">Cash</string>
+    <string name="method_upi">UPI</string>
+    <string name="method_other">Other</string>
+    <string name="confirm_and_save">Confirm &amp; Save</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="delete">Delete</string>
+    <string name="success_saved">Saved successfully</string>
+    <string name="error_invalid_amount">Please enter a valid amount greater than 0</string>
+    <string name="error_customer_name_required">Customer name is required</string>
+    <string name="duplicate_phone_warning">A customer with this phone number already exists.</string>
+
+    <!-- Billing -->
+    <string name="new_bill">New Bill</string>
+    <string name="quick_amount_mode">Quick Total</string>
+    <string name="itemized_mode">Itemized Bill</string>
+    <string name="select_customer">Select Customer (Optional)</string>
+    <string name="walk_in_customer">Walk-in Customer</string>
+    <string name="add_item">Add Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="unit_price">Unit Price (₹)</string>
+    <string name="line_total">Total: ₹%s</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="discount">Discount (₹)</string>
+    <string name="total_bill">Total Bill</string>
+    <string name="amount_received_label">Amount Received</string>
+    <string name="unpaid_balance">Remaining as Udhaar</string>
+    <string name="generate_bill">Generate Bill</string>
+    <string name="bill_summary">Bill Summary</string>
+
+    <!-- Receipts & Sharing -->
+    <string name="receipt">Receipt</string>
+    <string name="receipt_number">Receipt No</string>
+    <string name="share_via_whatsapp">WhatsApp</string>
+    <string name="share_pdf">Share PDF</string>
+    <string name="print_receipt">Print Receipt</string>
+    <string name="reminder_message">Payment Reminder</string>
+    <string name="send_reminder">Send Reminder</string>
+    <string name="copy_text">Copy Text</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="whatsapp_not_installed">WhatsApp is not installed on this device</string>
+
+    <!-- Expenses -->
+    <string name="expenses">Expenses</string>
+    <string name="add_expense">Record Expense</string>
+    <string name="expense_category">Category</string>
+    <string name="cat_stock">Stock purchase</string>
+    <string name="cat_transport">Transport</string>
+    <string name="cat_rent">Rent</string>
+    <string name="cat_electricity">Electricity</string>
+    <string name="cat_wages">Wages</string>
+    <string name="cat_other">Other</string>
+
+    <!-- Reports -->
+    <string name="reports">Reports &amp; Analytics</string>
+    <string name="today">Today</string>
+    <string name="last_7_days">Last 7 Days</string>
+    <string name="this_month">This Month</string>
+    <string name="custom_range">Custom Range</string>
+    <string name="sales_summary">Sales Summary</string>
+    <string name="collections_summary">Collections Summary</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="export_pdf">Export PDF Report</string>
+
+    <!-- Printing -->
+    <string name="bluetooth_printer">Bluetooth Printer</string>
+    <string name="connect_printer">Connect Printer</string>
+    <string name="test_print">Test Print</string>
+    <string name="printer_status_connected">Connected</string>
+    <string name="printer_status_disconnected">Disconnected</string>
+    <string name="printer_58mm">58 mm (Standard Small)</string>
+    <string name="printer_80mm">80 mm (Wide)</string>
+    <string name="paper_width">Paper Width</string>
+    <string name="printer_not_connected">Printer not connected. Please pair in Bluetooth settings first.</string>
+
+    <!-- Security & Settings -->
+    <string name="settings">Settings</string>
+    <string name="shop_profile">Shop Profile</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="shop_address">Shop Address (Optional)</string>
+    <string name="shop_phone">Shop Phone (Optional)</string>
+    <string name="upi_id">Shop UPI ID (for QR codes)</string>
+    <string name="receipt_footer">Receipt Footer Message</string>
+    <string name="app_lock">App Lock</string>
+    <string name="enable_pin">Set 4-Digit Security PIN</string>
+    <string name="enable_biometrics">Use Biometrics (Fingerprint / Face)</string>
+    <string name="backup_restore">Backup &amp; Restore</string>
+    <string name="create_backup">Create Encrypted Backup</string>
+    <string name="export_unencrypted_backup">Export Plain JSON Backup</string>
+    <string name="restore_backup">Restore from Backup</string>
+    <string name="backup_notice">Backups are stored locally on your device or Google Drive via File picker. No cloud servers are involved.</string>
+    <string name="backup_password_label">Backup Encryption Password</string>
+    <string name="backup_password_hint">Enter password (min 12 characters)</string>
+    <string name="backup_password_confirm">Confirm Password</string>
+    <string name="backup_password_restore_title">Decrypt Encrypted Backup</string>
+    <string name="backup_password_restore_hint">Enter the password used to create this backup</string>
+    <string name="backup_success_encrypted">Encrypted backup created successfully</string>
+    <string name="backup_success_unencrypted">Unencrypted backup exported successfully</string>
+    <string name="backup_integrity_failed">Backup integrity check failed</string>
+    <string name="restore_cancelled">Restore cancelled; existing data was not changed</string>
+    <string name="restore_failed_preserved">Restore failed; existing data has been preserved</string>
+    <string name="restore_success">Data restored successfully!</string>
+    <string name="confirm_restore_title">Confirm Restore</string>
+    <string name="confirm_restore_warning">Warning: Restoring will overwrite existing ledger data with the records from this backup.</string>
+    <string name="proceed_overwrite">Proceed &amp; Overwrite</string>
+    <string name="error_credit_sale_requires_customer">Please select a customer for credit (Udhaar) sales.</string>
+    <string name="error_invalid_payment_amount">Please enter a valid non-negative payment amount</string>
+    <string name="error_payment_exceeds_bill">Received amount cannot exceed total bill amount</string>
+    <string name="today_other">Other Payments Collected</string>
+    <string name="language">Language / भाषा</string>
+    <string name="theme">Theme</string>
+    <string name="dark_mode">Dark Theme</string>
+    <string name="enter_pin">Enter Security PIN</string>
+    <string name="confirm_pin">Confirm PIN</string>
+    <string name="pin_mismatch">PINs do not match</string>
+    <string name="pin_incorrect">Incorrect PIN</string>
+    <string name="unlock_app">Unlock App</string>
+    <string name="software_updates">Software Updates</string>
+    <string name="app_version_label">Current Version: v%1$s (Build %2$d)</string>
+    <string name="auto_check_updates">Auto-check for updates</string>
+    <string name="check_for_updates">Check for Updates</string>
+    <string name="checking_updates">Checking for updates...</string>
+    <string name="up_to_date_message">You are using the latest version of Syntaxa Khata.</string>
+    <string name="one_tap_update">One-Tap Update</string>
+    <string name="data_safe_notice">Automatic Safety Backup: Database snapshot is created before updating to preserve shop records.</string>
+
+    <!-- User Guide & Onboarding Walkthrough -->
+    <string name="user_guide_title">User Guide &amp; Shop Manual</string>
+    <string name="user_guide_subtitle">Step-by-step counter instructions and best practices</string>
+    <string name="user_guide_help">Help &amp; Guide</string>
+    <string name="open_shop_manual">Open Complete Shop Manual</string>
+    <string name="replay_walkthrough">Replay App Walkthrough</string>
+    <string name="walkthrough_step_count">Step %1$d of %2$d</string>
+    <string name="walkthrough_skip">Skip</string>
+    <string name="walkthrough_next">Next</string>
+    <string name="walkthrough_back">Back</string>
+    <string name="walkthrough_finish">Start Managing Shop</string>
+    <string name="search_guide_placeholder">Search user guide (e.g. Udhaar, Printer, Stock)...</string>
+    <string name="pro_tip_label">Shopkeeper Pro Tip:</string>
+    <string name="switch_language">Language / भाषा</string>
+
+    <!-- Customer Ledger & Purchase History -->
+    <string name="ledger_total_purchases">Total Purchases</string>
+    <string name="ledger_payments_received">Payments Received</string>
+    <string name="ledger_outstanding_balance">Current Balance</string>
+    <string name="ledger_transactions_count">Transactions</string>
+    <string name="filter_all_time">All Time</string>
+    <string name="filter_last_30_days">Last 30 Days</string>
+    <string name="filter_last_3_months">Last 3 Months</string>
+    <string name="filter_last_year">Last Year</string>
+    <string name="filter_custom_range">Custom Range</string>
+    <string name="bill_status_paid">Paid</string>
+    <string name="bill_status_partially_paid">Partially Paid</string>
+    <string name="bill_status_credit_unpaid">Credit / Unpaid</string>
+    <string name="bill_status_cancelled">Cancelled</string>
+    <string name="bill_view_full">View Full Bill</string>
+    <string name="bill_share_pdf">Share PDF</string>
+    <string name="bill_print_thermal">Print Receipt</string>
+    <string name="bill_items_count">%1$d item(s)</string>
+    <string name="share_via_sms">Share SMS</string>
+    <string name="share_via_email">Share Email</string>
+    <string name="printer_guidance_title">No Bluetooth Printer Paired</string>
+    <string name="printer_guidance_msg">Please pair your 58mm or 80mm Bluetooth thermal receipt printer in Android Bluetooth Settings, then tap Print again.</string>
+    <string name="printer_guidance_open_settings">Open Bluetooth</string>
+    <string name="custom_date_range_title">Select Custom Date Range</string>
+    <string name="from_date">From Date (YYYY-MM-DD)</string>
+    <string name="to_date">To Date (YYYY-MM-DD)</string>
+    <string name="apply">Apply</string>
+    <string name="all_interactions">Timeline &amp; Purchases</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="direct_udhaar">Direct Udhaar</string>
+    <string name="reversal_entry">Correction / Reversal</string>
+
+    <!-- Suppliers & Wholesalers -->
+    <string name="suppliers">Suppliers</string>
+    <string name="search_suppliers_hint">Search Suppliers / Wholesalers</string>
+    <string name="supplier_statement">Statement</string>
+    <string name="pay_supplier_btn">Pay Cash/UPI</string>
+    <string name="add_supplier_title">Add Supplier / Wholesaler</string>
+    <string name="supplier_name_label">Supplier / Company Name *</string>
+    <string name="notes_goods_label">Notes / Goods Supplied</string>
+    <string name="record_purchase">Record Purchase</string>
+    <string name="record_purchase_title">Record Purchase: %s</string>
+    <string name="supplier_invoice_label">Supplier Bill/Invoice Number</string>
+    <string name="items_desc_label">Items Description / Notes</string>
+    <string name="add_to_payable">Add to Payable</string>
+    <string name="pay_supplier_title">Pay Supplier: %s</string>
+    <string name="total_payable">Total Payable</string>
+    <string name="purchases">Purchases</string>
+    <string name="payments">Payments</string>
+    <string name="no_suppliers_recorded">No suppliers or wholesalers recorded yet</string>
+    <string name="action_add_supplier">Add Supplier</string>
+
+    <!-- Stock & Inventory -->
+    <string name="stock_inventory">Stock</string>
+    <string name="search_products_hint">Search Products or Barcode</string>
+    <string name="all_products_count">All Products (%1$d)</string>
+    <string name="low_stock_count">Low Stock Alert (%1$d)</string>
+    <string name="add_product_title">Add Product</string>
+    <string name="edit_product_title">Edit Product</string>
+    <string name="adjust_stock_title">Adjust Stock: %s</string>
+    <string name="product_name_label">Product Name *</string>
+    <string name="unit_label">Unit (pcs/kg/ltr/pack)</string>
+    <string name="barcode_label">Barcode / Code</string>
+    <string name="selling_price_label">Selling Price (₹)</string>
+    <string name="cost_price_label">Cost Price (₹)</string>
+    <string name="initial_stock_label">Initial Stock Quantity</string>
+    <string name="low_stock_threshold_label">Low Stock Alert Threshold</string>
+    <string name="stock_quantity_label">Quantity (%s)</string>
+    <string name="add_stock_mode">Add Stock (+)</string>
+    <string name="remove_stock_mode">Reduce Stock (-)</string>
+    <string name="set_exact_stock_mode">Set Exact Stock (=)</string>
+    <string name="in_stock">In Stock</string>
+    <string name="out_of_stock">Out of Stock</string>
+    <string name="low_stock_badge">Low Stock</string>
+    <string name="no_products_recorded">No products recorded in inventory</string>
+    <string name="action_add_product">Add Product</string>
+
+    <!-- Daily Cash Closing -->
+    <string name="daily_cash_closing_title">Daily Cash Closing Reconciler</string>
+    <string name="expected_cash_label">Expected Cash in Drawer</string>
+    <string name="counted_cash_label">Actual Counted Cash in Drawer</string>
+    <string name="cash_matched">Cash Matched Perfectly</string>
+    <string name="cash_excess">Cash Excess (Surplus)</string>
+    <string name="cash_shortage">Cash Shortage (Deficit)</string>
+    <string name="save_closing">Save Daily Cash Closing</string>
+    <string name="reconcile_notes">Closing Notes (Optional)</string>
+    <string name="difference">Difference</string>
+    <string name="closing_saved_success">Daily cash closing saved successfully!</string>
+
+    <!-- Billing extras -->
+    <string name="total_due">TOTAL DUE:</string>
+    <string name="full_paid">Full Paid (%s)</string>
+    <string name="full_udhaar">Full Udhaar (₹0)</string>
+    <string name="method_split">Split (Cash+UPI)</string>
+
+    <!-- Cash Closing & Supplier & Status Additions -->
+    <string name="cash_closing_formula_label">Expected Cash in Drawer Formula:</string>
+    <string name="opening_cash_label">Opening Cash:</string>
+    <string name="cash_sales_today_label">Cash Sales Today:</string>
+    <string name="old_udhaar_collected_label">Old Udhaar Cash Collected:</string>
+    <string name="cash_expenses_paid_label">Cash Expenses Paid:</string>
+    <string name="expected_total_cash_label">Expected Total Cash:</string>
+    <string name="direct_bank_upi_info">Direct Bank UPI (Not in Drawer): %s</string>
+    <string name="morning_opening_cash_label">Morning Opening Cash (₹)</string>
+    <string name="physical_cash_counted_label">Physical Cash Counted in Drawer (₹)</string>
+    <string name="cash_drawer_balanced">Cash Drawer Balanced! Exact match.</string>
+    <string name="cash_surplus_detail">Surplus: %s extra in drawer</string>
+    <string name="cash_shortage_detail">Shortage: %s missing from drawer</string>
+    <string name="cash_counted_expected_summary">Counted: %1$s | Expected: %2$s</string>
+    <string name="save_and_close_drawer">Save &amp; Close Drawer</string>
+    <string name="supplier_to_pay">To Pay (Udhaar)</string>
+    <string name="supplier_settled">Settled</string>
+    <string name="adjust_stock">Adjust Stock</string>
+    <string name="offline_mode_badge">Offline Mode</string>
+    <string name="reverse_entry_btn">Reverse</string>
+    <string name="record_payment">Record Payment</string>
+    <string name="close">Close</string>
+
+    <!-- Terms & Conditions / Software Disclaimer -->
+    <string name="terms_title">Terms of Service &amp; Disclaimer</string>
+    <string name="terms_subtitle">Important Operational &amp; Legal Notice</string>
+    <string name="terms_fresh_badge">First-Time Setup Agreement</string>
+    <string name="terms_review_badge">Legal Notice &amp; Terms of Use</string>
+    <string name="terms_machine_disclaimer_title">Machine &amp; Software Disclaimer</string>
+    <string name="terms_machine_disclaimer_text">Syntaxa Khata is an automated software program running on mobile hardware. Like all computer software and digital devices, unexpected glitches, operating system interruptions, hardware faults, calculation discrepancies, or storage anomalies may occur. The software is provided \"AS IS\" without warranty of any kind.</string>
+    <string name="terms_liability_title">No Liability for Business Losses</string>
+    <string name="terms_liability_text">Under no circumstances shall the creators, developers, owners, or distributors of Syntaxa Khata be held liable for any commercial losses, lost shop revenue, financial disputes with customers, bad debts, inventory loss, tax penalties, or any direct or indirect business damages arising from the use of or inability to use this application.</string>
+    <string name="terms_shopkeeper_duty_title">Shopkeeper\'s Verification Duty</string>
+    <string name="terms_shopkeeper_duty_text">The shopkeeper retains 100% responsibility to independently verify all calculations, udhaar ledgers, cash drawer totals, and customer receipts before concluding transactions or settling balances.</string>
+    <string name="terms_local_storage_title">100% Offline Local Data Storage</string>
+    <string name="terms_local_storage_text">All your records are stored solely on your local device. There are zero remote cloud servers. Maintaining regular offline backups (via Settings) to external storage is the merchant\'s sole responsibility to guard against device theft, damage, or loss.</string>
+    <string name="terms_checkbox_label">I have read, understood, and accept the Terms of Service, Machine Error Disclaimer, and Limitation of Liability. I understand that I am responsible for verifying my shop\'s accounts.</string>
+    <string name="terms_next_button">Next</string>
+    <string name="terms_understood_button">I Understand &amp; Agree</string>
+    <string name="terms_checkbox_prompt">Tick the checkbox above to accept terms and continue</string>
+    <string name="terms_menu_item_title">Terms of Service &amp; Disclaimer</string>
+    <string name="terms_menu_item_subtitle">Machine disclaimer, zero liability policy &amp; terms of use</string>
+</resources>

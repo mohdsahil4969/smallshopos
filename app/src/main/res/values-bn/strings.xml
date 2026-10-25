@@ -1,0 +1,317 @@
+<resources>
+    <string name="app_name">সিনট্যাক্সা খাতা</string>
+    <string name="tagline">দোকানদারদের অফলাইন ডিজিটাল খাতা</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">হোম</string>
+    <string name="nav_khata">খাতা</string>
+    <string name="nav_records">রেকর্ড</string>
+    <string name="nav_more">আরও</string>
+
+    <!-- Home Dashboard -->
+    <string name="today_sales">আজকের বিক্রি</string>
+    <string name="today_cash">নগদ জমা</string>
+    <string name="today_upi">UPI জমা</string>
+    <string name="today_expenses">আজকের খরচ</string>
+    <string name="outstanding_udhaar">মোট বাকি উধার</string>
+    <string name="net_cash_movement">মোট নগদ লেনদেন</string>
+    <string name="quick_actions">দ্রুত কাজ</string>
+    <string name="recent_transactions">সাম্প্রতিক লেনদেন</string>
+    <string name="view_all">সব দেখুন</string>
+    <string name="no_transactions_today">আজ কোনো লেনদেন নথিভুক্ত হয়নি</string>
+
+    <!-- Quick Actions -->
+    <string name="action_add_customer">গ্রাহক যোগ করুন</string>
+    <string name="action_add_udhaar">উধার দিন</string>
+    <string name="action_receive_payment">পেমেন্ট গ্রহণ করুন</string>
+    <string name="action_create_bill">বিল তৈরি করুন</string>
+    <string name="action_add_expense">খরচ লিখুন</string>
+    <string name="action_share_receipt">রসিদ পাঠান</string>
+
+    <!-- Customer & Khata -->
+    <string name="customers">গ্রাহক তালিকা</string>
+    <string name="search_customer">নাম বা ফোন নম্বর দিয়ে খুঁজুন</string>
+    <string name="customer_name">গ্রাহকের নাম</string>
+    <string name="phone_number">ফোন নম্বর (ঐচ্ছিক)</string>
+    <string name="notes">নোট (ঐচ্ছিক)</string>
+    <string name="customer_balance">বাকি টাকা</string>
+    <string name="no_dues">কোনো বাকি নেই</string>
+    <string name="advance_balance">অগ্রিম জমা</string>
+    <string name="udhaar_given">উধার দেওয়া হয়েছে</string>
+    <string name="payment_received">পেমেন্ট পাওয়া গেছে</string>
+    <string name="reversal">ভুল এন্ট্রি বাতিল</string>
+    <string name="reverse_transaction">লেনদেন বাতিল করুন</string>
+    <string name="reverse_confirm_title">বাতিল করার নিশ্চিতকরণ</string>
+    <string name="reverse_confirm_msg">আপনি কি নিশ্চিত যে এই লেনদেনটি বাতিল করতে চান? লেজারে একটি সংশোধিত এন্ট্রি যোগ করা হবে।</string>
+    <string name="archive_customer">আর্কাইভ করুন</string>
+    <string name="restore_customer">পুনরুদ্ধার করুন</string>
+    <string name="archived_customers">আর্কাইভ করা গ্রাহক</string>
+    <string name="customer_statement">গ্রাহক খাতা বিবরণী</string>
+
+    <!-- Financial Inputs & Common -->
+    <string name="enter_amount">টাকার পরিমাণ লিখুন</string>
+    <string name="amount_in_rupees">টাকা (₹)</string>
+    <string name="description">বিবরণ / পণ্যের নাম</string>
+    <string name="payment_method">পেমেন্টের মাধ্যম</string>
+    <string name="method_cash">নগদ (Cash)</string>
+    <string name="method_upi">UPI</string>
+    <string name="method_other">অন্যান্য</string>
+    <string name="confirm_and_save">নিশ্চিত করে সেভ করুন</string>
+    <string name="save">সেভ করুন</string>
+    <string name="cancel">বাতিল</string>
+    <string name="done">সম্পন্ন</string>
+    <string name="delete">মুছুন</string>
+    <string name="success_saved">সফলভাবে সেভ হয়েছে</string>
+    <string name="error_invalid_amount">দয়া করে ০ এর বেশি সঠিক টাকার পরিমাণ লিখুন</string>
+    <string name="error_customer_name_required">গ্রাহকের নাম আবশ্যক</string>
+    <string name="duplicate_phone_warning">এই ফোন নম্বরে একজন গ্রাহক ইতিমধ্যেই আছেন।</string>
+
+    <!-- Billing -->
+    <string name="new_bill">নতুন বিল</string>
+    <string name="quick_amount_mode">দ্রুত মোট বিল</string>
+    <string name="itemized_mode">পণ্য তালিকাভিত্তিক বিল</string>
+    <string name="select_customer">গ্রাহক নির্বাচন করুন (ঐচ্ছিক)</string>
+    <string name="walk_in_customer">নগদ গ্রাহক</string>
+    <string name="add_item">পণ্য যোগ করুন</string>
+    <string name="item_name">পণ্যের নাম</string>
+    <string name="quantity">পরিমাণ</string>
+    <string name="unit_price">দর (₹)</string>
+    <string name="line_total">মোট: ₹%s</string>
+    <string name="subtotal">উপ-মোট</string>
+    <string name="discount">ছাড় (₹)</string>
+    <string name="total_bill">মোট বিল</string>
+    <string name="amount_received_label">প্রাপ্ত টাকা</string>
+    <string name="unpaid_balance">বাকি উধার</string>
+    <string name="generate_bill">বিল তৈরি করুন</string>
+    <string name="bill_summary">বিল সারাংশ</string>
+
+    <!-- Receipts & Sharing -->
+    <string name="receipt">রসিদ</string>
+    <string name="receipt_number">রসিদ নম্বর</string>
+    <string name="share_via_whatsapp">WhatsApp-এ পাঠান</string>
+    <string name="share_pdf">PDF শেয়ার করুন</string>
+    <string name="print_receipt">রসিদ প্রিন্ট করুন</string>
+    <string name="reminder_message">উধার পরিশোধের তাগাদা</string>
+    <string name="send_reminder">তাগাদা পাঠান</string>
+    <string name="copy_text">কপি করুন</string>
+    <string name="copied_to_clipboard">কপিবোর্ডে কপি হয়েছে</string>
+    <string name="whatsapp_not_installed">WhatsApp ইনস্টল করা নেই</string>
+
+    <!-- Expenses -->
+    <string name="expenses">খরচ</string>
+    <string name="add_expense">খরচ লিখুন</string>
+    <string name="expense_category">বিভাগ</string>
+    <string name="cat_stock">পণ্য কেনা</string>
+    <string name="cat_transport">গাড়িভাড়া / পরিবহন</string>
+    <string name="cat_rent">দোকান ভাড়া</string>
+    <string name="cat_electricity">বিদ্যুৎ বিল</string>
+    <string name="cat_wages">মজুরি / বেতন</string>
+    <string name="cat_other">অন্যান্য খরচ</string>
+
+    <!-- Reports -->
+    <string name="reports">প্রতিবেদন</string>
+    <string name="today">আজ</string>
+    <string name="last_7_days">গত ৭ দিন</string>
+    <string name="this_month">এই মাস</string>
+    <string name="custom_range">তারিখ নির্বাচন করুন</string>
+    <string name="sales_summary">বিক্রির সারাংশ</string>
+    <string name="collections_summary">আদায়ের সারাংশ</string>
+    <string name="export_csv">CSV ডাউনলোড</string>
+    <string name="export_pdf">PDF রিপোর্ট ডাউনলোড</string>
+
+    <!-- Printing -->
+    <string name="bluetooth_printer">ব্লুটুথ প্রিন্টার</string>
+    <string name="connect_printer">প্রিন্টার সংযোগ করুন</string>
+    <string name="test_print">টেস্ট প্রিন্ট</string>
+    <string name="printer_status_connected">সংযুক্ত আছে</string>
+    <string name="printer_status_disconnected">সংযোগ বিচ্ছিন্ন</string>
+    <string name="printer_58mm">58 mm (ছোট প্রিন্টার)</string>
+    <string name="printer_80mm">80 mm (বড় প্রিন্টার)</string>
+    <string name="paper_width">কাগজের প্রস্থ</string>
+    <string name="printer_not_connected">প্রিন্টার সংযুক্ত নেই। ব্লুটুথ সেটিংসে জোড়া লাগান।</string>
+
+    <!-- Security & Settings -->
+    <string name="settings">সেটিংস</string>
+    <string name="shop_profile">দোকানের তথ্য</string>
+    <string name="shop_name">দোকানের নাম</string>
+    <string name="shop_address">ঠিকানা (ঐচ্ছিক)</string>
+    <string name="shop_phone">ফোন নম্বর (ঐচ্ছিক)</string>
+    <string name="upi_id">দোকানের UPI ID (QR কোডের জন্য)</string>
+    <string name="receipt_footer">রসিদের ফুটনোট বার্তা</string>
+    <string name="app_lock">অ্যাপ লক</string>
+    <string name="enable_pin">৪ ডিজিট সিকিউরিটি পিন দিন</string>
+    <string name="enable_biometrics">ফিঙ্গারপ্রিন্ট ব্যবহার করুন</string>
+    <string name="backup_restore">ব্যাকআপ ও পুনরুদ্ধার</string>
+    <string name="create_backup">এনক্রিপ্টেড ব্যাকআপ তৈরি করুন</string>
+    <string name="export_unencrypted_backup">সাধারণ JSON ব্যাকআপ নিন</string>
+    <string name="restore_backup">ব্যাকআপ থেকে পুনরুদ্ধার করুন</string>
+    <string name="backup_notice">ব্যাকআপ আপনার ফোন বা গুগল ড্রাইভে সংরক্ষিত থাকে। ক্লাউড সার্ভারের প্রয়োজন নেই।</string>
+    <string name="backup_password_label">ব্যাকআপ পাসওয়ার্ড</string>
+    <string name="backup_password_hint">পাসওয়ার্ড লিখুন (কমপক্ষে ১২ অক্ষর)</string>
+    <string name="backup_password_confirm">পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="backup_password_restore_title">ব্যাকআপ আনলক করুন</string>
+    <string name="backup_password_restore_hint">ব্যাকআপ তৈরির সময় দেওয়া পাসওয়ার্ড লিখুন</string>
+    <string name="backup_success_encrypted">সুরক্ষিত ব্যাকআপ সফলভাবে তৈরি হয়েছে</string>
+    <string name="backup_success_unencrypted">ব্যাকআপ ফাইল সেভ হয়েছে</string>
+    <string name="backup_integrity_failed">ব্যাকআপ ফাইলটি সঠিক নয়</string>
+    <string name="restore_cancelled">পুনরুদ্ধার বাতিল করা হয়েছে</string>
+    <string name="restore_failed_preserved">পুনরুদ্ধার ব্যর্থ হয়েছে; পুরনো ডেটা নিরাপদ আছে</string>
+    <string name="restore_success">ডেটা সফলভাবে পুনরুদ্ধার হয়েছে!</string>
+    <string name="confirm_restore_title">পুনরুদ্ধার নিশ্চিতকরণ</string>
+    <string name="confirm_restore_warning">সতর্কতা: পুনরুদ্ধার করলে বর্তমান ডেটা এই ব্যাকআপ ডেটা দিয়ে প্রতিস্থাপিত হবে।</string>
+    <string name="proceed_overwrite">এগিয়ে যান এবং প্রতিস্থাপন করুন</string>
+    <string name="error_credit_sale_requires_customer">উধার বিক্রির জন্য গ্রাহক নির্বাচন করা আবশ্যক।</string>
+    <string name="error_invalid_payment_amount">দয়া করে সঠিক পেমেন্টের পরিমাণ লিখুন</string>
+    <string name="error_payment_exceeds_bill">প্রাপ্ত টাকা মোট বিলের চেয়ে বেশি হতে পারে না</string>
+    <string name="today_other">অন্যান্য মাধ্যমে আদায়</string>
+    <string name="language">ভাষা / Language</string>
+    <string name="theme">থিম</string>
+    <string name="dark_mode">ডার্ক থিম</string>
+    <string name="enter_pin">সিকিউরিটি পিন দিন</string>
+    <string name="confirm_pin">পিন নিশ্চিত করুন</string>
+    <string name="pin_mismatch">পিনের মিল নেই</string>
+    <string name="pin_incorrect">ভুল পিন</string>
+    <string name="unlock_app">অ্যাপ আনলক করুন</string>
+    <string name="software_updates">সফটওয়্যার আপডেট</string>
+    <string name="app_version_label">সংস্করণ: v%1$s (বিল্ড %2$d)</string>
+    <string name="auto_check_updates">স্বয়ংক্রিয়ভাবে আপডেট পরীক্ষা করুন</string>
+    <string name="check_for_updates">আপডেট চেক করুন</string>
+    <string name="checking_updates">পরীক্ষা করা হচ্ছে...</string>
+    <string name="up_to_date_message">আপনি সর্বশেষ সংস্করণ ব্যবহার করছেন।</string>
+    <string name="one_tap_update">এক ট্যাপে আপডেট করুন</string>
+    <string name="data_safe_notice">ডেটা নিরাপত্তা: আপডেটের আগে রেকর্ডগুলির স্বয়ংক্রিয় ব্যাকআপ তৈরি হয়।</string>
+
+    <!-- User Guide -->
+    <string name="user_guide_title">ব্যবহারকারী গাইড</string>
+    <string name="user_guide_subtitle">সহজ নির্দেশিকা ও নিয়মাবলী</string>
+    <string name="user_guide_help">সাহায্য &amp; গাইড</string>
+    <string name="open_shop_manual">সম্পূর্ণ নির্দেশিকা খুলুন</string>
+    <string name="replay_walkthrough">ভূমিকা পুনরায় দেখুন</string>
+    <string name="walkthrough_step_count">ধাপ %1$d / %2$d</string>
+    <string name="walkthrough_skip">এড়িয়ে যান</string>
+    <string name="walkthrough_next">পরবর্তী</string>
+    <string name="walkthrough_back">পেছনে</string>
+    <string name="walkthrough_finish">শুরু করুন</string>
+    <string name="search_guide_placeholder">নির্দেশিকায় খুঁজুন...</string>
+    <string name="pro_tip_label">পরামর্শ:</string>
+    <string name="switch_language">ভাষা / Language</string>
+
+    <!-- Customer Ledger & Purchase History -->
+    <string name="ledger_total_purchases">মোট কেনাকাটা</string>
+    <string name="ledger_payments_received">প্রাপ্ত টাকা</string>
+    <string name="ledger_outstanding_balance">বর্তমান বাকি</string>
+    <string name="ledger_transactions_count">লেনদেন সংখ্যা</string>
+    <string name="filter_all_time">সব সময়</string>
+    <string name="filter_last_30_days">গত ৩০ দিন</string>
+    <string name="filter_last_3_months">গত ৩ মাস</string>
+    <string name="filter_last_year">গত ১ বছর</string>
+    <string name="filter_custom_range">তারিখ নির্বাচন করুন</string>
+    <string name="bill_status_paid">পরিশোধিত</string>
+    <string name="bill_status_partially_paid">আংশিক পরিশোধিত</string>
+    <string name="bill_status_credit_unpaid">উধার / বাকি</string>
+    <string name="bill_status_cancelled">বাতিলকৃত</string>
+    <string name="bill_view_full">সম্পূর্ণ বিল দেখুন</string>
+    <string name="bill_share_pdf">PDF শেয়ার করুন</string>
+    <string name="bill_print_thermal">রসিদ প্রিন্ট করুন</string>
+    <string name="bill_items_count">%1$d পণ্য</string>
+    <string name="share_via_sms">SMS পাঠান</string>
+    <string name="share_via_email">ইমেইল পাঠান</string>
+    <string name="printer_guidance_title">প্রিন্টার সংযুক্ত নেই</string>
+    <string name="printer_guidance_msg">ব্লুটুথ সেটিংসে গিয়ে 58mm বা 80mm থার্মাল প্রিন্টার জোড়া লাগিয়ে আবার প্রিন্ট চাপুন।</string>
+    <string name="printer_guidance_open_settings">ব্লুটুথ খুলুন</string>
+    <string name="custom_date_range_title">তারিখ নির্বাচন করুন</string>
+    <string name="from_date">শুরুর তারিখ (YYYY-MM-DD)</string>
+    <string name="to_date">শেষ তারিখ (YYYY-MM-DD)</string>
+    <string name="apply">প্রয়োগ করুন</string>
+    <string name="all_interactions">ইতিহাস ও ক্রয়তালিকা</string>
+    <string name="bill_details">বিলের বিবরণ</string>
+    <string name="payment_details">পেমেন্ট বিবরণ</string>
+    <string name="direct_udhaar">সরাসরি উধার</string>
+    <string name="reversal_entry">সংশোধন / বাতিল এন্ট্রি</string>
+
+    <!-- Suppliers & Wholesalers -->
+    <string name="suppliers">সরবরাহকারী / পাইকারি ব্যবসায়ী</string>
+    <string name="search_suppliers_hint">সরবরাহকারী খুঁজুন</string>
+    <string name="supplier_statement">খাতা বিবরণী</string>
+    <string name="pay_supplier_btn">টাকা দিন (নগদ/UPI)</string>
+    <string name="add_supplier_title">সরবরাহকারী যোগ করুন</string>
+    <string name="supplier_name_label">সরবরাহকারী / কোম্পানির নাম *</string>
+    <string name="notes_goods_label">পণ্যের বিবরণ</string>
+    <string name="record_purchase">ক্রয় লিখুন</string>
+    <string name="record_purchase_title">ক্রয় লিখুন: %s</string>
+    <string name="supplier_invoice_label">বিল / ইনভয়েস নম্বর</string>
+    <string name="items_desc_label">পণ্যের বিবরণ / নোট</string>
+    <string name="add_to_payable">দেনার খাতায় যোগ করুন</string>
+    <string name="pay_supplier_title">পেমেন্ট করুন: %s</string>
+    <string name="total_payable">মোট দেনার পরিমাণ</string>
+    <string name="purchases">ক্রয়</string>
+    <string name="payments">পেমেন্ট</string>
+    <string name="no_suppliers_recorded">কোনো সরবরাহকারী নথিভুক্ত নেই</string>
+    <string name="action_add_supplier">সরবরাহকারী যোগ করুন</string>
+
+    <!-- Stock & Inventory -->
+    <string name="stock_inventory">মজুদ (স্টক)</string>
+    <string name="search_products_hint">পণ্য বা বারকোড খুঁজুন</string>
+    <string name="all_products_count">মোট পণ্য (%1$d)</string>
+    <string name="low_stock_count">কম স্টকের সতর্কতা (%1$d)</string>
+    <string name="add_product_title">পণ্য যোগ করুন</string>
+    <string name="edit_product_title">পণ্য সংশোধন করুন</string>
+    <string name="adjust_stock_title">স্টক পরিবর্তন করুন: %s</string>
+    <string name="product_name_label">পণ্যের নাম *</string>
+    <string name="unit_label">একক (পিস/কেজি/লিটার/প্যাকেট)</string>
+    <string name="barcode_label">বারকোড / কোড</string>
+    <string name="selling_price_label">বিক্রয় মূল্য (₹)</string>
+    <string name="cost_price_label">ক্রয় মূল্য (₹)</string>
+    <string name="initial_stock_label">প্রারম্ভিক স্টক</string>
+    <string name="low_stock_threshold_label">ন্যূনতম স্টক সতর্কতার সীমা</string>
+    <string name="stock_quantity_label">পরিমাণ (%s)</string>
+    <string name="add_stock_mode">স্টক বাড়ান (+)</string>
+    <string name="remove_stock_mode">স্টক কমান (-)</string>
+    <string name="set_exact_stock_mode">নির্দিষ্ট স্টক নির্ধারণ করুন (=)</string>
+    <string name="in_stock">স্টক আছে</string>
+    <string name="out_of_stock">স্টক শেষ</string>
+    <string name="low_stock_badge">কম স্টক</string>
+    <string name="no_products_recorded">কোনো পণ্য নথিভুক্ত নেই</string>
+    <string name="action_add_product">পণ্য যোগ করুন</string>
+
+    <!-- Daily Cash Closing -->
+    <string name="daily_cash_closing_title">দৈনিক নগদ মেলাবার খাতা (ক্যাশ ক্লোজিং)</string>
+    <string name="expected_cash_label">বাক্সে প্রত্যাশিত নগদ</string>
+    <string name="counted_cash_label">প্রকৃত গণনা করা নগদ</string>
+    <string name="cash_matched">নগদ টাকার হিসাব পুরোপুরি মিলেছে</string>
+    <string name="cash_excess">অতিরিক্ত নগদ (উদ্বৃত্ত)</string>
+    <string name="cash_shortage">নগদ ঘাটতি</string>
+    <string name="save_closing">দৈনিক ক্লোজিং সেভ করুন</string>
+    <string name="reconcile_notes">নোট (ঐচ্ছिक)</string>
+    <string name="difference">পার্থক্য</string>
+    <string name="closing_saved_success">দৈনিক নগদ ক্লোজিং সফলভাবে সেভ হয়েছে!</string>
+
+    <!-- Billing extras -->
+    <string name="total_due">মোট প্রদেয়:</string>
+    <string name="full_paid">সম্পূর্ণ পরিশোধ (%s)</string>
+    <string name="full_udhaar">সম্পূর্ণ উধার (₹0)</string>
+    <string name="method_split">ভাগ করে (নগদ+UPI)</string>
+
+    <!-- Cash Closing & Supplier & Status Additions -->
+    <string name="cash_closing_formula_label">ড্রয়ারে প্রত্যাশিত নগদ টাকার সূত্র:</string>
+    <string name="opening_cash_label">শুরুর নগদ টাকা:</string>
+    <string name="cash_sales_today_label">আজকের নগদ বিক্রি:</string>
+    <string name="old_udhaar_collected_label">পুরনো উধার নগদ আদায়:</string>
+    <string name="cash_expenses_paid_label">নগদ খরচ:</string>
+    <string name="expected_total_cash_label">প্রত্যাশিত মোট নগদ টাকা:</string>
+    <string name="direct_bank_upi_info">সরাসরি ব্যাংকে UPI (ড্রয়ারে নেই): %s</string>
+    <string name="morning_opening_cash_label">সকালের শুরুর নগদ (₹)</string>
+    <string name="physical_cash_counted_label">ড্রয়ারে গোনা আসল নগদ টাকা (₹)</string>
+    <string name="cash_drawer_balanced">ড্রয়ারের হিসাব নিখুঁত মিলেছে!</string>
+    <string name="cash_surplus_detail">উদ্বৃত্ত: ড্রয়ারে %s বেশি আছে</string>
+    <string name="cash_shortage_detail">ঘাটতি: ড্রয়ার থেকে %s কম আছে</string>
+    <string name="cash_counted_expected_summary">গোনা হয়েছে: %1$s | হওয়া উচিত: %2$s</string>
+    <string name="save_and_close_drawer">সেভ করুন ও ড্রয়ার বন্ধ করুন</string>
+    <string name="supplier_to_pay">পরিশোধ বাকি (উধার)</string>
+    <string name="supplier_settled">সম্পূর্ণ পরিশোধিত</string>
+    <string name="adjust_stock">স্টক সমন্বয় করুন</string>
+    <string name="offline_mode_badge">অফলাইন মোড</string>
+    <string name="reverse_entry_btn">রিভার্স করুন</string>
+    <string name="record_payment">পেমেন্ট রেকর্ড করুন</string>
+    <string name="close">বন্ধ করুন</string>
+</resources>
