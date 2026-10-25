@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.2",
-  "versionCode": 3,
+  "latestVersion": "1.0.3",
+  "versionCode": 4,
   "minimumSupportedVersion": "1.0",
   "releaseDate": 1730000000000,
-  "releaseNotes": "• 10 Indian Languages Added (Hindi, Telugu, Kannada, Malayalam, Punjabi, Tamil, Marathi, Gujarati, Bengali, English)\n• Dynamic Instant In-App Language Switching\n• Daily Cash Closing Reconciler Floating-Point Math Fixed\n• 100% UI String Localization across all screens\n• Optimized 2.89 MB Compact Production Build",
+  "releaseNotes": "• Fixed WhatsApp PDF Receipt Sharing (FLAG_ACTIVITY_NEW_TASK & WhatsApp Business support)\n• Fixed 'More' Navigation Button Crash on Android 12+\n• Redesigned UI Component Layouts, Balanced 2x3 Action Grid & Safe Button Sizing\n• Fixed Component & Chip Overlays with FlowRow on Small Screens\n• 10 Indian Regional Languages with Zero Text Clipping\n• Production Release v1.0.3",
   "android": {
-    "url": "https://raw.githubusercontent.com/mohdsahil4969/smallshopos/main/apk/SyntaxaKhata-v1.0.2-release.apk",
-    "sha256": "bf25cf8fff89af4476f033bf5d06b32879cba7801803fadc0dbd6d323b4481d0",
-    "sizeBytes": 3034187
+    "url": "https://raw.githubusercontent.com/mohdsahil4969/smallshopos/main/apk/SyntaxaKhata-v1.0.3-release.apk",
+    "sha256": "d027ff0b2f3a06e25ea0f2578cbfc52948b0db2970875799d8326a2eecee1487",
+    "sizeBytes": 3942360
   }
 }
