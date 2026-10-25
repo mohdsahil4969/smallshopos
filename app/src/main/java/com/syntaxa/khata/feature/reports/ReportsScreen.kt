@@ -175,8 +175,8 @@ fun ReportsScreen(
                             showCashClosingDialog = true
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
-                    shape = RoundedCornerShape(8.dp)
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.AccountBalanceWallet, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
@@ -207,8 +207,8 @@ fun ReportsScreen(
                             }
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
-                    shape = RoundedCornerShape(8.dp)
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.FileDownload, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
@@ -250,15 +250,19 @@ private fun ReportMetricRow(
     ) {
         Text(
             text = label,
+            modifier = Modifier.weight(1f).padding(end = 8.dp),
             style = if (isPrimary) MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                     else MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
         )
         Text(
             text = value,
             style = if (isPrimary) MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     else MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-            color = valueColor
+            color = valueColor,
+            maxLines = 1
         )
     }
 }

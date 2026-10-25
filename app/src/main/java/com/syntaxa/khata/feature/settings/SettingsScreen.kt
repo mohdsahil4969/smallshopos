@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.syntaxa.khata.R
 import com.syntaxa.khata.core.model.DateTimeUtils
@@ -316,33 +317,48 @@ fun SettingsScreen(
 
                 Button(
                     onClick = onOpenUserGuide,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.open_shop_manual))
+                    Text(
+                        text = stringResource(R.string.open_shop_manual),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedButton(
                     onClick = onReplayWalkthrough,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.PlayArrow, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.replay_walkthrough))
+                    Text(
+                        text = stringResource(R.string.replay_walkthrough),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedButton(
                     onClick = onOpenTerms,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.Gavel, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.terms_menu_item_title))
+                    Text(
+                        text = stringResource(R.string.terms_menu_item_title),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         }
@@ -417,9 +433,14 @@ fun SettingsScreen(
                             }
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
-                    Text(stringResource(R.string.save))
+                    Text(
+                        text = stringResource(R.string.save),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         }
@@ -535,11 +556,16 @@ fun SettingsScreen(
                             }
                         },
                         enabled = !isTestingPrint && selectedPrinter != null,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        shape = RoundedCornerShape(10.dp)
                     ) {
                         Icon(Icons.Default.Print, contentDescription = null)
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text(stringResource(R.string.test_print))
+                        Text(
+                            text = stringResource(R.string.test_print),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                         if (subscriptionManager?.canUse(FeatureEntitlement.PDF_THERMAL_PRINTING) == false) {
                             Spacer(modifier = Modifier.width(6.dp))
                             Icon(
@@ -633,11 +659,16 @@ fun SettingsScreen(
                         backupPasswordConfirmInput = ""
                         showBackupPasswordDialog = true
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.Security, contentDescription = null)
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text(stringResource(R.string.create_backup))
+                    Text(
+                        text = stringResource(R.string.create_backup),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -653,11 +684,16 @@ fun SettingsScreen(
                             Toast.makeText(context, "Cannot open file picker: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.CloudUpload, contentDescription = null)
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text(stringResource(R.string.export_unencrypted_backup))
+                    Text(
+                        text = stringResource(R.string.export_unencrypted_backup),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -671,11 +707,16 @@ fun SettingsScreen(
                             Toast.makeText(context, "Cannot open file picker: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.Restore, contentDescription = null)
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text(stringResource(R.string.restore_backup))
+                    Text(
+                        text = stringResource(R.string.restore_backup),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         }
@@ -745,7 +786,8 @@ fun SettingsScreen(
                     onClick = {
                         updateViewModel?.checkForUpdate(isManual = true)
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    shape = RoundedCornerShape(10.dp),
                     enabled = updateState.status != UpdateStatus.CHECKING && updateState.status != UpdateStatus.DOWNLOADING
                 ) {
                     if (updateState.status == UpdateStatus.CHECKING) {
@@ -755,11 +797,19 @@ fun SettingsScreen(
                             strokeWidth = 2.dp
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(R.string.checking_updates))
+                        Text(
+                            text = stringResource(R.string.checking_updates),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     } else {
                         Icon(Icons.Default.SystemUpdate, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(R.string.check_for_updates))
+                        Text(
+                            text = stringResource(R.string.check_for_updates),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
 
@@ -814,11 +864,16 @@ fun SettingsScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedButton(
                             onClick = { showCrashDialog = true },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            shape = RoundedCornerShape(10.dp)
                         ) {
                             Icon(Icons.Default.BugReport, contentDescription = null)
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("View Error Details")
+                            Text(
+                                text = "View Error Details",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     }
                 }
@@ -864,18 +919,32 @@ fun SettingsScreen(
                         } else {
                             Toast.makeText(context, "PIN must be 4 digits and match", Toast.LENGTH_SHORT).show()
                         }
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.save))
+                    Text(
+                        text = stringResource(R.string.save),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = {
-                    showPinDialog = false
-                    pinInput = ""
-                    pinConfirmInput = ""
-                }) {
-                    Text(stringResource(R.string.cancel))
+                TextButton(
+                    onClick = {
+                        showPinDialog = false
+                        pinInput = ""
+                        pinConfirmInput = ""
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )
@@ -926,14 +995,28 @@ fun SettingsScreen(
                         } else {
                             Toast.makeText(context, "Password must be at least 12 characters and match", Toast.LENGTH_SHORT).show()
                         }
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.confirm_and_save))
+                    Text(
+                        text = stringResource(R.string.confirm_and_save),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showBackupPasswordDialog = false }) {
-                    Text(stringResource(R.string.cancel))
+                TextButton(
+                    onClick = { showBackupPasswordDialog = false },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )
@@ -987,18 +1070,32 @@ fun SettingsScreen(
                                 }
                             }
                         }
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Unlock & Validate")
+                    Text(
+                        text = "Unlock & Validate",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = {
-                    showRestorePasswordDialog = false
-                    pendingRestoreUri = null
-                    Toast.makeText(context, context.getString(R.string.restore_cancelled), Toast.LENGTH_SHORT).show()
-                }) {
-                    Text(stringResource(R.string.cancel))
+                TextButton(
+                    onClick = {
+                        showRestorePasswordDialog = false
+                        pendingRestoreUri = null
+                        Toast.makeText(context, context.getString(R.string.restore_cancelled), Toast.LENGTH_SHORT).show()
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )
@@ -1050,19 +1147,33 @@ fun SettingsScreen(
                             }
                         }
                     },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Text(stringResource(R.string.proceed_overwrite))
+                    Text(
+                        text = stringResource(R.string.proceed_overwrite),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = {
-                    pendingRestoreValidation = null
-                    pendingRestoreData = null
-                    pendingRestoreUri = null
-                    Toast.makeText(context, context.getString(R.string.restore_cancelled), Toast.LENGTH_SHORT).show()
-                }) {
-                    Text(stringResource(R.string.cancel))
+                TextButton(
+                    onClick = {
+                        pendingRestoreValidation = null
+                        pendingRestoreData = null
+                        pendingRestoreUri = null
+                        Toast.makeText(context, context.getString(R.string.restore_cancelled), Toast.LENGTH_SHORT).show()
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )
@@ -1084,21 +1195,37 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                Button(onClick = {
-                    try {
-                        val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
-                        val clip = android.content.ClipData.newPlainText("Syntaxa Crash Log", crashLogContent)
-                        clipboard?.setPrimaryClip(clip)
-                        Toast.makeText(context, "Log copied to clipboard", Toast.LENGTH_SHORT).show()
-                    } catch (_: Throwable) {}
-                    showCrashDialog = false
-                }) {
-                    Text("Copy Log")
+                Button(
+                    onClick = {
+                        try {
+                            val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
+                            val clip = android.content.ClipData.newPlainText("Syntaxa Crash Log", crashLogContent)
+                            clipboard?.setPrimaryClip(clip)
+                            Toast.makeText(context, "Log copied to clipboard", Toast.LENGTH_SHORT).show()
+                        } catch (_: Throwable) {}
+                        showCrashDialog = false
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = "Copy Log",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showCrashDialog = false }) {
-                    Text("Close")
+                TextButton(
+                    onClick = { showCrashDialog = false },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = "Close",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )

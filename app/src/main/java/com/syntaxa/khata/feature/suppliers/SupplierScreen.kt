@@ -227,9 +227,9 @@ private fun SupplierItemCard(
                 onClick = onViewStatement,
                 modifier = Modifier
                     .weight(1f)
-                    .defaultMinSize(minHeight = 36.dp),
+                    .height(38.dp),
                 shape = RoundedCornerShape(8.dp),
-                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 4.dp)
+                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
             ) {
                 Icon(Icons.Default.Receipt, contentDescription = null, modifier = Modifier.size(14.dp))
                 Spacer(modifier = Modifier.width(3.dp))
@@ -245,10 +245,10 @@ private fun SupplierItemCard(
                 onClick = onRecordPurchase,
                 modifier = Modifier
                     .weight(1f)
-                    .defaultMinSize(minHeight = 36.dp),
+                    .height(38.dp),
                 colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                 shape = RoundedCornerShape(8.dp),
-                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 4.dp)
+                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
             ) {
                 Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.onErrorContainer)
                 Spacer(modifier = Modifier.width(2.dp))
@@ -266,10 +266,10 @@ private fun SupplierItemCard(
                 onClick = onRecordPayment,
                 modifier = Modifier
                     .weight(1f)
-                    .defaultMinSize(minHeight = 36.dp),
+                    .height(38.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape = RoundedCornerShape(8.dp),
-                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 4.dp)
+                contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp)
             ) {
                 Icon(Icons.Default.Payment, contentDescription = null, modifier = Modifier.size(14.dp))
                 Spacer(modifier = Modifier.width(2.dp))
@@ -324,13 +324,21 @@ private fun AddSupplierDialog(
         confirmButton = {
             Button(
                 onClick = { if (name.isNotBlank()) onSave(name, phone, notes) },
-                enabled = name.isNotBlank()
+                enabled = name.isNotBlank(),
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.save))
+                Text(stringResource(R.string.save), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     )
 }
@@ -377,13 +385,21 @@ private fun RecordSupplierPurchaseDialog(
                     val paise = try { CurrencyFormatter.parseInputToPaise(amountInput) } catch (_: Exception) { 0L }
                     if (paise > 0) onConfirm(paise, invoiceNo, notes)
                 },
-                enabled = amountInput.isNotBlank()
+                enabled = amountInput.isNotBlank(),
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.add_to_payable))
+                Text(stringResource(R.string.add_to_payable), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     )
 }
@@ -439,13 +455,21 @@ private fun RecordSupplierPaymentDialog(
                     val paise = try { CurrencyFormatter.parseInputToPaise(amountInput) } catch (_: Exception) { 0L }
                     if (paise > 0) onConfirm(paise, paymentMode, notes)
                 },
-                enabled = amountInput.isNotBlank()
+                enabled = amountInput.isNotBlank(),
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.record_payment))
+                Text(stringResource(R.string.record_payment), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     )
 }
@@ -515,7 +539,13 @@ private fun SupplierStatementDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.close)) }
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(stringResource(R.string.close), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     )
 }

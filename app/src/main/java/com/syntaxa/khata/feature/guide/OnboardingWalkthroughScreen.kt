@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.syntaxa.khata.core.ui.components.KiranaCard
@@ -466,11 +467,16 @@ fun OnboardingWalkthroughScreen(
                     if (currentStepIndex > 0) {
                         OutlinedButton(
                             onClick = { currentStepIndex-- },
+                            modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(if (isHindi) "पीछे" else "Back")
+                            Text(
+                                text = if (isHindi) "पीछे" else "Back",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     } else {
                         Spacer(modifier = Modifier.width(80.dp))
@@ -500,22 +506,32 @@ fun OnboardingWalkthroughScreen(
                     if (currentStepIndex < totalSteps - 1) {
                         Button(
                             onClick = { currentStepIndex++ },
+                            modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                             shape = RoundedCornerShape(8.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = KiranaGreenPrimary)
                         ) {
-                            Text(if (isHindi) "आगे" else "Next")
+                            Text(
+                                text = if (isHindi) "आगे" else "Next",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                             Spacer(modifier = Modifier.width(4.dp))
                             Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null, modifier = Modifier.size(16.dp))
                         }
                     } else {
                         Button(
                             onClick = onComplete,
+                            modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                             shape = RoundedCornerShape(8.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = KiranaCreditGreen)
                         ) {
                             Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(if (isHindi) "दुकान शुरू करें" else "Get Started")
+                            Text(
+                                text = if (isHindi) "दुकान शुरू करें" else "Get Started",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     }
                 }

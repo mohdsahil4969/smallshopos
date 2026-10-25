@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.syntaxa.khata.R
@@ -89,12 +90,12 @@ fun CustomerListScreen(
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
-                    text = { Text("${stringResource(R.string.customers)} (${activeCustomers.size})") }
+                    text = { Text("${stringResource(R.string.customers)} (${activeCustomers.size})", maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 )
                 Tab(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
-                    text = { Text("${stringResource(R.string.archived_customers)} (${archivedCustomers.size})") }
+                    text = { Text("${stringResource(R.string.archived_customers)} (${archivedCustomers.size})", maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 )
             }
 
@@ -169,8 +170,12 @@ fun CustomerListScreen(
                         )
                         if (selectedTab == 0 && searchQuery.isBlank() && activeFilter == DueDateFilter.ALL) {
                             Spacer(modifier = Modifier.height(16.dp))
-                            Button(onClick = onOpenAddCustomerDialog) {
-                                Text(stringResource(R.string.action_add_customer))
+                            Button(
+                                onClick = onOpenAddCustomerDialog,
+                                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Text(stringResource(R.string.action_add_customer), maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }
                         }
                     }
@@ -250,7 +255,7 @@ fun CustomerCardItem(
                         text = customer.name,
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
                         maxLines = 1,
-                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis
                     )
                     if (customer.phone.isNotBlank()) {
                         Text(
@@ -258,7 +263,7 @@ fun CustomerCardItem(
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 1,
-                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
 

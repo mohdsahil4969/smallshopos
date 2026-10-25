@@ -46,9 +46,12 @@ class SubscriptionManager(
         private const val KEY_SERVER_SIGNATURE = "sub_server_signature"
         private const val KEY_LICENSE_ID = "sub_license_id"
         private const val OFFLINE_SALT = "SYNTAXA_OFFLINE_PRO_SALT_2026"
+        private const val OFFLINE_YEAR_SALT = "SYNTAXA_OFFLINE_PRO_YEAR_2026"
+        val MASTER_LIFETIME_CODES = setOf("OWNER2026", "OWNERPRO", "LIFETIME")
+        val MASTER_YEAR_CODES = setOf("SYNTAXA365", "VIP365", "PRO1YEAR")
 
         const val DEFAULT_WEBHOOK_URL =
-            "https://script.google.com/macros/s/AKfycbxhzYbn2KLc9QbNLrWsTgEW8pxl-efG300ivTZ0vCXSNn_ketAJHvqbBwVs-fgZ5qwCDA/exec"
+            "https://script.google.com/macros/s/AKfycbyHdJVvXx4o6Afvqrakm4GT9frKcnJjcIlRvAKKJ8Dhwjzi0mAzvi1GB4LbwJLiLHsK/exec"
     }
 
     @SuppressLint("HardwareIds")
@@ -130,7 +133,7 @@ class SubscriptionManager(
     /**
      * Activates or extends PRO subscription by given number of days.
      */
-    fun activatePro(days: Int = PRO_DURATION_DAYS, paymentRef: String) {
+    fun activatePro(days: Int = PRO_DURATION_DAYS, paymentRef: String = "MANUAL_ACTIVATION") {
         val now = System.currentTimeMillis()
         val currentExpiry = prefs.getLong(KEY_EXPIRY_EPOCH, 0L)
         val baseTime = if (currentExpiry > now) currentExpiry else now
@@ -346,18 +349,55 @@ class SubscriptionManager(
     }
 
     /**
-     * Verifies an offline 6-digit license code linked to this device ID.
+     * Verifies an offline license code (Owner Lifetime, VIP 1-Year, Device-specific, or Cancel).
      */
     fun verifyOfflineCode(code: String): Boolean {
         val cleanCode = code.trim().uppercase()
-        if (cleanCode.length != 6) return false
+        if (cleanCode.length < 5) return false
 
-        val expectedCode = generateOfflineCodeForDevice(hardwareDeviceId)
-        if (cleanCode == expectedCode) {
+        // Cancellation / Revoke Codes
+        if (cleanCode == "CANCEL" || cleanCode == "RESET" || cleanCode == "REVOKE") {
+            resetToFree()
+            return true
+        }
+
+        // 0. Owner Lifetime Master Codes (10 Years / 3650 days)
+        if (cleanCode in MASTER_LIFETIME_CODES) {
+            activatePro(days = 3650, paymentRef = "OWNER_LIFETIME:$cleanCode")
+            return true
+        }
+
+        // 1. VIP 1-Year Master Codes (365 days)
+        if (cleanCode in MASTER_YEAR_CODES) {
+            activatePro(days = 365, paymentRef = "MASTER_VIP_1YEAR:$cleanCode")
+            return true
+        }
+
+        // 2. Device-specific 1-Year Code (365 days)
+        val expectedYearCode = generateOfflineYearlyCodeForDevice(hardwareDeviceId)
+        if (cleanCode == expectedYearCode) {
+            activatePro(days = 365, paymentRef = "OFFLINE_1YEAR:$cleanCode")
+            return true
+        }
+
+        // 3. Device-specific 30-Day Monthly Code
+        val expectedMonthlyCode = generateOfflineCodeForDevice(hardwareDeviceId)
+        if (cleanCode == expectedMonthlyCode) {
             activatePro(days = PRO_DURATION_DAYS, paymentRef = "OFFLINE_KEY:$cleanCode")
             return true
         }
         return false
+    }
+
+    /**
+     * Generates expected 6-character 1-Year (365 Days) offline license code for a given device ID.
+     */
+    fun generateOfflineYearlyCodeForDevice(devId: String): String {
+        val input = "$devId:$OFFLINE_YEAR_SALT"
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(input.toByteArray())
+        val hex = digest.joinToString("") { "%02X".format(it) }
+        return hex.take(6).uppercase()
     }
 
     /**
@@ -385,6 +425,8 @@ class SubscriptionManager(
             .putString(KEY_TIER, SubscriptionTier.FREE.name)
             .putLong(KEY_EXPIRY_EPOCH, 0L)
             .remove(KEY_PAYMENT_REF)
+            .remove(KEY_SERVER_SIGNATURE)
+            .remove(KEY_LICENSE_ID)
             .apply()
         refresh()
     }

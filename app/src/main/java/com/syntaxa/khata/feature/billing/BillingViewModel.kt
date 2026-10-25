@@ -8,6 +8,7 @@ import com.syntaxa.khata.KhataAppContainer
 import com.syntaxa.khata.core.model.DateTimeUtils
 import com.syntaxa.khata.data.local.entity.BillConstants
 import com.syntaxa.khata.data.local.entity.BillItemEntity
+import com.syntaxa.khata.data.local.entity.ProductEntity
 import com.syntaxa.khata.data.local.entity.ShopProfileEntity
 import com.syntaxa.khata.data.local.entity.TransactionConstants
 import com.syntaxa.khata.domain.model.BillWithItems
@@ -29,12 +30,37 @@ class BillingViewModel(private val container: KhataAppContainer) : ViewModel() {
         .observeActiveCustomers()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val activeProducts: StateFlow<List<ProductEntity>> = container.inventoryRepository
+        .observeActiveProducts()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     val recentBills: StateFlow<List<BillWithItems>> = container.billingRepository
         .observeRecentBills(20)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _lastGeneratedBill = MutableStateFlow<BillWithItems?>(null)
     val lastGeneratedBill: StateFlow<BillWithItems?> = _lastGeneratedBill.asStateFlow()
+
+    fun createQuickProduct(
+        name: String,
+        sellingPricePaise: Long = 0L,
+        unit: String = "pcs",
+        onCreated: (ProductEntity) -> Unit = {}
+    ) {
+        viewModelScope.launch {
+            try {
+                if (name.isBlank()) return@launch
+                val id = container.inventoryRepository.addProduct(
+                    name = name.trim(),
+                    unit = unit.trim().ifBlank { "pcs" },
+                    sellingPricePaise = maxOf(0L, sellingPricePaise)
+                )
+                val newProduct = container.inventoryRepository.getProductById(id)
+                newProduct?.let { onCreated(it) }
+            } catch (_: Exception) {
+            }
+        }
+    }
 
     fun createBill(
         customerId: Long?,

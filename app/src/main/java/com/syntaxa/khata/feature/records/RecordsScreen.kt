@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.syntaxa.khata.R
 import com.syntaxa.khata.feature.billing.BillingScreen
@@ -47,31 +48,31 @@ fun RecordsScreen(
             Tab(
                 selected = selectedTab == 0,
                 onClick = { selectedTab = 0 },
-                text = { Text(stringResource(R.string.action_create_bill)) },
+                text = { Text(stringResource(R.string.action_create_bill), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 icon = { Icon(Icons.AutoMirrored.Filled.ReceiptLong, contentDescription = null) }
             )
             Tab(
                 selected = selectedTab == 1,
                 onClick = { selectedTab = 1 },
-                text = { Text(stringResource(R.string.expenses)) },
+                text = { Text(stringResource(R.string.expenses), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 icon = { Icon(Icons.Default.MoneyOff, contentDescription = null) }
             )
             Tab(
                 selected = selectedTab == 2,
                 onClick = { selectedTab = 2 },
-                text = { Text(stringResource(R.string.stock_inventory)) },
+                text = { Text(stringResource(R.string.stock_inventory), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 icon = { Icon(Icons.Default.Inventory2, contentDescription = null) }
             )
             Tab(
                 selected = selectedTab == 3,
                 onClick = { selectedTab = 3 },
-                text = { Text(stringResource(R.string.suppliers)) },
+                text = { Text(stringResource(R.string.suppliers), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 icon = { Icon(Icons.Default.LocalShipping, contentDescription = null) }
             )
             Tab(
                 selected = selectedTab == 4,
                 onClick = { selectedTab = 4 },
-                text = { Text(stringResource(R.string.reports)) },
+                text = { Text(stringResource(R.string.reports), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 icon = { Icon(Icons.Default.BarChart, contentDescription = null) }
             )
         }

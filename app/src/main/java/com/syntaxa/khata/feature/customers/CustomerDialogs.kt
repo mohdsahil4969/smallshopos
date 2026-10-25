@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.syntaxa.khata.R
 import com.syntaxa.khata.core.model.CurrencyFormatter
@@ -104,14 +105,28 @@ fun AddCustomerDialog(
                     } else {
                         onSave(name.trim(), phone.trim(), notes.trim())
                     }
-                }
+                },
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.save))
+                Text(
+                    text = stringResource(R.string.save),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     )
@@ -200,14 +215,28 @@ fun EditCustomerDialog(
                     } else {
                         onSave(name.trim(), phone.trim(), notes.trim())
                     }
-                }
+                },
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.save))
+                Text(
+                    text = stringResource(R.string.save),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     )
@@ -286,15 +315,30 @@ fun AddUdhaarDialog(
                         onSave(targetCustomer.id, paise, description.trim())
                     }
                 },
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = KiranaDebitRed),
                 enabled = !isSubmitting
             ) {
-                Text(stringResource(R.string.confirm_and_save))
+                Text(
+                    text = stringResource(R.string.confirm_and_save),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss, enabled = !isSubmitting) {
-                Text(stringResource(R.string.cancel))
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp),
+                enabled = !isSubmitting
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     )
@@ -404,15 +448,30 @@ fun ReceivePaymentDialog(
                         onSave(targetCustomer.id, paise, paymentMethod, description.trim())
                     }
                 },
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = KiranaCreditGreen),
                 enabled = !isSubmitting
             ) {
-                Text(stringResource(R.string.confirm_and_save))
+                Text(
+                    text = stringResource(R.string.confirm_and_save),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss, enabled = !isSubmitting) {
-                Text(stringResource(R.string.cancel))
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp),
+                enabled = !isSubmitting
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     )

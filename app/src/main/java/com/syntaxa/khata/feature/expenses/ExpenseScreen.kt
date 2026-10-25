@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.syntaxa.khata.R
 import com.syntaxa.khata.core.model.CurrencyFormatter
@@ -159,9 +160,14 @@ fun ExpenseScreen(
                         }
                     },
                     modifier = Modifier.fillMaxWidth().height(48.dp),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(10.dp)
                 ) {
-                    Text(stringResource(R.string.save), fontWeight = FontWeight.Bold)
+                    Text(
+                        text = stringResource(R.string.save),
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         }
@@ -197,15 +203,27 @@ fun ExpenseScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column {
-                            Text(ex.category, fontWeight = FontWeight.SemiBold)
+                        Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                            Text(
+                                text = ex.category,
+                                fontWeight = FontWeight.SemiBold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                             if (ex.description.isNotBlank()) {
-                                Text(ex.description, style = MaterialTheme.typography.bodySmall)
+                                Text(
+                                    text = ex.description,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
                             }
                             Text(
-                                "${DateTimeUtils.formatDateTime(ex.occurredAt)} • ${ex.paymentMethod}",
+                                text = "${DateTimeUtils.formatDateTime(ex.occurredAt)} • ${ex.paymentMethod}",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
 

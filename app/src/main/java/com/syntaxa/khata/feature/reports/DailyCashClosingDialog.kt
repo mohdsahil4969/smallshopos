@@ -272,6 +272,8 @@ fun DailyCashClosingDialog(
                         }
                     }
                 },
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp),
                 enabled = countedInput.isNotBlank() && !isSaving
             ) {
                 if (isSaving) {
@@ -287,8 +289,16 @@ fun DailyCashClosingDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                )
             }
         }
     )

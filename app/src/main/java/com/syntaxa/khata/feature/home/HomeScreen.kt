@@ -1,5 +1,6 @@
 package com.syntaxa.khata.feature.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.syntaxa.khata.R
@@ -38,6 +40,7 @@ import com.syntaxa.khata.feature.subscription.SubscriptionManager
 import com.syntaxa.khata.feature.subscription.SubscriptionStatus
 import com.syntaxa.khata.feature.subscription.SubscriptionTier
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
@@ -90,13 +93,42 @@ fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
-                        Text(
-                            text = shopProfile?.shopName?.takeIf { it.isNotBlank() } ?: stringResource(R.string.app_name),
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = KiranaGreenPrimary
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = shopProfile?.shopName?.takeIf { it.isNotBlank() } ?: stringResource(R.string.app_name),
+                                style = MaterialTheme.typography.titleLarge.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = KiranaGreenPrimary
+                                )
                             )
-                        )
+                            if (subStatus.isPro) {
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Surface(
+                                    color = Color(0xFFFEF3C7),
+                                    shape = RoundedCornerShape(6.dp),
+                                    border = BorderStroke(1.dp, Color(0xFFF59E0B))
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.WorkspacePremium,
+                                            contentDescription = "PRO",
+                                            tint = Color(0xFFB45309),
+                                            modifier = Modifier.size(12.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(2.dp))
+                                        Text(
+                                            text = "PRO",
+                                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.ExtraBold),
+                                            color = Color(0xFFB45309),
+                                            fontSize = 10.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = DateTimeUtils.formatDate(System.currentTimeMillis()),
@@ -122,6 +154,7 @@ fun HomeScreen(
                         Surface(
                             color = if (subStatus.isPro) Color(0xFFFEF3C7) else MaterialTheme.colorScheme.surfaceVariant,
                             shape = CircleShape,
+                            border = if (subStatus.isPro) BorderStroke(1.dp, Color(0xFFF59E0B)) else null,
                             modifier = Modifier.clickable { onNavigateToPaywall() }
                         ) {
                             Row(
@@ -136,7 +169,7 @@ fun HomeScreen(
                                 )
                                 Spacer(modifier = Modifier.width(3.dp))
                                 Text(
-                                    text = if (subStatus.isPro) "PRO" else "₹49",
+                                    text = if (subStatus.isPro) "PRO ACTIVE" else "₹49",
                                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                                     color = if (subStatus.isPro) Color(0xFFB45309) else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -157,7 +190,69 @@ fun HomeScreen(
             }
         }
 
-        // 2. Primary KPI: Total Sales & Market Udhaar Owed
+        // PRO Plan Ribbon (Visible when user is on PRO)
+        if (subStatus.isPro) {
+            item {
+                Surface(
+                    shape = RoundedCornerShape(10.dp),
+                    color = Color(0xFF0F3E1E),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onNavigateToPaywall() }
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Default.WorkspacePremium,
+                                contentDescription = null,
+                                tint = Color(0xFFFDE68A),
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Column {
+                                Text(
+                                    text = "Syntaxa PRO Plan Active",
+                                    style = MaterialTheme.typography.labelMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFFFDE68A)
+                                    )
+                                )
+                                Text(
+                                    text = "${subStatus.daysRemaining} days remaining • All features unlocked",
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        fontSize = 11.sp,
+                                        color = Color(0xFFD1FAE5)
+                                    )
+                                )
+                            }
+                        }
+                        Surface(
+                            shape = CircleShape,
+                            color = Color(0xFF16A34A).copy(alpha = 0.3f),
+                            border = BorderStroke(1.dp, Color(0xFF4ADE80))
+                        ) {
+                            Text(
+                                text = "PRO MEMBER",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 9.sp,
+                                    color = Color(0xFF86EFAC)
+                                ),
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        // 2. Primary KPI: Total Sales & Market Udhaar Owed (Horizontal Single-Line Numbering)
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -173,16 +268,21 @@ fun HomeScreen(
                         Text(
                             text = stringResource(R.string.today_sales),
                             style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = CurrencyFormatter.formatPaise(dailySummary.totalSalesPaise),
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp
+                                fontSize = 19.sp
                             ),
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            softWrap = false,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
@@ -197,72 +297,95 @@ fun HomeScreen(
                         Text(
                             text = stringResource(R.string.outstanding_udhaar),
                             style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = CurrencyFormatter.formatPaise(dailySummary.totalMarketUdhaarOwedPaise),
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp
+                                fontSize = 19.sp
                             ),
-                            color = KiranaDebitRed
+                            color = KiranaDebitRed,
+                            maxLines = 1,
+                            softWrap = false,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
             }
         }
 
-        // 3. Secondary Cash & Collections Row
+        // 3. Secondary Cash & Collections Row (Horizontal Numbering)
         item {
-            Row(
+            Card(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                shape = RoundedCornerShape(10.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f))
             ) {
-                // Cash Collected
-                Card(
-                    modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(8.dp)
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 14.dp, vertical = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    Column(modifier = Modifier.padding(10.dp)) {
-                        Text(stringResource(R.string.today_cash), style = MaterialTheme.typography.labelSmall)
-                        Spacer(modifier = Modifier.height(2.dp))
+                    // Cash Collected
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
                         Text(
-                            CurrencyFormatter.formatPaise(dailySummary.totalCashCollectedPaise),
+                            text = "${stringResource(R.string.today_cash)}:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = CurrencyFormatter.formatPaise(dailySummary.totalCashCollectedPaise),
                             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                            color = KiranaCreditGreen
+                            color = KiranaCreditGreen,
+                            maxLines = 1,
+                            softWrap = false
                         )
                     }
-                }
 
-                // UPI Collected
-                Card(
-                    modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Column(modifier = Modifier.padding(10.dp)) {
-                        Text(stringResource(R.string.today_upi), style = MaterialTheme.typography.labelSmall)
-                        Spacer(modifier = Modifier.height(2.dp))
+                    // UPI Collected
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
                         Text(
-                            CurrencyFormatter.formatPaise(dailySummary.totalUpiCollectedPaise),
+                            text = "${stringResource(R.string.today_upi)}:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = CurrencyFormatter.formatPaise(dailySummary.totalUpiCollectedPaise),
                             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                            color = KiranaGreenPrimary
+                            color = KiranaGreenPrimary,
+                            maxLines = 1,
+                            softWrap = false
                         )
                     }
-                }
 
-                // Today's Expenses
-                Card(
-                    modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Column(modifier = Modifier.padding(10.dp)) {
-                        Text(stringResource(R.string.today_expenses), style = MaterialTheme.typography.labelSmall)
-                        Spacer(modifier = Modifier.height(2.dp))
+                    // Today's Expenses
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
                         Text(
-                            CurrencyFormatter.formatPaise(dailySummary.totalExpensesPaise),
+                            text = "${stringResource(R.string.today_expenses)}:",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = CurrencyFormatter.formatPaise(dailySummary.totalExpensesPaise),
                             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            softWrap = false
                         )
                     }
                 }
@@ -346,7 +469,7 @@ fun HomeScreen(
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                 )
                 TextButton(onClick = onNavigateToKhata) {
-                    Text(stringResource(R.string.view_all))
+                    Text(stringResource(R.string.view_all), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         }
@@ -413,14 +536,28 @@ fun HomeScreen(
                             reversalReason = ""
                         }
                     },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Text(stringResource(R.string.reverse_transaction))
+                    Text(
+                        text = stringResource(R.string.reverse_transaction),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = { transactionToReverse = null }) {
-                    Text(stringResource(R.string.cancel))
+                TextButton(
+                    onClick = { transactionToReverse = null },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )
@@ -455,6 +592,9 @@ fun TransactionItemRow(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -490,7 +630,7 @@ fun TransactionItemRow(
                     )
                 }
 
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = when {
                             isReversed -> stringResource(R.string.reversal_entry)
@@ -498,19 +638,25 @@ fun TransactionItemRow(
                             isPayment -> "${stringResource(R.string.payment_received)} (${transaction.paymentMethod})"
                             else -> transaction.type
                         },
-                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold)
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                     if (transaction.description.isNotBlank()) {
                         Text(
                             text = transaction.description,
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                     Text(
                         text = DateTimeUtils.formatDateTime(transaction.occurredAt),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }

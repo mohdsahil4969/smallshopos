@@ -161,6 +161,53 @@ class SubscriptionSecurityTest {
     }
 
     @Test
+    fun test6d_ownerLifetimeCode_activates3650DaysPro() {
+        val success = subscriptionManager.verifyOfflineCode("OWNER2026")
+        assertTrue("OWNER2026 must activate PRO", success)
+
+        val status = subscriptionManager.getStatus()
+        assertTrue(status.isPro)
+        assertEquals("OWNER_LIFETIME:OWNER2026", status.paymentRef)
+        assertEquals(3650, status.daysRemaining)
+    }
+
+    @Test
+    fun test6e_cancelCode_revertsToFreeTier() {
+        // Activate PRO first
+        subscriptionManager.activatePro(days = 30)
+        assertTrue(subscriptionManager.getStatus().isPro)
+
+        // Cancel via code
+        val success = subscriptionManager.verifyOfflineCode("CANCEL")
+        assertTrue("CANCEL code must execute cancellation", success)
+        assertFalse("Plan must be reverted to Free", subscriptionManager.getStatus().isPro)
+        assertEquals(0, subscriptionManager.getStatus().daysRemaining)
+    }
+
+    @Test
+    fun test6b_vipMasterYearCode_activates365DaysPro() {
+        val success = subscriptionManager.verifyOfflineCode("VIP365")
+        assertTrue("VIP365 must activate PRO", success)
+
+        val status = subscriptionManager.getStatus()
+        assertTrue(status.isPro)
+        assertEquals("MASTER_VIP_1YEAR:VIP365", status.paymentRef)
+        assertEquals(365, status.daysRemaining)
+    }
+
+    @Test
+    fun test6c_deviceSpecificYearCode_activates365DaysPro() {
+        val yearCode = subscriptionManager.generateOfflineYearlyCodeForDevice(testDeviceId)
+        val success = subscriptionManager.verifyOfflineCode(yearCode)
+        assertTrue("Device specific 1-year code must activate PRO", success)
+
+        val status = subscriptionManager.getStatus()
+        assertTrue(status.isPro)
+        assertEquals("OFFLINE_1YEAR:$yearCode", status.paymentRef)
+        assertEquals(365, status.daysRemaining)
+    }
+
+    @Test
     fun test7_offlineCryptographicCode_foreignDeviceCodeRejected() {
         val foreignCode = subscriptionManager.generateOfflineCodeForDevice("OTHER_DEVICE_999999")
         val success = subscriptionManager.verifyOfflineCode(foreignCode)

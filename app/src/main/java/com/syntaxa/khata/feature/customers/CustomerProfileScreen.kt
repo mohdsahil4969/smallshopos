@@ -272,7 +272,7 @@ fun CustomerProfileScreen(
                             onClick = { onOpenAddUdhaar(customer.id) },
                             modifier = Modifier
                                 .weight(1f)
-                                .defaultMinSize(minHeight = 46.dp),
+                                .height(48.dp),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = KiranaDebitRed),
                             shape = RoundedCornerShape(10.dp)
@@ -292,7 +292,7 @@ fun CustomerProfileScreen(
                             onClick = { onOpenReceivePayment(customer.id) },
                             modifier = Modifier
                                 .weight(1f)
-                                .defaultMinSize(minHeight = 46.dp),
+                                .height(48.dp),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = KiranaCreditGreen),
                             shape = RoundedCornerShape(10.dp)
@@ -440,9 +440,9 @@ fun CustomerProfileScreen(
                                     }
                                 }
                             },
-                            modifier = Modifier.height(38.dp),
+                            modifier = Modifier.height(40.dp),
                             shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
                             Icon(Icons.Default.PictureAsPdf, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
@@ -455,9 +455,9 @@ fun CustomerProfileScreen(
                                 val text = buildStatementShareText(customer.name, financialSummary)
                                 ShareHelper.shareTextViaWhatsApp(context, text, customer.phone)
                             },
-                            modifier = Modifier.height(38.dp),
+                            modifier = Modifier.height(40.dp),
                             shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
                             Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
@@ -470,9 +470,9 @@ fun CustomerProfileScreen(
                                 val text = buildStatementShareText(customer.name, financialSummary)
                                 ShareHelper.shareTextViaSms(context, text, customer.phone)
                             },
-                            modifier = Modifier.height(38.dp),
+                            modifier = Modifier.height(40.dp),
                             shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
                             Icon(Icons.Default.Sms, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
@@ -502,9 +502,9 @@ fun CustomerProfileScreen(
                                     }
                                 }
                             },
-                            modifier = Modifier.height(38.dp),
+                            modifier = Modifier.height(40.dp),
                             shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
                             Icon(Icons.Default.Email, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
@@ -520,9 +520,9 @@ fun CustomerProfileScreen(
                                     showReminderDialog = true
                                 }
                             },
-                            modifier = Modifier.height(38.dp),
+                            modifier = Modifier.height(40.dp),
                             shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
                             Icon(Icons.Default.NotificationsActive, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
@@ -705,9 +705,11 @@ fun CustomerProfileScreen(
                             }
                             billToShareModal = null
                         }
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("WhatsApp")
+                    Text("WhatsApp", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             },
             dismissButton = {
@@ -717,9 +719,11 @@ fun CustomerProfileScreen(
                             val msg = "Bill #${bwi.bill.receiptNumber} total: ${CurrencyFormatter.formatPaise(bwi.bill.totalPaise)}, Paid: ${CurrencyFormatter.formatPaise(bwi.bill.amountPaidPaise)}. Thank you!"
                             ShareHelper.shareTextViaSms(context, msg, customerWithBalance?.phone ?: "")
                             billToShareModal = null
-                        }
+                        },
+                        modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("SMS")
+                        Text("SMS", maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                     TextButton(
                         onClick = {
@@ -732,9 +736,11 @@ fun CustomerProfileScreen(
                                 }
                                 billToShareModal = null
                             }
-                        }
+                        },
+                        modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("More...")
+                        Text("More...", maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             }
@@ -762,14 +768,28 @@ fun CustomerProfileScreen(
                         } catch (e: Exception) {
                             Toast.makeText(context, "Could not open Bluetooth settings", Toast.LENGTH_SHORT).show()
                         }
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.printer_guidance_open_settings))
+                    Text(
+                        stringResource(R.string.printer_guidance_open_settings),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showNoPrinterDialog = false }) {
-                    Text(stringResource(R.string.cancel))
+                TextButton(
+                    onClick = { showNoPrinterDialog = false },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.cancel),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )
@@ -847,9 +867,15 @@ fun CustomerProfileScreen(
                             }
                             transactionToShare = null
                         }
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.share_via_whatsapp))
+                    Text(
+                        stringResource(R.string.share_via_whatsapp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
@@ -864,9 +890,15 @@ fun CustomerProfileScreen(
                             }
                             transactionToShare = null
                         }
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.share_pdf))
+                    Text(
+                        stringResource(R.string.share_pdf),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )
@@ -896,9 +928,15 @@ fun CustomerProfileScreen(
                         onClick = {
                             showReminderDialog = false
                             ShareHelper.shareTextViaWhatsApp(context, reminderText, c.phone)
-                        }
+                        },
+                        modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text(stringResource(R.string.share_via_whatsapp))
+                        Text(
+                            stringResource(R.string.share_via_whatsapp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 },
                 dismissButton = {
@@ -907,17 +945,25 @@ fun CustomerProfileScreen(
                             onClick = {
                                 showReminderDialog = false
                                 ShareHelper.shareTextViaSms(context, reminderText, c.phone)
-                            }
+                            },
+                            modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                            shape = RoundedCornerShape(8.dp)
                         ) {
-                            Text("SMS")
+                            Text("SMS", maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                         TextButton(
                             onClick = {
                                 ShareHelper.copyToClipboard(context, reminderText)
                                 showReminderDialog = false
-                            }
+                            },
+                            modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                            shape = RoundedCornerShape(8.dp)
                         ) {
-                            Text(stringResource(R.string.copy_text))
+                            Text(
+                                stringResource(R.string.copy_text),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     }
                 }
@@ -956,14 +1002,28 @@ fun CustomerProfileScreen(
                             Toast.makeText(context, "Transaction reversed", Toast.LENGTH_SHORT).show()
                         }
                     },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Text(stringResource(R.string.reverse_transaction))
+                    Text(
+                        stringResource(R.string.reverse_transaction),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             },
             dismissButton = {
-                TextButton(onClick = { transactionToReverse = null }) {
-                    Text(stringResource(R.string.cancel))
+                TextButton(
+                    onClick = { transactionToReverse = null },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.cancel),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         )

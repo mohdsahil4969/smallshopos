@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.syntaxa.khata.R
@@ -55,6 +56,7 @@ fun SubscriptionPaywallScreen(
     var utrError by remember { mutableStateOf<String?>(null) }
     var offlineCodeError by remember { mutableStateOf<String?>(null) }
     var showSuccessDialog by remember { mutableStateOf(false) }
+    var showCancelDialog by remember { mutableStateOf(false) }
     var showOfflineTab by remember { mutableStateOf(false) }
 
     fun startAutoPaymentDetection() {
@@ -393,53 +395,23 @@ fun SubscriptionPaywallScreen(
                                 try {
                                     context.startActivity(intent)
                                 } catch (e: Exception) {
-                                    Toast.makeText(context, "No UPI app found. Please copy the UPI ID below.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "No UPI app found. Please install Google Pay, PhonePe, or Paytm.", Toast.LENGTH_SHORT).show()
                                 }
                                 startAutoPaymentDetection()
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(52.dp),
-                            shape = RoundedCornerShape(12.dp),
+                                .height(48.dp),
+                            shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = KiranaGreenPrimary)
                         ) {
                             Icon(Icons.Default.Payment, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "Pay ₹49 via UPI App",
-                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        // Manual UPI ID row
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                                .clickable {
-                                    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                    clipboard.setPrimaryClip(ClipData.newPlainText("UPI ID", SubscriptionManager.DEFAULT_UPI_ID))
-                                    Toast.makeText(context, "UPI ID copied: ${SubscriptionManager.DEFAULT_UPI_ID}", Toast.LENGTH_SHORT).show()
-                                }
-                                .padding(horizontal = 12.dp, vertical = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column {
-                                Text("Or pay directly to UPI ID:", style = MaterialTheme.typography.labelSmall)
-                                Text(
-                                    SubscriptionManager.DEFAULT_UPI_ID,
-                                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                            Icon(
-                                imageVector = Icons.Default.ContentCopy,
-                                contentDescription = "Copy UPI ID",
-                                modifier = Modifier.size(18.dp)
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
                     }
@@ -534,7 +506,7 @@ fun SubscriptionPaywallScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(48.dp),
-                            shape = RoundedCornerShape(12.dp)
+                            shape = RoundedCornerShape(10.dp)
                         ) {
                             if (isVerifyingUtr) {
                                 CircularProgressIndicator(
@@ -543,13 +515,15 @@ fun SubscriptionPaywallScreen(
                                     strokeWidth = 2.dp
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Verifying with Google Sheets...")
+                                Text("Verifying with Google Sheets...", maxLines = 1, overflow = TextOverflow.Ellipsis)
                             } else {
                                 Icon(Icons.Default.CloudDone, contentDescription = null)
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "Verify UTR & Activate PRO",
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                             }
                         }
@@ -591,13 +565,13 @@ fun SubscriptionPaywallScreen(
                                 OutlinedTextField(
                                     value = offlineCodeInput,
                                     onValueChange = {
-                                        if (it.length <= 6) {
+                                        if (it.length <= 16) {
                                             offlineCodeInput = it.uppercase()
                                             offlineCodeError = null
                                         }
                                     },
-                                    label = { Text("6-Digit License Code") },
-                                    placeholder = { Text("e.g. 7A8B9C") },
+                                    label = { Text("License / Promo Code") },
+                                    placeholder = { Text("e.g. 7A8B9C or VIP365") },
                                     isError = offlineCodeError != null,
                                     singleLine = true,
                                     modifier = Modifier.fillMaxWidth()
@@ -616,18 +590,47 @@ fun SubscriptionPaywallScreen(
 
                                 Button(
                                     onClick = {
+                                        val clean = offlineCodeInput.trim().uppercase()
+                                        if (clean == "CANCEL" || clean == "RESET" || clean == "REVOKE") {
+                                            subscriptionManager.resetToFree()
+                                            offlineCodeInput = ""
+                                            Toast.makeText(context, "Subscription cancelled. Reverted to Free plan.", Toast.LENGTH_LONG).show()
+                                            return@Button
+                                        }
                                         val success = subscriptionManager.verifyOfflineCode(offlineCodeInput)
                                         if (success) {
                                             offlineCodeInput = ""
                                             showSuccessDialog = true
                                         } else {
-                                            offlineCodeError = "Invalid offline license code for this device."
+                                            offlineCodeError = "Invalid offline license or promo code."
                                         }
                                     },
-                                    enabled = offlineCodeInput.length == 6,
-                                    modifier = Modifier.fillMaxWidth()
+                                    enabled = offlineCodeInput.length >= 5,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(48.dp),
+                                    shape = RoundedCornerShape(10.dp)
                                 ) {
-                                    Text("Activate Offline License")
+                                    Text("Activate License", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                }
+
+                                if (status.isPro) {
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    OutlinedButton(
+                                        onClick = { showCancelDialog = true },
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(48.dp),
+                                        shape = RoundedCornerShape(10.dp),
+                                        colors = ButtonDefaults.outlinedButtonColors(
+                                            contentColor = MaterialTheme.colorScheme.error
+                                        ),
+                                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.error.copy(alpha = 0.5f))
+                                    ) {
+                                        Icon(Icons.Default.Cancel, contentDescription = null, modifier = Modifier.size(18.dp))
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text("Cancel Subscription (Return to Free)", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                    }
                                 }
 
                                 Spacer(modifier = Modifier.height(12.dp))
@@ -702,9 +705,58 @@ fun SubscriptionPaywallScreen(
                     onClick = {
                         showSuccessDialog = false
                         onBack()
-                    }
+                    },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Start Using PRO")
+                    Text("Start Using PRO", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+        )
+    }
+
+    // Cancel Subscription Confirmation Dialog
+    if (showCancelDialog) {
+        AlertDialog(
+            onDismissRequest = { showCancelDialog = false },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Cancel PRO Subscription?", fontWeight = FontWeight.Bold)
+                }
+            },
+            text = {
+                Text(
+                    text = "Are you sure you want to cancel your PRO subscription? Your plan will be immediately reverted to the Free tier, and PRO features will be locked.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        subscriptionManager.resetToFree()
+                        showCancelDialog = false
+                        Toast.makeText(context, "Subscription cancelled. Reverted to Free plan.", Toast.LENGTH_LONG).show()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text("Yes, Cancel Subscription", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showCancelDialog = false },
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text("Keep Active", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         )

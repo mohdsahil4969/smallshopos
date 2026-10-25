@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
@@ -253,26 +255,30 @@ fun AppUpdateDialog(
                             ) {
                                 Button(
                                     onClick = onRequestPermission,
-                                    modifier = Modifier.weight(1f),
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .defaultMinSize(minHeight = 40.dp),
                                     shape = RoundedCornerShape(8.dp),
                                     contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 6.dp)
                                 ) {
                                     Text(
                                         "Open Settings",
                                         maxLines = 1,
-                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                        overflow = TextOverflow.Ellipsis
                                     )
                                 }
                                 OutlinedButton(
                                     onClick = onResumeInstall,
-                                    modifier = Modifier.weight(1f),
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .defaultMinSize(minHeight = 40.dp),
                                     shape = RoundedCornerShape(8.dp),
                                     contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 6.dp)
                                 ) {
                                     Text(
                                         "Continue Install",
                                         maxLines = 1,
-                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                        overflow = TextOverflow.Ellipsis
                                     )
                                 }
                             }
@@ -325,27 +331,33 @@ fun AppUpdateDialog(
             if (isReadyToInstall) {
                 Button(
                     onClick = onUpdateClick,
-                    shape = RoundedCornerShape(12.dp)
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
                     Icon(Icons.Default.SystemUpdate, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("Install Now")
+                    Text("Install Now", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             } else if (!isDownloading && !isPermissionRequired) {
                 Button(
                     onClick = onUpdateClick,
-                    shape = RoundedCornerShape(12.dp)
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
                     Icon(Icons.Default.SystemUpdate, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text(if (hasError) "Retry Update" else "One-Tap Update")
+                    Text(if (hasError) "Retry Update" else "One-Tap Update", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         },
         dismissButton = {
             if (!isDownloading && !isMandatory) {
-                TextButton(onClick = onDismiss) {
-                    Text("Later")
+                TextButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text("Later", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         }

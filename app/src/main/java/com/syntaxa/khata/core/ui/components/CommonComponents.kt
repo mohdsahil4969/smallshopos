@@ -166,7 +166,9 @@ fun ActionIconButton(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = modifier
+            .defaultMinSize(minHeight = 84.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }
             .padding(vertical = 4.dp, horizontal = 2.dp)
@@ -218,15 +220,29 @@ fun KiranaConfirmDialog(
         confirmButton = {
             Button(
                 onClick = onConfirm,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp),
                 colors = if (isDestructive) ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                          else ButtonDefaults.buttonColors()
             ) {
-                Text(confirmText)
+                Text(
+                    text = confirmText,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(dismissText)
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(
+                    text = dismissText,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     )

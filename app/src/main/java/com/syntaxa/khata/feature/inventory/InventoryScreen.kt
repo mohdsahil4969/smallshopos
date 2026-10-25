@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.syntaxa.khata.R
@@ -197,7 +198,7 @@ private fun ProductItemCard(
                     text = product.name,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                     maxLines = 1,
-                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -240,10 +241,18 @@ private fun ProductItemCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextButton(onClick = onAdjustStock) {
+            TextButton(
+                onClick = onAdjustStock,
+                modifier = Modifier.defaultMinSize(minHeight = 36.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
                 Icon(Icons.Default.SyncAlt, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(stringResource(R.string.adjust_stock))
+                Text(
+                    text = stringResource(R.string.adjust_stock),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
 
             Row {
@@ -352,13 +361,21 @@ private fun AddEditProductDialog(
                         onSave(name, unit, sPaise, cPaise, stock, thresh, barcode, "")
                     }
                 },
-                enabled = name.isNotBlank() && sellingInput.isNotBlank()
+                enabled = name.isNotBlank() && sellingInput.isNotBlank(),
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.save))
+                Text(stringResource(R.string.save), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     )
 }
@@ -412,13 +429,21 @@ private fun AdjustStockDialog(
                     val delta = if (isAddition) qty else -qty
                     onAdjust(delta)
                 },
-                enabled = deltaInput.toDoubleOrNull() != null && deltaInput.toDouble() > 0
+                enabled = deltaInput.toDoubleOrNull() != null && deltaInput.toDouble() > 0,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.apply))
+                Text(stringResource(R.string.apply), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.defaultMinSize(minHeight = 44.dp),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     )
 }

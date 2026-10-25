@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -270,7 +271,13 @@ fun MainAppScaffold(
                     val isSelected = currentRoute == screen.route
                     NavigationBarItem(
                         icon = { Icon(screen.icon, contentDescription = stringResource(screen.titleRes)) },
-                        label = { Text(stringResource(screen.titleRes)) },
+                        label = {
+                            Text(
+                                text = stringResource(screen.titleRes),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
                         selected = isSelected,
                         onClick = {
                             navController.navigate(screen.route) {
