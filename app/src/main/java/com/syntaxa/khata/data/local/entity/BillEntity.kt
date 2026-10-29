@@ -11,6 +11,9 @@ object BillConstants {
 
     const val STATUS_COMPLETED = "COMPLETED"
     const val STATUS_CANCELLED = "CANCELLED"
+
+    /** Description used for the "carry-forward old udhaar" line item in bills. */
+    const val ITEM_DESC_OLD_UDHAAR = "Previous Udhaar Balance"
 }
 
 @Entity(

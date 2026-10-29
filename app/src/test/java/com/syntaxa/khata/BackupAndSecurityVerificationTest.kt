@@ -261,6 +261,7 @@ class BackupAndSecurityVerificationTest {
                 if (idx != -1) products[idx] = product
             }
             override suspend fun getProductById(id: Long): ProductEntity? = products.find { it.id == id }
+            override suspend fun getProductByName(name: String): ProductEntity? = products.find { it.name.equals(name, ignoreCase = true) }
             override fun observeActiveProducts(): Flow<List<ProductEntity>> = flowOf(products.filter { !it.isArchived })
             override fun searchActiveProducts(query: String): Flow<List<ProductEntity>> = flowOf(products.filter { !it.isArchived && it.name.contains(query, true) })
             override fun observeLowStockProducts(): Flow<List<ProductEntity>> = flowOf(products.filter { !it.isArchived && it.isLowStock })

@@ -168,14 +168,14 @@ fun ActionIconButton(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = modifier
-            .defaultMinSize(minHeight = 84.dp)
+            .defaultMinSize(minHeight = 74.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }
-            .padding(vertical = 4.dp, horizontal = 2.dp)
+            .padding(vertical = 4.dp, horizontal = 1.dp)
     ) {
         Box(
             modifier = Modifier
-                .size(48.dp)
+                .size(40.dp)
                 .clip(CircleShape)
                 .background(backgroundColor),
             contentAlignment = Alignment.Center
@@ -184,16 +184,16 @@ fun ActionIconButton(
                 imageVector = icon,
                 contentDescription = label,
                 tint = iconTint,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(20.dp)
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall.copy(
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 11.sp,
-                lineHeight = 13.sp
+                fontWeight = FontWeight.Medium,
+                fontSize = 10.sp,
+                lineHeight = 12.5.sp
             ),
             textAlign = TextAlign.Center,
             minLines = 2,

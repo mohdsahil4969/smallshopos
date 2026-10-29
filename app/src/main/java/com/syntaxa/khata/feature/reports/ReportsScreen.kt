@@ -175,7 +175,7 @@ fun ReportsScreen(
                             showCashClosingDialog = true
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.AccountBalanceWallet, contentDescription = null)
@@ -201,13 +201,13 @@ fun ReportsScreen(
                         coroutineScope.launch {
                             try {
                                 val csv = viewModel.exportReportCsv(context)
-                                ShareHelper.sharePdf(context, csv, "Export Business CSV Report")
+                                ShareHelper.shareFile(context, csv, mimeType = "text/csv", title = context.getString(R.string.export_csv_title))
                             } catch (e: Exception) {
-                                Toast.makeText(context, "Error exporting CSV: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.error_exporting_csv, e.message ?: ""), Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.FileDownload, contentDescription = null)
@@ -228,7 +228,7 @@ fun ReportsScreen(
             onDismiss = { showCashClosingDialog = false },
             onSuccess = {
                 showCashClosingDialog = false
-                Toast.makeText(context, "Daily cash closing saved successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.cash_closing_saved_success), Toast.LENGTH_SHORT).show()
             }
         )
     }

@@ -36,6 +36,8 @@ fun RecordsScreen(
     subscriptionManager: SubscriptionManager? = null,
     onNavigateToPaywall: () -> Unit = {},
     initialTab: Int = 0,
+    billingPreselectedCustomerId: Long? = null,
+    onOpenAddCustomerDialog: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var selectedTab by remember(initialTab) { mutableIntStateOf(initialTab) }
@@ -79,15 +81,19 @@ fun RecordsScreen(
 
         Box(modifier = Modifier.fillMaxSize()) {
             when (selectedTab) {
-                0 -> BillingScreen(viewModel = billingViewModel)
+                0 -> BillingScreen(
+                    viewModel = billingViewModel,
+                    preselectedCustomerId = billingPreselectedCustomerId,
+                    onOpenAddCustomerDialog = onOpenAddCustomerDialog
+                )
                 1 -> ExpenseScreen(viewModel = expenseViewModel)
                 2 -> {
                     if (subscriptionManager != null) {
                         ProFeatureGate(
                             subscriptionManager = subscriptionManager,
                             entitlement = FeatureEntitlement.FULL_INVENTORY,
-                            featureTitle = "Inventory & Stock Tracking",
-                            featureDescription = "Manage your shop catalog, set custom units, and automatically deduct stock whenever an item is billed at your counter.",
+                            featureTitle = stringResource(R.string.inventory_feature_title),
+                            featureDescription = stringResource(R.string.inventory_feature_desc),
                             icon = Icons.Default.Inventory2,
                             onUpgradeClick = onNavigateToPaywall,
                             benefits = listOf(
@@ -107,8 +113,8 @@ fun RecordsScreen(
                         ProFeatureGate(
                             subscriptionManager = subscriptionManager,
                             entitlement = FeatureEntitlement.SUPPLIERS_PURCHASES,
-                            featureTitle = "Supplier & Wholesaler Khata",
-                            featureDescription = "Keep your vendor purchases and distributor payable dues strictly isolated from your customer receivables.",
+                            featureTitle = stringResource(R.string.supplier_feature_title),
+                            featureDescription = stringResource(R.string.supplier_feature_desc),
                             icon = Icons.Default.LocalShipping,
                             onUpgradeClick = onNavigateToPaywall,
                             benefits = listOf(

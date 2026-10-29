@@ -872,4 +872,96 @@ class CustomerLedgerTest {
         assertTrue("Latest entry must be first", entries.first().timestamp >= entries.last().timestamp)
         assertTrue("Feed processing must take < 100ms", duration < 100)
     }
+
+    @Test
+    fun testRepeatCustomerUdhaarCarryForwardLedgerIntegrity() = runBlocking {
+        // Create repeat customer
+        val custId = customerRepo.createCustomer("Mukesh Repeat", "9876543210")
+        assertNotNull(custId)
+
+        // Customer has initial old Udhaar of Rs 500 (50000 paise)
+        fakeTransactionDao.insertTransaction(
+            FinancialTransactionEntity(
+                id = idGen.getAndIncrement(),
+                type = TransactionConstants.TYPE_UDHAAR_GIVEN,
+                customerId = custId,
+                amountPaise = 50000L,
+                paymentMethod = TransactionConstants.METHOD_CREDIT_LEDGER,
+                description = "Old Udhaar",
+                occurredAt = System.currentTimeMillis() - 86400000,
+                createdAt = System.currentTimeMillis() - 86400000,
+                status = TransactionConstants.STATUS_ACTIVE
+            )
+        )
+
+        val balanceBefore = fakeCustomerDao.getCustomerWithBalance(custId)?.balancePaise ?: 0L
+        assertEquals(50000L, balanceBefore)
+
+        // Today's new bill: New items worth Rs 300 (30000 paise) + Old Udhaar Rs 500 (50000 paise) = Total Rs 800 (80000 paise)
+        val billItems = listOf(
+            BillItemEntity(billId = 0L, description = "Wheat Atta (10 kg)", quantity = 10.0, unitPricePaise = 3000L, lineTotalPaise = 30000L),
+            BillItemEntity(billId = 0L, description = "Previous Udhaar Balance", quantity = 1.0, unitPricePaise = 50000L, lineTotalPaise = 50000L)
+        )
+
+        // Scenario 1: Customer pays full Rs 800
+        val billId1 = billingRepo.createBill(
+            receiptNumber = "BILL-REPEAT-001",
+            customerId = custId,
+            subtotalPaise = 80000L,
+            discountPaise = 0L,
+            totalPaise = 80000L,
+            amountPaidPaise = 80000L, // Paid full
+            paymentMethod = TransactionConstants.METHOD_CASH,
+            billType = BillConstants.TYPE_QUICK,
+            notes = "",
+            items = billItems,
+            cashPaidPaise = 80000L,
+            oldUdhaarIncludedPaise = 50000L
+        )
+        assertTrue(billId1 > 0)
+
+        // Ledger balance should now be 0 (old udhaar was paid via bill settlement)
+        val balanceAfterFullPayment = fakeCustomerDao.getCustomerWithBalance(custId)?.balancePaise ?: 0L
+        assertEquals(0L, balanceAfterFullPayment)
+
+        // Scenario 2: Another customer repeats udhaar and pays 0
+        val custId2 = customerRepo.createCustomer("Suresh Credit", "9812345678")
+        fakeTransactionDao.insertTransaction(
+            FinancialTransactionEntity(
+                id = idGen.getAndIncrement(),
+                type = TransactionConstants.TYPE_UDHAAR_GIVEN,
+                customerId = custId2,
+                amountPaise = 40000L, // Rs 400 old udhaar
+                paymentMethod = TransactionConstants.METHOD_CREDIT_LEDGER,
+                description = "Old Udhaar",
+                occurredAt = System.currentTimeMillis() - 86400000,
+                createdAt = System.currentTimeMillis() - 86400000,
+                status = TransactionConstants.STATUS_ACTIVE
+            )
+        )
+
+        // Today buys Rs 200 items, adds old udhaar Rs 400 = Total Rs 600, pays Rs 0
+        val billId2 = billingRepo.createBill(
+            receiptNumber = "BILL-REPEAT-002",
+            customerId = custId2,
+            subtotalPaise = 60000L,
+            discountPaise = 0L,
+            totalPaise = 60000L,
+            amountPaidPaise = 0L, // Pays nothing
+            paymentMethod = TransactionConstants.METHOD_CASH,
+            billType = BillConstants.TYPE_QUICK,
+            notes = "",
+            items = listOf(
+                BillItemEntity(billId = 0L, description = "Oil (1 ltr)", quantity = 1.0, unitPricePaise = 20000L, lineTotalPaise = 20000L),
+                BillItemEntity(billId = 0L, description = "Previous Udhaar Balance", quantity = 1.0, unitPricePaise = 40000L, lineTotalPaise = 40000L)
+            ),
+            cashPaidPaise = 0L,
+            oldUdhaarIncludedPaise = 40000L
+        )
+        assertTrue(billId2 > 0)
+
+        // Ledger balance should be exactly 40000 (old) + 20000 (new) = 60000 (NOT 40000 + 60000 = 100000!)
+        val balanceAfterZeroPayment = fakeCustomerDao.getCustomerWithBalance(custId2)?.balancePaise ?: 0L
+        assertEquals(60000L, balanceAfterZeroPayment)
+    }
 }

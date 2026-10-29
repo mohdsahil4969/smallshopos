@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">सिंटॅक्स खाते</string>
-    <string name="tagline">दुकानदारांचे ऑफलाइन डिजिटल खातेवही</string>
+    <string name="app_name">स्मार्ट खाते</string>
+    <string name="tagline">स्मार्ट बिलिंग आणि उधारी - Syntaxa द्वारे</string>
 
     <!-- Navigation -->
     <string name="nav_home">होम</string>

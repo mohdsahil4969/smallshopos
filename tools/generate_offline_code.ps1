@@ -17,7 +17,7 @@ $bytesY = [System.Text.Encoding]::UTF8.GetBytes($cleanDevId + ":" + $saltYearly)
 $codeYearly = (($sha.ComputeHash($bytesY) | ForEach-Object { $_.ToString("X2") }) -join "").Substring(0, 6).ToUpper()
 
 Write-Host "==========================================" -ForegroundColor Cyan
-Write-Host " SYNTAXA KHATA - OFFLINE PRO CODE GENERATOR" -ForegroundColor Cyan
+Write-Host " SMARTKHATA (SYNTAXA) - OFFLINE PRO CODE GENERATOR" -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host "Target Device ID : $cleanDevId" -ForegroundColor Yellow
 Write-Host "------------------------------------------" -ForegroundColor DarkGray

@@ -113,7 +113,7 @@ fun ExpenseScreen(
                     value = description,
                     onValueChange = { description = it },
                     label = { Text(stringResource(R.string.description)) },
-                    placeholder = { Text("e.g. Milk crate delivery") },
+                    placeholder = { Text(stringResource(R.string.expense_desc_placeholder)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -159,7 +159,7 @@ fun ExpenseScreen(
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Text(
@@ -175,7 +175,7 @@ fun ExpenseScreen(
         // Recorded Expenses Section
         item {
             Text(
-                text = "Recorded Expenses (${expenses.size})",
+                text = stringResource(R.string.recorded_expenses_count, expenses.size),
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
             )
         }
@@ -188,12 +188,12 @@ fun ExpenseScreen(
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
                 ) {
                     Box(modifier = Modifier.padding(24.dp).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        Text("No expenses recorded yet")
+                        Text(stringResource(R.string.no_expenses_recorded))
                     }
                 }
             }
         } else {
-            items(expenses, key = { it.id }) { ex ->
+            items(expenses, key = { it.id }, contentType = { "expense_item" }) { ex ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp)

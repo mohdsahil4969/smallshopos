@@ -12,7 +12,7 @@ enum class SubscriptionTier {
     val title: String
         get() = when (this) {
             FREE -> "Free Starter"
-            PRO_MONTHLY -> "Syntaxa PRO"
+            PRO_MONTHLY -> "SmartKhata PRO"
         }
 
     val priceRupees: Int

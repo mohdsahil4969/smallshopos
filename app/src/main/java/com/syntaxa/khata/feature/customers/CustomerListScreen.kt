@@ -111,12 +111,12 @@ fun CustomerListScreen(
                     FilterChip(
                         selected = activeFilter == DueDateFilter.ALL,
                         onClick = { viewModel.setDueDateFilter(DueDateFilter.ALL) },
-                        label = { Text("All") }
+                        label = { Text(stringResource(R.string.all)) }
                     )
                     FilterChip(
                         selected = activeFilter == DueDateFilter.OVERDUE,
                         onClick = { viewModel.setDueDateFilter(DueDateFilter.OVERDUE) },
-                        label = { Text("⚠️ Overdue") },
+                        label = { Text("⚠️ ${stringResource(R.string.overdue_label)}") },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = KiranaDebitRed.copy(alpha = 0.15f),
                             selectedLabelColor = KiranaDebitRed
@@ -125,7 +125,7 @@ fun CustomerListScreen(
                     FilterChip(
                         selected = activeFilter == DueDateFilter.DUE_TODAY,
                         onClick = { viewModel.setDueDateFilter(DueDateFilter.DUE_TODAY) },
-                        label = { Text("🕒 Due Today") },
+                        label = { Text("🕒 ${stringResource(R.string.due_today_label)}") },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = Color(0xFFFFF3E0),
                             selectedLabelColor = Color(0xFFE65100)
@@ -134,7 +134,7 @@ fun CustomerListScreen(
                     FilterChip(
                         selected = activeFilter == DueDateFilter.UPCOMING,
                         onClick = { viewModel.setDueDateFilter(DueDateFilter.UPCOMING) },
-                        label = { Text("📅 Upcoming") },
+                        label = { Text("📅 ${stringResource(R.string.upcoming_due_label)}") },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                             selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -161,10 +161,10 @@ fun CustomerListScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = if (searchQuery.isNotBlank()) "No customers found matching '$searchQuery'"
-                                   else if (selectedTab == 0 && activeFilter != DueDateFilter.ALL) "No customers matching $activeFilter filter"
-                                   else if (selectedTab == 0) "No customers added yet"
-                                   else "No archived customers",
+                            text = if (searchQuery.isNotBlank()) stringResource(R.string.no_customers_found_query, searchQuery)
+                                   else if (selectedTab == 0 && activeFilter != DueDateFilter.ALL) stringResource(R.string.no_customers_filter, activeFilter.name)
+                                   else if (selectedTab == 0) stringResource(R.string.no_customers_added)
+                                   else stringResource(R.string.no_archived_customers),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -188,7 +188,7 @@ fun CustomerListScreen(
                     contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(currentList, key = { it.id }) { customer ->
+                    items(currentList, key = { it.id }, contentType = { "customer_item" }) { customer ->
                         CustomerCardItem(
                             customer = customer,
                             onClick = { onSelectCustomer(customer.id) },
@@ -288,9 +288,9 @@ fun CustomerCardItem(
                         ) {
                             Text(
                                 text = when {
-                                    isOverdue -> "Overdue: $dateText"
-                                    isDueToday -> "Due Today"
-                                    else -> "Due: $dateText"
+                                    isOverdue -> stringResource(R.string.label_overdue_date, dateText)
+                                    isDueToday -> stringResource(R.string.label_due_today)
+                                    else -> stringResource(R.string.label_due_date, dateText)
                                 },
                                 style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, fontWeight = FontWeight.Bold),
                                 color = when {
@@ -303,7 +303,7 @@ fun CustomerCardItem(
                         }
                     } else if (customer.lastTransactionAt != null) {
                         Text(
-                            text = "Last: ${DateTimeUtils.formatDate(customer.lastTransactionAt)}",
+                            text = stringResource(R.string.label_last_date, DateTimeUtils.formatDate(customer.lastTransactionAt)),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )
@@ -315,9 +315,9 @@ fun CustomerCardItem(
             Column(horizontalAlignment = Alignment.End) {
                 Text(
                     text = when {
-                        owesMoney -> "Due"
-                        hasAdvance -> "Advance"
-                        else -> "Settled"
+                        owesMoney -> stringResource(R.string.label_due)
+                        hasAdvance -> stringResource(R.string.label_advance)
+                        else -> stringResource(R.string.label_settled)
                     },
                     style = MaterialTheme.typography.labelSmall,
                     color = when {

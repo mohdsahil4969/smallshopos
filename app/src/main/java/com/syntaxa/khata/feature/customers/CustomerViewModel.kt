@@ -10,6 +10,7 @@ import com.syntaxa.khata.core.model.CurrencyFormatter
 import com.syntaxa.khata.core.model.DateTimeUtils
 import com.syntaxa.khata.data.local.entity.BillConstants
 import com.syntaxa.khata.data.local.entity.FinancialTransactionEntity
+import com.syntaxa.khata.data.local.entity.ShopProfileEntity
 import com.syntaxa.khata.data.local.entity.TransactionConstants
 import com.syntaxa.khata.domain.model.BillWithItems
 import com.syntaxa.khata.domain.model.CustomerFinancialSummary
@@ -310,6 +311,14 @@ class CustomerViewModel(private val container: KhataAppContainer) : ViewModel() 
                     return@launch
                 }
                 container.financialRepository.recordPayment(customerId, amountPaise, paymentMethod, description)
+                try {
+                    val shop = container.shopProfileRepository.getShopProfile()
+                    container.audioSoundboxManager.announcePayment(
+                        amountPaise = amountPaise,
+                        method = paymentMethod,
+                        storeLanguage = shop.language
+                    )
+                } catch (_: Throwable) {}
                 onSuccess()
             } catch (e: Exception) {
                 onError(e.localizedMessage ?: "Failed to record payment")
@@ -393,6 +402,10 @@ class CustomerViewModel(private val container: KhataAppContainer) : ViewModel() 
     suspend fun generateBillPdf(context: Context, billWithItems: BillWithItems): File {
         val shop = container.shopProfileRepository.getShopProfile()
         return PdfReceiptGenerator.generateBillReceipt(context, shop, billWithItems)
+    }
+
+    suspend fun getShopProfile(): ShopProfileEntity {
+        return container.shopProfileRepository.getShopProfile()
     }
 
     suspend fun printBillThermal(

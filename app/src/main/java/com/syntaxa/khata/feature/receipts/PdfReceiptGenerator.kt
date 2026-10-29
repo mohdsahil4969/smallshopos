@@ -139,7 +139,7 @@ object PdfReceiptGenerator {
         val rightX = PAGE_WIDTH - 40f
 
         // Shop Header
-        val shopDisplayName = shop.shopName.ifBlank { "Syntaxa Khata" }
+        val shopDisplayName = shop.shopName.ifBlank { "SmartKhata" }
         canvas.drawText(shopDisplayName, centerX, y, headerPaint)
         y += 20f
 
@@ -274,7 +274,7 @@ object PdfReceiptGenerator {
             y += 18f
         }
         textPaint.textSize = 9f
-        canvas.drawText("Generated offline with Syntaxa Khata", centerX, y, textPaint)
+        canvas.drawText("Generated offline with SmartKhata (Syntaxa)", centerX, y, textPaint)
     }
 
     private fun drawCustomerStatement(
@@ -315,7 +315,7 @@ object PdfReceiptGenerator {
         val leftX = 40f
         val rightX = PAGE_WIDTH - 40f
 
-        val shopDisplayName = shop.shopName.ifBlank { "Syntaxa Khata" }
+        val shopDisplayName = shop.shopName.ifBlank { "SmartKhata" }
         canvas.drawText(shopDisplayName, centerX, y, headerPaint)
         y += 20f
         textPaint.textAlign = Paint.Align.CENTER
@@ -477,7 +477,7 @@ object PdfReceiptGenerator {
         val rightX = PAGE_WIDTH - 40f
 
         // Shop Header
-        val shopDisplayName = shop.shopName.ifBlank { "Syntaxa Khata" }
+        val shopDisplayName = shop.shopName.ifBlank { "SmartKhata" }
         canvas.drawText(shopDisplayName, centerX, y, headerPaint)
         y += 20f
         textPaint.textAlign = Paint.Align.CENTER

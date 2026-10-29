@@ -8,6 +8,7 @@ import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
@@ -172,7 +173,7 @@ class AppUpdateSystemTest {
         val dummyUpdate = AppUpdateInfo(
             version = "1.1",
             buildNumber = 2,
-            title = "Syntaxa Khata v1.1",
+            title = "SmartKhata v1.1",
             releaseNotes = "New features",
             downloadUrl = "https://syntaxa.in/app.apk",
             fileSizeBytes = 20_000_000L,
@@ -312,6 +313,6 @@ class AppUpdateSystemTest {
             null // null indicates passed verification
         }
         val result = validVerifier(dummyApk)
-        assertEquals(null, result)
+        assertNull(result)
     }
 }

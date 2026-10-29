@@ -34,6 +34,7 @@ import com.syntaxa.khata.data.repository.SupplierRepository
 import com.syntaxa.khata.domain.model.CustomerWithBalance
 import com.syntaxa.khata.domain.model.PaymentReminderTemplate
 import com.syntaxa.khata.domain.model.SupplierWithBalance
+import com.syntaxa.khata.feature.receipts.ShareHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -115,6 +116,7 @@ class SmallShopFeaturesTest {
             if (idx != -1) products[idx] = product
         }
         override suspend fun getProductById(id: Long): ProductEntity? = products.firstOrNull { it.id == id }
+        override suspend fun getProductByName(name: String): ProductEntity? = products.firstOrNull { it.name.equals(name, ignoreCase = true) }
         override fun observeActiveProducts(): Flow<List<ProductEntity>> = flow {
             emit(products.filter { !it.isArchived })
         }
@@ -597,6 +599,31 @@ class SmallShopFeaturesTest {
         )
         assertTrue(quickBillId > 0)
         assertEquals(10.0, inventoryRepo.getProductById(riceId)!!.stockQuantity, 0.001)
+
+        // 5. Auto-resolution of catalog items by product name when productId is null
+        val nameMatchedBillId = billingRepo.createBill(
+            receiptNumber = "BILL-004",
+            customerId = null,
+            subtotalPaise = 135_000L,
+            totalPaise = 135_000L,
+            amountPaidPaise = 135_000L,
+            paymentMethod = "CASH",
+            billType = "ITEMIZED",
+            items = listOf(
+                BillItemEntity(
+                    billId = 0L,
+                    description = "Daawat Basmati Rice 5kg (packet)",
+                    quantity = 3.0,
+                    unitPricePaise = 45_000L,
+                    lineTotalPaise = 135_000L,
+                    productId = null // No explicit ID passed - name matching will resolve it!
+                )
+            ),
+            cashPaidPaise = 135_000L
+        )
+        assertTrue(nameMatchedBillId > 0)
+        // Stock must be automatically deducted from 10.0 down to 7.0!
+        assertEquals(7.0, inventoryRepo.getProductById(riceId)!!.stockQuantity, 0.001)
     }
 
     @Test
@@ -690,5 +717,47 @@ class SmallShopFeaturesTest {
                 assertTrue(item.details.isNotBlank())
             }
         }
+    }
+
+    @Test
+    fun testWhatsAppPhoneNumberFormattingForDirectChat() {
+        // Standard 10-digit Indian numbers -> prepends 91
+        assertEquals("919876543210", ShareHelper.formatPhoneNumberForWhatsApp("9876543210"))
+        // 11 digits with leading 0 -> removes 0 and prepends 91
+        assertEquals("919876543210", ShareHelper.formatPhoneNumberForWhatsApp("09876543210"))
+        // 12 digits with 91 -> preserved
+        assertEquals("919876543210", ShareHelper.formatPhoneNumberForWhatsApp("919876543210"))
+        // Formatted with plus, spaces and dashes -> cleaned and prepends 91
+        assertEquals("919876543210", ShareHelper.formatPhoneNumberForWhatsApp("+91 98765-43210"))
+        // Blank or non-digits -> empty string
+        assertEquals("", ShareHelper.formatPhoneNumberForWhatsApp(""))
+    }
+
+    @Test
+    fun testWhatsAppBillSummaryTextGeneration() {
+        val summary = ShareHelper.buildBillWhatsAppText(
+            shopName = "Kirana Store",
+            receiptNumber = "BILL-20261027-001",
+            customerName = "Ramesh Kumar",
+            items = listOf(
+                "Basmati Rice (2.5 kg)" to 25000L,
+                "Mustard Oil (1 ltr)" to 16000L,
+                "Previous Udhaar Balance" to 50000L
+            ),
+            subtotalPaise = 91000L,
+            discountPaise = 1000L,
+            totalPaise = 90000L,
+            amountPaidPaise = 50000L,
+            paymentMethod = "CASH"
+        )
+
+        assertTrue(summary.contains("Kirana Store"))
+        assertTrue(summary.contains("BILL-20261027-001"))
+        assertTrue(summary.contains("Ramesh Kumar"))
+        assertTrue(summary.contains("Basmati Rice (2.5 kg)"))
+        assertTrue(summary.contains("Mustard Oil (1 ltr)"))
+        assertTrue(summary.contains("Previous Udhaar Balance"))
+        assertTrue(summary.contains("Total Amount"))
+        assertTrue(summary.contains("Balance Due (Udhaar)"))
     }
 }

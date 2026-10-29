@@ -63,7 +63,7 @@ val guideCategories = listOf(
             ),
             GuideSectionItem(
                 title = "Language Selection (English / हिन्दी)",
-                details = "Syntaxa Khata provides 100% bilingual support for English and Hindi. You can switch languages at any time from the 'More' tab under 'Language / भाषा'.",
+                details = "SmartKhata provides 100% bilingual support for English and Hindi. You can switch languages at any time from the 'More' tab under 'Language / भाषा'.",
                 steps = listOf(
                     "Navigate to 'More' -> 'Language / भाषा'",
                     "Select 'English' or 'हिन्दी (Hindi)'",
@@ -130,7 +130,7 @@ val guideCategories = listOf(
         items = listOf(
             GuideSectionItem(
                 title = "Quick Total vs Itemized Mode",
-                details = "Syntaxa Khata supports two billing modes tailored for counter speed:",
+                details = "SmartKhata supports two billing modes tailored for counter speed:",
                 steps = listOf(
                     "Quick Total Mode: Simply type the total amount (e.g. ₹250) for fast rush-hour billing without selecting items",
                     "Itemized Mode: Search and pick items from your catalog, enter quantity, rate, and discounts",
@@ -244,7 +244,7 @@ val guideCategories = listOf(
                     "Go to 'More' tab -> 'Backup & Restore'",
                     "Tap 'Create Encrypted Backup' and set a password (min 12 characters)",
                     "Save the encrypted file to Google Drive or internal storage",
-                    "On a new phone, install Syntaxa Khata, select 'Restore from Backup', enter your password, and your data is restored"
+                    "On a new phone, install SmartKhata, select 'Restore from Backup', enter your password, and your data is restored"
                 ),
                 proTip = "Export an encrypted backup every Sunday to Google Drive. Your financial records will remain safe even if your phone is lost or damaged."
             )
@@ -261,7 +261,7 @@ val guideCategories = listOf(
                 details = "Print crisp physical receipts directly from your phone counter.",
                 steps = listOf(
                     "Pair your Bluetooth thermal printer in Android Bluetooth Settings first",
-                    "Open Syntaxa Khata -> 'More' tab -> 'Bluetooth Printer'",
+                    "Open SmartKhata -> 'More' tab -> 'Bluetooth Printer'",
                     "Select your paired printer and choose paper width (58mm mini or 80mm wide)",
                     "Tap 'Test Print' to verify the connection"
                 )
@@ -286,15 +286,15 @@ val guideCategories = listOf(
         items = listOf(
             GuideSectionItem(
                 title = "Does this app require an internet connection?",
-                details = "No! Syntaxa Khata is 100% offline-first. All customer records, billing, printing, inventory, expenses, and PDF receipts work completely offline without an internet connection."
+                details = "No! SmartKhata is 100% offline-first. All customer records, billing, printing, inventory, expenses, and PDF receipts work completely offline without an internet connection."
             ),
             GuideSectionItem(
                 title = "What happens if I change my phone?",
-                details = "Simply export an Encrypted Backup from the 'More' tab and save it to Google Drive. When you install Syntaxa Khata on your new phone, tap 'Restore from Backup', enter your backup password, and all your records will be restored seamlessly."
+                details = "Simply export an Encrypted Backup from the 'More' tab and save it to Google Drive. When you install SmartKhata on your new phone, tap 'Restore from Backup', enter your backup password, and all your records will be restored seamlessly."
             ),
             GuideSectionItem(
                 title = "Is my financial or customer data uploaded anywhere?",
-                details = "Never. Syntaxa Khata does not have cloud databases, analytics SDKs, or ad trackers. Your data is stored locally in an encrypted Room SQLite database on your own device."
+                details = "Never. SmartKhata does not have cloud databases, analytics SDKs, or ad trackers. Your data is stored locally in an encrypted Room SQLite database on your own device."
             )
         )
     )
@@ -472,7 +472,11 @@ fun UserGuideScreen(
             }
 
             // Categorized Guide Items
-            items(filteredCategories, key = { it.id }) { category ->
+            items(
+                items = filteredCategories,
+                key = { it.id },
+                contentType = { "guide_category" }
+            ) { category ->
                 val isExpanded = expandedCategories.contains(category.id) || searchQuery.isNotEmpty()
 
                 ElevatedCard(

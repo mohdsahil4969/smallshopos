@@ -8,6 +8,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +38,7 @@ import com.syntaxa.khata.R
 import com.syntaxa.khata.core.ui.components.KiranaCard
 import com.syntaxa.khata.core.ui.theme.KiranaCreditGreen
 import com.syntaxa.khata.core.ui.theme.KiranaGreenPrimary
+import com.syntaxa.khata.core.util.QrCodeGenerator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,13 +61,63 @@ fun SubscriptionPaywallScreen(
     var showSuccessDialog by remember { mutableStateOf(false) }
     var showCancelDialog by remember { mutableStateOf(false) }
     var showOfflineTab by remember { mutableStateOf(false) }
+    var autoCheckPromptUtr by remember { mutableStateOf(false) }
+
+    fun checkAndApplyClipboardUtr(): String? {
+        try {
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return null
+            if (!clipboard.hasPrimaryClip()) return null
+            val clip = clipboard.primaryClip ?: return null
+            if (clip.itemCount > 0) {
+                val text = clip.getItemAt(0)?.text?.toString()?.trim() ?: return null
+                val regex = Regex("""\b\d{12}\b""")
+                val match = regex.find(text)
+                if (match != null) {
+                    val detected = match.value
+                    if (!subscriptionManager.isDummyOrInvalidUtr(detected)) {
+                        return detected
+                    }
+                }
+            }
+        } catch (_: Exception) {}
+        return null
+    }
+
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                val detected = checkAndApplyClipboardUtr()
+                if (detected != null && utrInput.isBlank()) {
+                    utrInput = detected
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     fun startAutoPaymentDetection() {
         if (isAutoChecking) return
         isAutoChecking = true
+        autoCheckPromptUtr = false
         coroutineScope.launch {
-            for (attempt in 1..6) {
-                kotlinx.coroutines.delay(3000L)
+            for (attempt in 1..8) {
+                kotlinx.coroutines.delay(2500L)
+                // 1. Check if user copied 12-digit UTR to clipboard while in UPI app
+                val clipboardUtr = checkAndApplyClipboardUtr()
+                if (clipboardUtr != null && utrInput.isBlank()) {
+                    utrInput = clipboardUtr
+                    val verifyRes = subscriptionManager.verifyUtrWithServer(utr = clipboardUtr)
+                    if (verifyRes is UtrVerificationResult.Success) {
+                        isAutoChecking = false
+                        showSuccessDialog = true
+                        return@launch
+                    }
+                }
+                // 2. Check if server already has an active confirmation for this device
                 val unlocked = subscriptionManager.checkAndAutoActivatePro()
                 if (unlocked) {
                     isAutoChecking = false
@@ -73,6 +126,7 @@ fun SubscriptionPaywallScreen(
                 }
             }
             isAutoChecking = false
+            autoCheckPromptUtr = true
         }
     }
 
@@ -81,7 +135,7 @@ fun SubscriptionPaywallScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Syntaxa PRO",
+                        text = "SmartKhata PRO",
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
                 },
@@ -101,7 +155,7 @@ fun SubscriptionPaywallScreen(
                             modifier = Modifier.padding(end = 12.dp)
                         ) {
                             Text(
-                                text = "PRO ACTIVE (${status.daysRemaining}d)",
+                                text = stringResource(R.string.pro_active_days, status.daysRemaining),
                                 style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                                 color = Color(0xFF065F46),
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -121,7 +175,7 @@ fun SubscriptionPaywallScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(top = 8.dp, bottom = 40.dp)
         ) {
-            // Auto Checking Indicator Banner (Mirrors shopmanager FamPay Cloud Detection)
+            // Auto Checking Indicator Banner
             if (isAutoChecking) {
                 item {
                     Card(
@@ -144,7 +198,7 @@ fun SubscriptionPaywallScreen(
                             Spacer(modifier = Modifier.width(14.dp))
                             Column {
                                 Text(
-                                    text = "Detecting Payment Automatically...",
+                                    text = "Listening for UPI Payment...",
                                     style = MaterialTheme.typography.titleSmall.copy(
                                         fontWeight = FontWeight.Bold,
                                         color = Color(0xFF1E40AF)
@@ -152,10 +206,60 @@ fun SubscriptionPaywallScreen(
                                 )
                                 Spacer(modifier = Modifier.height(2.dp))
                                 Text(
-                                    text = "Checking FamPay cloud confirmation. Pro will auto-unlock...",
+                                    text = "Copy 12-digit UPI UTR in GPay to activate automatically...",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF3B82F6)
                                 )
+                            }
+                        }
+                    }
+                }
+            } else if (autoCheckPromptUtr && !status.isPro) {
+                item {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFEF3C7)),
+                        border = BorderStroke(1.5.dp, Color(0xFFF59E0B))
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Default.Info, contentDescription = null, tint = Color(0xFFD97706), modifier = Modifier.size(22.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "Payment Completed in GPay / PhonePe?",
+                                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold, color = Color(0xFF92400E))
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "NPCI/GPay does not share payment status automatically. Copy the 12-digit UPI Transaction ID from your GPay receipt and tap below to log in Google Sheets & unlock PRO instantly!",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color(0xFF78350F)
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                OutlinedButton(
+                                    onClick = {
+                                        val detected = checkAndApplyClipboardUtr()
+                                        if (detected != null) {
+                                            utrInput = detected
+                                            utrError = null
+                                            Toast.makeText(context, "Pasted UTR: $detected", Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            Toast.makeText(context, "No 12-digit UTR found in clipboard. Copy it from your GPay receipt.", Toast.LENGTH_LONG).show()
+                                        }
+                                    },
+                                    shape = RoundedCornerShape(8.dp),
+                                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+                                ) {
+                                    Icon(Icons.Default.ContentPaste, contentDescription = null, modifier = Modifier.size(16.dp))
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text("Paste from Clipboard", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                }
                             }
                         }
                     }
@@ -200,7 +304,7 @@ fun SubscriptionPaywallScreen(
                         Spacer(modifier = Modifier.height(14.dp))
 
                         Text(
-                            text = "Upgrade to Syntaxa PRO",
+                            text = "Upgrade to SmartKhata PRO",
                             style = MaterialTheme.typography.headlineSmall.copy(
                                 fontWeight = FontWeight.ExtraBold,
                                 color = Color.White
@@ -279,11 +383,11 @@ fun SubscriptionPaywallScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = "PRO Monthly Plan",
+                                    text = stringResource(R.string.pro_monthly_plan),
                                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                                 )
                                 Text(
-                                    text = "30 Days Complete Store Suite",
+                                    text = stringResource(R.string.plan_duration_suite),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -294,7 +398,7 @@ fun SubscriptionPaywallScreen(
                                 color = Color(0xFFFEF3C7)
                             ) {
                                 Text(
-                                    text = "BEST VALUE",
+                                    text = stringResource(R.string.best_value),
                                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                                     color = Color(0xFF92400E),
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -355,11 +459,56 @@ fun SubscriptionPaywallScreen(
                 }
             }
 
-            // 4. Step 1: 1-Tap UPI Payment
+            // 4. Step 1: Scan QR Code or Open UPI App
             item {
+                val upiUri = remember { subscriptionManager.buildUpiPaymentUri() }
+                val qrBitmap = remember(upiUri) { QrCodeGenerator.generateQrBitmap(upiUri, 512) }
+
+                fun launchUpiPayment(targetPackage: String? = null) {
+                    try {
+                        val baseIntent = Intent(Intent.ACTION_VIEW, Uri.parse(upiUri)).apply {
+                            if (targetPackage != null) {
+                                setPackage(targetPackage)
+                            }
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                        if (targetPackage == null) {
+                            val chooser = Intent.createChooser(baseIntent, "Choose UPI App to Pay ₹49").apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            context.startActivity(chooser)
+                        } else {
+                            context.startActivity(baseIntent)
+                        }
+                    } catch (e: Exception) {
+                        try {
+                            val chooserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(upiUri)).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            val chooser = Intent.createChooser(chooserIntent, "Choose UPI App to Pay ₹49").apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            context.startActivity(chooser)
+                        } catch (_: Exception) {
+                            Toast.makeText(
+                                context,
+                                "No UPI app found. Please scan the QR code or pay manually to ${SubscriptionManager.DEFAULT_UPI_ID}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                    startAutoPaymentDetection()
+                }
+
                 KiranaCard {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Surface(
                                 shape = CircleShape,
                                 color = MaterialTheme.colorScheme.primaryContainer,
@@ -371,48 +520,169 @@ fun SubscriptionPaywallScreen(
                             }
                             Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = "Pay ₹49 via Any UPI App",
+                                text = stringResource(R.string.pay_via_upi_title),
                                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                             )
                         }
 
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        // QR Code Surface
+                        Surface(
+                            shape = RoundedCornerShape(16.dp),
+                            color = Color.White,
+                            border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.outlineVariant),
+                            shadowElevation = 2.dp,
+                            modifier = Modifier.padding(vertical = 4.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(14.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                if (qrBitmap != null) {
+                                    Image(
+                                        bitmap = qrBitmap.asImageBitmap(),
+                                        contentDescription = "Scan to Pay ₹49",
+                                        modifier = Modifier.size(190.dp)
+                                    )
+                                } else {
+                                    Box(
+                                        modifier = Modifier.size(190.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            Icons.Default.QrCodeScanner,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(64.dp),
+                                            tint = MaterialTheme.colorScheme.primary
+                                        )
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Text(
+                                    text = "Scan with any UPI App",
+                                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                                    color = Color.Black
+                                )
+                                Text(
+                                    text = "Google Pay • PhonePe • Paytm • BHIM",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color.DarkGray,
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
+
                         Spacer(modifier = Modifier.height(10.dp))
 
-                        Text(
-                            text = "Tap the button below to open Google Pay, PhonePe, Paytm, or BHIM directly:",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        // Copyable UPI ID Box
+                        Surface(
+                            shape = RoundedCornerShape(10.dp),
+                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "UPI ID / VPA:",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                    Text(
+                                        text = SubscriptionManager.DEFAULT_UPI_ID,
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = KiranaGreenPrimary
+                                    )
+                                }
+                                OutlinedButton(
+                                    onClick = {
+                                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                        clipboard.setPrimaryClip(ClipData.newPlainText("UPI ID", SubscriptionManager.DEFAULT_UPI_ID))
+                                        Toast.makeText(context, "UPI ID copied: ${SubscriptionManager.DEFAULT_UPI_ID}", Toast.LENGTH_SHORT).show()
+                                    },
+                                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                                    shape = RoundedCornerShape(8.dp),
+                                    modifier = Modifier.height(36.dp)
+                                ) {
+                                    Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(16.dp))
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text("Copy", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                                }
+                            }
+                        }
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        Button(
-                            onClick = {
-                                val upiUri = subscriptionManager.buildUpiPaymentUri()
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(upiUri)).apply {
-                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                }
-                                try {
-                                    context.startActivity(intent)
-                                } catch (e: Exception) {
-                                    Toast.makeText(context, "No UPI app found. Please install Google Pay, PhonePe, or Paytm.", Toast.LENGTH_SHORT).show()
-                                }
-                                startAutoPaymentDetection()
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(48.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = KiranaGreenPrimary)
+                        Text(
+                            text = "Or tap to pay directly from your installed app:",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // Row 1 of App buttons: GPay + PhonePe
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Icon(Icons.Default.Payment, contentDescription = null)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "Pay ₹49 via UPI App",
-                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                            Button(
+                                onClick = { launchUpiPayment("com.google.android.apps.nbu.paisa.user") },
+                                modifier = Modifier.weight(1f).height(46.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                            ) {
+                                Icon(Icons.Default.Payment, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Google Pay", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
+                            }
+
+                            Button(
+                                onClick = { launchUpiPayment("com.phonepe.app") },
+                                modifier = Modifier.weight(1f).height(46.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = KiranaGreenPrimary)
+                            ) {
+                                Icon(Icons.Default.Payment, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("PhonePe", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // Row 2 of App buttons: Paytm + Other UPI Apps
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            FilledTonalButton(
+                                onClick = { launchUpiPayment("net.one97.paytm") },
+                                modifier = Modifier.weight(1f).height(46.dp),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Icon(Icons.Default.Payment, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Paytm", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
+                            }
+
+                            OutlinedButton(
+                                onClick = { launchUpiPayment(null) },
+                                modifier = Modifier.weight(1f).height(46.dp),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Icon(Icons.Default.Launch, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Any UPI App", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
+                            }
                         }
                     }
                 }
@@ -434,7 +704,7 @@ fun SubscriptionPaywallScreen(
                             }
                             Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = "Enter 12-Digit UTR to Activate",
+                                text = stringResource(R.string.enter_utr_title),
                                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                             )
                         }
@@ -464,10 +734,54 @@ fun SubscriptionPaywallScreen(
                             trailingIcon = {
                                 if (utrInput.length == 12) {
                                     Icon(Icons.Default.CheckCircle, contentDescription = null, tint = KiranaCreditGreen)
+                                } else {
+                                    IconButton(onClick = {
+                                        val detected = checkAndApplyClipboardUtr()
+                                        if (detected != null) {
+                                            utrInput = detected
+                                            utrError = null
+                                            Toast.makeText(context, "Pasted UTR: $detected", Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            Toast.makeText(context, "No 12-digit UPI UTR in clipboard. Copy it from your UPI receipt.", Toast.LENGTH_LONG).show()
+                                        }
+                                    }) {
+                                        Icon(Icons.Default.ContentPaste, contentDescription = "Paste from Clipboard", tint = MaterialTheme.colorScheme.primary)
+                                    }
                                 }
                             },
                             modifier = Modifier.fillMaxWidth()
                         )
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Found in GPay -> 'UPI transaction ID'",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            TextButton(
+                                onClick = {
+                                    val detected = checkAndApplyClipboardUtr()
+                                    if (detected != null) {
+                                        utrInput = detected
+                                        utrError = null
+                                        Toast.makeText(context, "Pasted UTR: $detected", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, "No 12-digit UPI UTR in clipboard. Copy it from your UPI receipt.", Toast.LENGTH_LONG).show()
+                                    }
+                                },
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
+                            ) {
+                                Icon(Icons.Default.ContentPaste, contentDescription = null, modifier = Modifier.size(14.dp))
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text("Paste from Clipboard", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
 
                         if (utrError != null) {
                             Spacer(modifier = Modifier.height(4.dp))
@@ -505,7 +819,7 @@ fun SubscriptionPaywallScreen(
                             enabled = utrInput.length == 12 && !isVerifyingUtr,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(48.dp),
+                                .defaultMinSize(minHeight = 48.dp),
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             if (isVerifyingUtr) {
@@ -515,7 +829,7 @@ fun SubscriptionPaywallScreen(
                                     strokeWidth = 2.dp
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Verifying with Google Sheets...", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                Text(stringResource(R.string.verifying_with_server), maxLines = 1, overflow = TextOverflow.Ellipsis)
                             } else {
                                 Icon(Icons.Default.CloudDone, contentDescription = null)
                                 Spacer(modifier = Modifier.width(8.dp))
@@ -543,7 +857,7 @@ fun SubscriptionPaywallScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Have an Offline License Code?",
+                                text = stringResource(R.string.have_offline_code),
                                 style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
                             )
                             Icon(
@@ -571,7 +885,7 @@ fun SubscriptionPaywallScreen(
                                         }
                                     },
                                     label = { Text("License / Promo Code") },
-                                    placeholder = { Text("e.g. 7A8B9C or VIP365") },
+                                    placeholder = { Text("e.g. SYN-9X8K2P") },
                                     isError = offlineCodeError != null,
                                     singleLine = true,
                                     modifier = Modifier.fillMaxWidth()
@@ -608,10 +922,10 @@ fun SubscriptionPaywallScreen(
                                     enabled = offlineCodeInput.length >= 5,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(48.dp),
+                                        .defaultMinSize(minHeight = 48.dp),
                                     shape = RoundedCornerShape(10.dp)
                                 ) {
-                                    Text("Activate License", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                    Text(stringResource(R.string.activate_license), maxLines = 1, overflow = TextOverflow.Ellipsis)
                                 }
 
                                 if (status.isPro) {
@@ -620,7 +934,7 @@ fun SubscriptionPaywallScreen(
                                         onClick = { showCancelDialog = true },
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .height(48.dp),
+                                            .defaultMinSize(minHeight = 48.dp),
                                         shape = RoundedCornerShape(10.dp),
                                         colors = ButtonDefaults.outlinedButtonColors(
                                             contentColor = MaterialTheme.colorScheme.error
@@ -629,7 +943,7 @@ fun SubscriptionPaywallScreen(
                                     ) {
                                         Icon(Icons.Default.Cancel, contentDescription = null, modifier = Modifier.size(18.dp))
                                         Spacer(modifier = Modifier.width(8.dp))
-                                        Text("Cancel Subscription (Return to Free)", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                        Text(stringResource(R.string.cancel_subscription_btn), maxLines = 1, overflow = TextOverflow.Ellipsis)
                                     }
                                 }
 
@@ -684,7 +998,7 @@ fun SubscriptionPaywallScreen(
                         modifier = Modifier.size(28.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Welcome to Syntaxa PRO! 🎉", fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.welcome_pro_title), fontWeight = FontWeight.Bold)
                 }
             },
             text = {
@@ -709,7 +1023,7 @@ fun SubscriptionPaywallScreen(
                     modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Start Using PRO", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.start_using_pro), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         )
@@ -727,7 +1041,7 @@ fun SubscriptionPaywallScreen(
                         tint = MaterialTheme.colorScheme.error
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Cancel PRO Subscription?", fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.cancel_pro_title), fontWeight = FontWeight.Bold)
                 }
             },
             text = {
@@ -747,7 +1061,7 @@ fun SubscriptionPaywallScreen(
                     modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Yes, Cancel Subscription", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.yes_cancel_sub), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             },
             dismissButton = {
@@ -756,7 +1070,7 @@ fun SubscriptionPaywallScreen(
                     modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Keep Active", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.keep_active), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         )

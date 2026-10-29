@@ -70,7 +70,7 @@ class SubscriptionSecurityTest {
 
         assertTrue("PRO must be active", status.isPro)
         assertEquals(SubscriptionTier.PRO_MONTHLY, status.tier)
-        assertEquals("Syntaxa PRO", status.tierName)
+        assertEquals("SmartKhata PRO", status.tierName)
         assertTrue("Days remaining should be between 29 and 30", status.daysRemaining in 29..30)
         assertEquals("TEST_PAYMENT_123", status.paymentRef)
 
@@ -115,6 +115,12 @@ class SubscriptionSecurityTest {
         assertFalse("Alphanumeric UTR must fail", subscriptionManager.verifyUtrAndActivate("12345678901A"))
         assertFalse("Empty UTR must fail", subscriptionManager.verifyUtrAndActivate(""))
         assertFalse("Whitespace-only UTR must fail", subscriptionManager.verifyUtrAndActivate("            "))
+
+        // Dummy and sequential pattern checks
+        assertTrue("Repeated digit UTR must be flagged as invalid", subscriptionManager.isDummyOrInvalidUtr("000000000000"))
+        assertTrue("Repeated digit UTR must be flagged as invalid", subscriptionManager.isDummyOrInvalidUtr("111111111111"))
+        assertTrue("Sequential UTR must be flagged as invalid", subscriptionManager.isDummyOrInvalidUtr("123456789012"))
+        assertFalse("Real 12-digit UTR must pass client dummy check", subscriptionManager.isDummyOrInvalidUtr("432891234567"))
 
         // Status must remain FREE
         assertFalse(subscriptionManager.getStatus().isPro)
@@ -162,13 +168,17 @@ class SubscriptionSecurityTest {
 
     @Test
     fun test6d_ownerLifetimeCode_activates3650DaysPro() {
-        val success = subscriptionManager.verifyOfflineCode("OWNER2026")
-        assertTrue("OWNER2026 must activate PRO", success)
+        val success = subscriptionManager.verifyOfflineCode("SYNTAXA_SEC_LIFETIME_2026")
+        assertTrue("Secure lifetime master token must activate PRO", success)
 
         val status = subscriptionManager.getStatus()
         assertTrue(status.isPro)
-        assertEquals("OWNER_LIFETIME:OWNER2026", status.paymentRef)
+        assertEquals("OWNER_LIFETIME:SYNTAXA_SEC_LIFETIME_2026", status.paymentRef)
         assertEquals(3650, status.daysRemaining)
+
+        // Ensure old guessable codes are rejected
+        assertFalse("Guessable OWNER2026 must fail", subscriptionManager.verifyOfflineCode("OWNER2026"))
+        assertFalse("Guessable LIFETIME must fail", subscriptionManager.verifyOfflineCode("LIFETIME"))
     }
 
     @Test
@@ -186,13 +196,17 @@ class SubscriptionSecurityTest {
 
     @Test
     fun test6b_vipMasterYearCode_activates365DaysPro() {
-        val success = subscriptionManager.verifyOfflineCode("VIP365")
-        assertTrue("VIP365 must activate PRO", success)
+        val success = subscriptionManager.verifyOfflineCode("SYNTAXA_SEC_VIP_365_2026")
+        assertTrue("Secure VIP master token must activate PRO", success)
 
         val status = subscriptionManager.getStatus()
         assertTrue(status.isPro)
-        assertEquals("MASTER_VIP_1YEAR:VIP365", status.paymentRef)
+        assertEquals("MASTER_VIP_1YEAR:SYNTAXA_SEC_VIP_365_2026", status.paymentRef)
         assertEquals(365, status.daysRemaining)
+
+        // Ensure old guessable codes are rejected
+        assertFalse("Guessable VIP365 must fail", subscriptionManager.verifyOfflineCode("VIP365"))
+        assertFalse("Guessable PRO1YEAR must fail", subscriptionManager.verifyOfflineCode("PRO1YEAR"))
     }
 
     @Test

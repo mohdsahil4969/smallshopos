@@ -7,7 +7,7 @@ param(
     [string]$Payer = "UPI Customer"
 )
 
-$WebhookUrl = "https://script.google.com/macros/s/AKfycbyHdJVvXx4o6Afvqrakm4GT9frKcnJjcIlRvAKKJ8Dhwjzi0mAzvi1GB4LbwJLiLHsK/exec"
+$WebhookUrl = "https://script.google.com/macros/s/AKfycbyn2XGiekYBTKgODflwhl5OuCxD_6dNLkoO7qeAJrpN1s4A-C4lIJjIPPkm0g5WE654/exec"
 
 $cleanUtr = $UTR.Trim().Replace(" ", "").Replace("-", "")
 if ($cleanUtr.Length -ne 12 -or -not ($cleanUtr -match '^\d{12}$')) {
@@ -27,7 +27,7 @@ try {
     $resp = Invoke-RestMethod -Uri $WebhookUrl -Method Post -Body $body -ContentType "application/json"
     if ($resp.success) {
         Write-Host "SUCCESS: $($resp.message)" -ForegroundColor Green
-        Write-Host "UTR $cleanUtr is now ACTIVE and ready for the customer to verify in Syntaxa Khata!" -ForegroundColor Green
+        Write-Host "UTR $cleanUtr is now ACTIVE and ready for the customer to verify in SmartKhata!" -ForegroundColor Green
     } else {
         Write-Host "RESPONSE: $($resp.message)" -ForegroundColor Yellow
     }

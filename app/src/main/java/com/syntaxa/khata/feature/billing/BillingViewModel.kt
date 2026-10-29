@@ -76,6 +76,7 @@ class BillingViewModel(private val container: KhataAppContainer) : ViewModel() {
         upiPaidPaise: Long = 0L,
         otherPaidPaise: Long = 0L,
         idempotencyKey: String = UUID.randomUUID().toString(),
+        oldUdhaarIncludedPaise: Long = 0L,
         onSuccess: (BillWithItems) -> Unit,
         onError: (String) -> Unit
     ) {
@@ -105,12 +106,23 @@ class BillingViewModel(private val container: KhataAppContainer) : ViewModel() {
                     cashPaidPaise = cashPaidPaise,
                     upiPaidPaise = upiPaidPaise,
                     otherPaidPaise = otherPaidPaise,
-                    idempotencyKey = idempotencyKey
+                    idempotencyKey = idempotencyKey,
+                    oldUdhaarIncludedPaise = oldUdhaarIncludedPaise
                 )
 
                 val fullBill = container.billingRepository.getBillWithItems(billId)
                 if (fullBill != null) {
                     _lastGeneratedBill.value = fullBill
+                    if (amountPaidPaise > 0L) {
+                        try {
+                            val shop = container.shopProfileRepository.getShopProfile()
+                            container.audioSoundboxManager.announcePayment(
+                                amountPaise = amountPaidPaise,
+                                method = paymentMethod,
+                                storeLanguage = shop.language
+                            )
+                        } catch (_: Throwable) {}
+                    }
                     onSuccess(fullBill)
                 } else {
                     onError("Failed to load saved bill")
@@ -131,6 +143,8 @@ class BillingViewModel(private val container: KhataAppContainer) : ViewModel() {
             }
         }
     }
+
+    suspend fun getShopProfile(): ShopProfileEntity = container.shopProfileRepository.getShopProfile()
 
     suspend fun generateBillPdf(context: Context, billWithItems: BillWithItems): File {
         val shop = container.shopProfileRepository.getShopProfile()

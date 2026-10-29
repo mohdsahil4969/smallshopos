@@ -36,6 +36,7 @@ import com.syntaxa.khata.core.model.DateTimeUtils
 import com.syntaxa.khata.core.ui.components.KiranaCard
 import com.syntaxa.khata.core.ui.theme.KiranaCreditGreen
 import com.syntaxa.khata.core.ui.theme.KiranaDebitRed
+import com.syntaxa.khata.core.ui.theme.KiranaGreenPrimary
 import com.syntaxa.khata.data.local.entity.BillConstants
 import com.syntaxa.khata.data.local.entity.BillEntity
 import com.syntaxa.khata.data.local.entity.BillItemEntity
@@ -61,6 +62,7 @@ fun CustomerProfileScreen(
     onBack: () -> Unit,
     onOpenAddUdhaar: (Long) -> Unit,
     onOpenReceivePayment: (Long) -> Unit,
+    onNavigateToBilling: (Long) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -124,12 +126,12 @@ fun CustomerProfileScreen(
                         IconButton(onClick = {
                             if (c.archivedAt == null) {
                                 viewModel.archiveCustomer(c.id) {
-                                    Toast.makeText(context, "Customer archived", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.customer_archived_success), Toast.LENGTH_SHORT).show()
                                     onBack()
                                 }
                             } else {
                                 viewModel.restoreCustomer(c.id) {
-                                    Toast.makeText(context, "Customer restored", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.customer_restored_success), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }) {
@@ -272,17 +274,17 @@ fun CustomerProfileScreen(
                             onClick = { onOpenAddUdhaar(customer.id) },
                             modifier = Modifier
                                 .weight(1f)
-                                .height(48.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
+                                .defaultMinSize(minHeight = 44.dp),
+                            contentPadding = PaddingValues(horizontal = 6.dp, vertical = 4.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = KiranaDebitRed),
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(8.dp)
                         ) {
-                            Icon(Icons.Default.ArrowUpward, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.ArrowUpward, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = stringResource(R.string.action_add_udhaar),
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 13.sp,
+                                fontSize = 12.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -292,17 +294,17 @@ fun CustomerProfileScreen(
                             onClick = { onOpenReceivePayment(customer.id) },
                             modifier = Modifier
                                 .weight(1f)
-                                .height(48.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
+                                .defaultMinSize(minHeight = 44.dp),
+                            contentPadding = PaddingValues(horizontal = 6.dp, vertical = 4.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = KiranaCreditGreen),
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(8.dp)
                         ) {
-                            Icon(Icons.Default.ArrowDownward, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.ArrowDownward, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = stringResource(R.string.action_receive_payment),
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 13.sp,
+                                fontSize = 12.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -414,7 +416,7 @@ fun CustomerProfileScreen(
                 }
 
                 // ==========================================
-                // 4. Customer-Level Action Strip (WhatsApp, SMS, Email, PDF, Reminder)
+                // 4. Customer-Level Action Strip (Create Bill, WhatsApp, SMS, Email, PDF, Reminder)
                 // ==========================================
                 item {
                     Row(
@@ -423,6 +425,19 @@ fun CustomerProfileScreen(
                             .horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        // Create Bill button
+                        Button(
+                            onClick = { onNavigateToBilling(customer.id) },
+                            modifier = Modifier.defaultMinSize(minHeight = 36.dp),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = KiranaGreenPrimary)
+                        ) {
+                            Icon(Icons.AutoMirrored.Filled.ReceiptLong, contentDescription = null, modifier = Modifier.size(15.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(stringResource(R.string.create_bill_customer), fontSize = 11.5.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        }
+
                         // PDF Statement button
                         OutlinedButton(
                             onClick = {
@@ -434,19 +449,20 @@ fun CustomerProfileScreen(
                                             financialSummary.startEpoch,
                                             financialSummary.endEpoch
                                         )
-                                        ShareHelper.sharePdf(context, pdf, "Statement - ${customer.name}")
+                                        val caption = "Statement for ${customer.name} - Balance: ${CurrencyFormatter.formatPaise(financialSummary.currentOutstandingBalancePaise)}"
+                                        ShareHelper.shareViaWhatsApp(context, pdf, phone = customer.phone, caption = caption)
                                     } catch (e: Exception) {
                                         Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             },
-                            modifier = Modifier.height(40.dp),
+                            modifier = Modifier.defaultMinSize(minHeight = 36.dp),
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
-                            Icon(Icons.Default.PictureAsPdf, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.PictureAsPdf, contentDescription = null, modifier = Modifier.size(15.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(stringResource(R.string.share_pdf), fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.share_pdf), fontSize = 11.5.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
 
                         // WhatsApp statement summary
@@ -455,13 +471,13 @@ fun CustomerProfileScreen(
                                 val text = buildStatementShareText(customer.name, financialSummary)
                                 ShareHelper.shareTextViaWhatsApp(context, text, customer.phone)
                             },
-                            modifier = Modifier.height(40.dp),
+                            modifier = Modifier.defaultMinSize(minHeight = 36.dp),
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
-                            Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(15.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(stringResource(R.string.share_via_whatsapp), fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.share_via_whatsapp), fontSize = 11.5.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
 
                         // SMS statement summary
@@ -470,13 +486,13 @@ fun CustomerProfileScreen(
                                 val text = buildStatementShareText(customer.name, financialSummary)
                                 ShareHelper.shareTextViaSms(context, text, customer.phone)
                             },
-                            modifier = Modifier.height(40.dp),
+                            modifier = Modifier.defaultMinSize(minHeight = 36.dp),
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
-                            Icon(Icons.Default.Sms, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.Sms, contentDescription = null, modifier = Modifier.size(15.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("SMS", fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.sms), fontSize = 11.5.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
 
                         // Email statement
@@ -502,13 +518,13 @@ fun CustomerProfileScreen(
                                     }
                                 }
                             },
-                            modifier = Modifier.height(40.dp),
+                            modifier = Modifier.defaultMinSize(minHeight = 36.dp),
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
-                            Icon(Icons.Default.Email, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.Email, contentDescription = null, modifier = Modifier.size(15.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Email", fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.email), fontSize = 11.5.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
 
                         // Reminder button
@@ -520,13 +536,13 @@ fun CustomerProfileScreen(
                                     showReminderDialog = true
                                 }
                             },
-                            modifier = Modifier.height(40.dp),
+                            modifier = Modifier.defaultMinSize(minHeight = 36.dp),
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp)
                         ) {
-                            Icon(Icons.Default.NotificationsActive, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.NotificationsActive, contentDescription = null, modifier = Modifier.size(15.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(stringResource(R.string.reminder_message), fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.reminder_message), fontSize = 11.5.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     }
                 }
@@ -562,7 +578,11 @@ fun CustomerProfileScreen(
                         }
                     }
                 } else {
-                    items(ledgerEntries, key = { "${it.javaClass.simpleName}_${it.id}" }) { entry ->
+                    items(
+                        items = ledgerEntries,
+                        key = { "${it.javaClass.simpleName}_${it.id}" },
+                        contentType = { it.javaClass.simpleName }
+                    ) { entry ->
                         when (entry) {
                             is CustomerLedgerEntry.BillPurchase -> {
                                 val isExpanded = expandedBillIds[entry.id] ?: false
@@ -579,7 +599,21 @@ fun CustomerProfileScreen(
                                         coroutineScope.launch {
                                             try {
                                                 val pdf = viewModel.generateBillPdf(context, entry.billWithItems)
-                                                ShareHelper.sharePdf(context, pdf, "Bill ${entry.receiptNumber}")
+                                                val shop = viewModel.getShopProfile()
+                                                val itemsList = entry.billWithItems.items.map { it.description to it.lineTotalPaise }
+                                                val billText = ShareHelper.buildBillWhatsAppText(
+                                                    shopName = shop.shopName,
+                                                    receiptNumber = entry.receiptNumber,
+                                                    customerName = customer.name,
+                                                    items = itemsList,
+                                                    subtotalPaise = entry.billWithItems.bill.subtotalPaise,
+                                                    discountPaise = entry.billWithItems.bill.discountPaise,
+                                                    totalPaise = entry.billWithItems.bill.totalPaise,
+                                                    amountPaidPaise = entry.billWithItems.bill.amountPaidPaise,
+                                                    paymentMethod = entry.billWithItems.bill.paymentMethod,
+                                                    notes = entry.billWithItems.bill.notes
+                                                )
+                                                ShareHelper.shareViaWhatsApp(context, pdf, phone = customer.phone, caption = billText)
                                             } catch (e: Exception) {
                                                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                                             }
@@ -597,10 +631,10 @@ fun CustomerProfileScreen(
                                                 val res = viewModel.printBillThermal(context, entry.billWithItems)
                                                 when (res) {
                                                     is PrintResult.Success -> {
-                                                        Toast.makeText(context, "Receipt sent to printer!", Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(context, context.getString(R.string.receipt_sent_to_printer), Toast.LENGTH_SHORT).show()
                                                     }
                                                     is PrintResult.Failure -> {
-                                                        Toast.makeText(context, "Print error: ${res.message}", Toast.LENGTH_LONG).show()
+                                                        Toast.makeText(context, context.getString(R.string.print_error_format, res.message), Toast.LENGTH_LONG).show()
                                                     }
                                                 }
                                             }
@@ -649,11 +683,50 @@ fun CustomerProfileScreen(
         BillDetailDialog(
             billWithItems = bwi,
             onDismiss = { billDetailToView = null },
+            onShareWhatsAppDirect = {
+                coroutineScope.launch {
+                    try {
+                        val shop = viewModel.getShopProfile()
+                        val custPhone = customerWithBalance?.phone ?: bwi.customer?.phone ?: ""
+                        val itemsList = bwi.items.map { it.description to it.lineTotalPaise }
+                        val billText = ShareHelper.buildBillWhatsAppText(
+                            shopName = shop.shopName,
+                            receiptNumber = bwi.bill.receiptNumber,
+                            customerName = customerWithBalance?.name ?: bwi.customer?.name,
+                            items = itemsList,
+                            subtotalPaise = bwi.bill.subtotalPaise,
+                            discountPaise = bwi.bill.discountPaise,
+                            totalPaise = bwi.bill.totalPaise,
+                            amountPaidPaise = bwi.bill.amountPaidPaise,
+                            paymentMethod = bwi.bill.paymentMethod,
+                            notes = bwi.bill.notes
+                        )
+                        ShareHelper.shareTextViaWhatsApp(context, billText, phone = custPhone)
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "WhatsApp error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            },
             onSharePdf = {
                 coroutineScope.launch {
                     try {
                         val pdf = viewModel.generateBillPdf(context, bwi)
-                        ShareHelper.sharePdf(context, pdf, "Bill ${bwi.bill.receiptNumber}")
+                        val shop = viewModel.getShopProfile()
+                        val custPhone = customerWithBalance?.phone ?: bwi.customer?.phone ?: ""
+                        val itemsList = bwi.items.map { it.description to it.lineTotalPaise }
+                        val billText = ShareHelper.buildBillWhatsAppText(
+                            shopName = shop.shopName,
+                            receiptNumber = bwi.bill.receiptNumber,
+                            customerName = customerWithBalance?.name ?: bwi.customer?.name,
+                            items = itemsList,
+                            subtotalPaise = bwi.bill.subtotalPaise,
+                            discountPaise = bwi.bill.discountPaise,
+                            totalPaise = bwi.bill.totalPaise,
+                            amountPaidPaise = bwi.bill.amountPaidPaise,
+                            paymentMethod = bwi.bill.paymentMethod,
+                            notes = bwi.bill.notes
+                        )
+                        ShareHelper.shareViaWhatsApp(context, pdf, phone = custPhone, caption = billText)
                     } catch (e: Exception) {
                         Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
@@ -668,10 +741,10 @@ fun CustomerProfileScreen(
                         val res = viewModel.printBillThermal(context, bwi)
                         when (res) {
                             is PrintResult.Success -> {
-                                Toast.makeText(context, "Receipt sent to printer!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.receipt_sent_to_printer), Toast.LENGTH_SHORT).show()
                             }
                             is PrintResult.Failure -> {
-                                Toast.makeText(context, "Print error: ${res.message}", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, context.getString(R.string.print_error_format, res.message), Toast.LENGTH_LONG).show()
                             }
                         }
                     }
@@ -684,32 +757,84 @@ fun CustomerProfileScreen(
     billToShareModal?.let { bwi ->
         AlertDialog(
             onDismissRequest = { billToShareModal = null },
-            title = { Text("Share Bill #${bwi.bill.receiptNumber}", fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.share_bill_title, bwi.bill.receiptNumber), fontWeight = FontWeight.Bold) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Text("Total: ${CurrencyFormatter.formatPaise(bwi.bill.totalPaise)}")
-                    Text("Paid: ${CurrencyFormatter.formatPaise(bwi.bill.amountPaidPaise)} | Due: ${CurrencyFormatter.formatPaise(bwi.bill.totalPaise - bwi.bill.amountPaidPaise)}")
+                    Text(stringResource(R.string.total_amount_label, CurrencyFormatter.formatPaise(bwi.bill.totalPaise)))
+                    Text(stringResource(R.string.share_bill_summary, CurrencyFormatter.formatPaise(bwi.bill.amountPaidPaise), CurrencyFormatter.formatPaise(bwi.bill.totalPaise - bwi.bill.amountPaidPaise)))
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text("Choose how you want to share this bill receipt:")
+                    Text(stringResource(R.string.share_bill_instructions))
                 }
             },
             confirmButton = {
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            try {
-                                val pdf = viewModel.generateBillPdf(context, bwi)
-                                ShareHelper.shareViaWhatsApp(context, pdf)
-                            } catch (e: Exception) {
-                                Toast.makeText(context, "WhatsApp error: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                            billToShareModal = null
-                        }
-                    },
-                    modifier = Modifier.defaultMinSize(minHeight = 44.dp),
-                    shape = RoundedCornerShape(8.dp)
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("WhatsApp", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Button(
+                        onClick = {
+                            coroutineScope.launch {
+                                try {
+                                    val shop = viewModel.getShopProfile()
+                                    val custPhone = customerWithBalance?.phone ?: bwi.customer?.phone ?: ""
+                                    val itemsList = bwi.items.map { it.description to it.lineTotalPaise }
+                                    val billText = ShareHelper.buildBillWhatsAppText(
+                                        shopName = shop.shopName,
+                                        receiptNumber = bwi.bill.receiptNumber,
+                                        customerName = customerWithBalance?.name ?: bwi.customer?.name,
+                                        items = itemsList,
+                                        subtotalPaise = bwi.bill.subtotalPaise,
+                                        discountPaise = bwi.bill.discountPaise,
+                                        totalPaise = bwi.bill.totalPaise,
+                                        amountPaidPaise = bwi.bill.amountPaidPaise,
+                                        paymentMethod = bwi.bill.paymentMethod,
+                                        notes = bwi.bill.notes
+                                    )
+                                    ShareHelper.shareTextViaWhatsApp(context, billText, phone = custPhone)
+                                } catch (e: Exception) {
+                                    Toast.makeText(context, "WhatsApp error: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                                billToShareModal = null
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 44.dp),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(stringResource(R.string.whatsapp_direct), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
+
+                    OutlinedButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                try {
+                                    val pdf = viewModel.generateBillPdf(context, bwi)
+                                    val shop = viewModel.getShopProfile()
+                                    val custPhone = customerWithBalance?.phone ?: bwi.customer?.phone ?: ""
+                                    val itemsList = bwi.items.map { it.description to it.lineTotalPaise }
+                                    val billText = ShareHelper.buildBillWhatsAppText(
+                                        shopName = shop.shopName,
+                                        receiptNumber = bwi.bill.receiptNumber,
+                                        customerName = customerWithBalance?.name ?: bwi.customer?.name,
+                                        items = itemsList,
+                                        subtotalPaise = bwi.bill.subtotalPaise,
+                                        discountPaise = bwi.bill.discountPaise,
+                                        totalPaise = bwi.bill.totalPaise,
+                                        amountPaidPaise = bwi.bill.amountPaidPaise,
+                                        paymentMethod = bwi.bill.paymentMethod,
+                                        notes = bwi.bill.notes
+                                    )
+                                    ShareHelper.shareViaWhatsApp(context, pdf, phone = custPhone, caption = billText)
+                                } catch (e: Exception) {
+                                    Toast.makeText(context, "WhatsApp error: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                                billToShareModal = null
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 44.dp),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(stringResource(R.string.share_pdf_whatsapp), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
                 }
             },
             dismissButton = {
@@ -723,7 +848,7 @@ fun CustomerProfileScreen(
                         modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("SMS", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.sms), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                     TextButton(
                         onClick = {
@@ -740,7 +865,7 @@ fun CustomerProfileScreen(
                         modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("More...", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.share_more), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             }
@@ -766,7 +891,7 @@ fun CustomerProfileScreen(
                             }
                             context.startActivity(intent)
                         } catch (e: Exception) {
-                            Toast.makeText(context, "Could not open Bluetooth settings", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.cannot_open_bt_settings), Toast.LENGTH_SHORT).show()
                         }
                     },
                     modifier = Modifier.defaultMinSize(minHeight = 44.dp),
@@ -822,7 +947,7 @@ fun CustomerProfileScreen(
                         notes = updatedNotes,
                         onSuccess = {
                             showEditDialog = false
-                            Toast.makeText(context, "Customer details updated", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.customer_updated_success), Toast.LENGTH_SHORT).show()
                         },
                         onError = { err ->
                             Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
@@ -848,11 +973,11 @@ fun CustomerProfileScreen(
             },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("Ref: #TXN-${tx.id}")
-                    Text("Amount: ${CurrencyFormatter.formatPaise(tx.amountPaise)}")
-                    if (tx.description.isNotBlank()) Text("Note: ${tx.description}")
+                    Text(stringResource(R.string.txn_ref_label, tx.id))
+                    Text(stringResource(R.string.txn_amount_label, CurrencyFormatter.formatPaise(tx.amountPaise)))
+                    if (tx.description.isNotBlank()) Text(stringResource(R.string.txn_note_label, tx.description))
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("Share single transaction PDF receipt with customer:")
+                    Text(stringResource(R.string.share_single_txn_title))
                 }
             },
             confirmButton = {
@@ -861,7 +986,8 @@ fun CustomerProfileScreen(
                         coroutineScope.launch {
                             try {
                                 val pdf = viewModel.generateTransactionPdf(context, customerId, tx)
-                                ShareHelper.shareViaWhatsApp(context, pdf)
+                                val custPhone = customerWithBalance?.phone ?: ""
+                                ShareHelper.shareViaWhatsApp(context, pdf, phone = custPhone)
                             } catch (e: Exception) {
                                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                             }
@@ -915,7 +1041,7 @@ fun CustomerProfileScreen(
                         OutlinedTextField(
                             value = reminderText,
                             onValueChange = { reminderText = it },
-                            label = { Text("Message Text") },
+                            label = { Text(stringResource(R.string.message_text_label)) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(140.dp),
@@ -949,7 +1075,7 @@ fun CustomerProfileScreen(
                             modifier = Modifier.defaultMinSize(minHeight = 44.dp),
                             shape = RoundedCornerShape(8.dp)
                         ) {
-                            Text("SMS", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.sms), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                         TextButton(
                             onClick = {
@@ -988,7 +1114,7 @@ fun CustomerProfileScreen(
                     OutlinedTextField(
                         value = reversalReason,
                         onValueChange = { reversalReason = it },
-                        label = { Text("Reason (Optional)") },
+                        label = { Text(stringResource(R.string.reason_optional)) },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -999,7 +1125,7 @@ fun CustomerProfileScreen(
                         viewModel.reverseTransaction(tx.id, reversalReason) {
                             transactionToReverse = null
                             reversalReason = ""
-                            Toast.makeText(context, "Transaction reversed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.transaction_reversed_success), Toast.LENGTH_SHORT).show()
                         }
                     },
                     modifier = Modifier.defaultMinSize(minHeight = 44.dp),
@@ -1035,7 +1161,7 @@ fun CustomerProfileScreen(
         val c = customerWithBalance!!
         AlertDialog(
             onDismissRequest = { showDueDatePicker = false },
-            title = { Text("Set Payment Due Date") },
+            title = { Text(stringResource(R.string.set_due_date_title)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -1047,58 +1173,58 @@ fun CustomerProfileScreen(
                         onClick = {
                             viewModel.updateDueDate(c.id, now + 3 * 86400000L) {
                                 showDueDatePicker = false
-                                Toast.makeText(context, "Due date set: In 3 days", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.due_date_set_format, context.getString(R.string.in_3_days)), Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("+3 Days")
+                        Text(stringResource(R.string.in_3_days))
                     }
                     OutlinedButton(
                         onClick = {
                             viewModel.updateDueDate(c.id, now + 7 * 86400000L) {
                                 showDueDatePicker = false
-                                Toast.makeText(context, "Due date set: In 1 week", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.due_date_set_format, context.getString(R.string.in_1_week)), Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("+7 Days (1 Week)")
+                        Text(stringResource(R.string.in_1_week))
                     }
                     OutlinedButton(
                         onClick = {
                             viewModel.updateDueDate(c.id, now + 15 * 86400000L) {
                                 showDueDatePicker = false
-                                Toast.makeText(context, "Due date set: In 15 days", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.due_date_set_format, context.getString(R.string.in_15_days)), Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("+15 Days")
+                        Text(stringResource(R.string.in_15_days))
                     }
                     OutlinedButton(
                         onClick = {
                             viewModel.updateDueDate(c.id, now + 30 * 86400000L) {
                                 showDueDatePicker = false
-                                Toast.makeText(context, "Due date set: In 30 days", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.due_date_set_format, context.getString(R.string.in_30_days)), Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("+30 Days (Next Month)")
+                        Text(stringResource(R.string.in_30_days))
                     }
                     if (c.dueDate != null) {
                         TextButton(
                             onClick = {
                                 viewModel.updateDueDate(c.id, null) {
                                     showDueDatePicker = false
-                                    Toast.makeText(context, "Due date cleared", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.due_date_cleared_success), Toast.LENGTH_SHORT).show()
                                 }
                             },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)
                         ) {
-                            Text("Clear Due Date")
+                            Text(stringResource(R.string.clear_due_date))
                         }
                     }
                 }
@@ -1106,7 +1232,7 @@ fun CustomerProfileScreen(
             confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { showDueDatePicker = false }) {
-                    Text("Close")
+                    Text(stringResource(R.string.close))
                 }
             }
         )
@@ -1402,7 +1528,7 @@ fun BillLedgerItemCard(
                 ) {
                     Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(13.dp))
                     Spacer(modifier = Modifier.width(2.dp))
-                    Text("View", fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.view), fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
 
                 OutlinedButton(
@@ -1412,7 +1538,7 @@ fun BillLedgerItemCard(
                 ) {
                     Icon(Icons.Default.PictureAsPdf, contentDescription = null, modifier = Modifier.size(13.dp))
                     Spacer(modifier = Modifier.width(2.dp))
-                    Text("PDF", fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.pdf), fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
 
                 OutlinedButton(
@@ -1422,7 +1548,7 @@ fun BillLedgerItemCard(
                 ) {
                     Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(13.dp))
                     Spacer(modifier = Modifier.width(2.dp))
-                    Text("Share", fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.share), fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
 
                 OutlinedButton(
@@ -1432,7 +1558,7 @@ fun BillLedgerItemCard(
                 ) {
                     Icon(Icons.Default.Print, contentDescription = null, modifier = Modifier.size(13.dp))
                     Spacer(modifier = Modifier.width(2.dp))
-                    Text("Print", fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.print), fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         }
@@ -1693,6 +1819,7 @@ fun ReversalLedgerItemCard(
 fun BillDetailDialog(
     billWithItems: BillWithItems,
     onDismiss: () -> Unit,
+    onShareWhatsAppDirect: () -> Unit = {},
     onSharePdf: () -> Unit,
     onPrint: () -> Unit
 ) {
@@ -1836,37 +1963,56 @@ fun BillDetailDialog(
 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
-                // Actions: Share PDF & Thermal Print
-                Row(
+                // Actions: WhatsApp Direct, Thermal Print & Share PDF (WhatsApp)
+                Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = onShareWhatsAppDirect,
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 8.dp)
+                        ) {
+                            Text(
+                                stringResource(R.string.whatsapp_direct),
+                                fontSize = 11.5.sp,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+
+                        Button(
+                            onClick = onPrint,
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 8.dp)
+                        ) {
+                            Icon(Icons.Default.Print, contentDescription = null, modifier = Modifier.size(15.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                stringResource(R.string.print_receipt),
+                                fontSize = 11.5.sp,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+
                     OutlinedButton(
                         onClick = onSharePdf,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(8.dp),
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
                     ) {
                         Icon(Icons.Default.PictureAsPdf, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            stringResource(R.string.share_pdf),
-                            fontSize = 12.sp,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-
-                    Button(
-                        onClick = onPrint,
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(8.dp),
-                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
-                    ) {
-                        Icon(Icons.Default.Print, contentDescription = null, modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            stringResource(R.string.print_receipt),
+                            stringResource(R.string.share_pdf_whatsapp),
                             fontSize = 12.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis

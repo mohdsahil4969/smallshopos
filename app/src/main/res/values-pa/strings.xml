@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">ਸਿੰਟੈਕਸਾ ਖਾਤਾ</string>
-    <string name="tagline">ਔਫਲਾਈਨ ਦੁਕਾਨਦਾਰ ਸਹਾਇਕ</string>
+    <string name="app_name">ਸਮਾਰਟ ਖਾਤਾ</string>
+    <string name="tagline">ਸਮਾਰਟ ਬਿਲਿੰਗ ਅਤੇ ਉਧਾਰ - Syntaxa ਦੁਆਰਾ</string>
 
     <!-- Navigation -->
     <string name="nav_home">ਹੋਮ</string>

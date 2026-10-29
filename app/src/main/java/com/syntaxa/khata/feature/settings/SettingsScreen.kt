@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,10 +23,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.syntaxa.khata.R
+import com.syntaxa.khata.core.audio.AudioSoundboxManager
 import com.syntaxa.khata.core.model.DateTimeUtils
 import com.syntaxa.khata.core.model.SupportedLanguages
 import com.syntaxa.khata.core.ui.components.KiranaCard
 import com.syntaxa.khata.core.ui.theme.KiranaDebitRed
+import com.syntaxa.khata.core.util.StorageCleanerManager
 import com.syntaxa.khata.data.local.entity.ShopProfileEntity
 import com.syntaxa.khata.feature.backup.BackupValidationResult
 import com.syntaxa.khata.feature.backup.ParsedBackupData
@@ -84,6 +87,14 @@ fun SettingsScreen(
     var paperWidth by remember { mutableIntStateOf(BluetoothPrinterManager.WIDTH_58MM) }
     var isTestingPrint by remember { mutableStateOf(false) }
 
+    // Virtual Soundbox state
+    var isSoundboxEnabled by remember {
+        mutableStateOf(try { viewModel.isSoundboxEnabled() } catch (_: Throwable) { true })
+    }
+    var soundboxLang by remember {
+        mutableStateOf(try { viewModel.getSoundboxLanguage() } catch (_: Throwable) { AudioSoundboxManager.LANG_AUTO })
+    }
+
     // Security PIN state
     var isAppLockEnabled by remember {
         mutableStateOf(try { viewModel.isAppLockEnabled() } catch (_: Throwable) { false })
@@ -114,6 +125,11 @@ fun SettingsScreen(
     var pendingRestoreData by remember { mutableStateOf<ParsedBackupData?>(null) }
     var showRestorePasswordDialog by remember { mutableStateOf(false) }
     var restorePasswordInput by remember { mutableStateOf("") }
+
+    // Storage & Cache cleaner state
+    var cacheSizeBytes by remember {
+        mutableStateOf(StorageCleanerManager.getCacheSizeBytes(context))
+    }
 
     // Crash log diagnostic state
     val crashFile = remember { java.io.File(context.filesDir, "crash_log.txt") }
@@ -317,7 +333,7 @@ fun SettingsScreen(
 
                 Button(
                     onClick = onOpenUserGuide,
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = null)
@@ -333,7 +349,7 @@ fun SettingsScreen(
 
                 OutlinedButton(
                     onClick = onReplayWalkthrough,
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.PlayArrow, contentDescription = null)
@@ -349,7 +365,7 @@ fun SettingsScreen(
 
                 OutlinedButton(
                     onClick = onOpenTerms,
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.Gavel, contentDescription = null)
@@ -433,7 +449,7 @@ fun SettingsScreen(
                             }
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Text(
@@ -509,7 +525,7 @@ fun SettingsScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 } else {
-                    Text("Select Paired Printer:", style = MaterialTheme.typography.labelSmall)
+                    Text(stringResource(R.string.select_paired_printer), style = MaterialTheme.typography.labelSmall)
                     pairedDevices.forEach { dev ->
                         FilterChip(
                             selected = selectedPrinter?.address == dev.address,
@@ -556,7 +572,7 @@ fun SettingsScreen(
                             }
                         },
                         enabled = !isTestingPrint && selectedPrinter != null,
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Icon(Icons.Default.Print, contentDescription = null)
@@ -575,6 +591,103 @@ fun SettingsScreen(
                                 modifier = Modifier.size(16.dp)
                             )
                         }
+                    }
+                }
+            }
+        }
+
+        // 3b. Virtual Soundbox (Audio Payment Confirmation) Card
+        item {
+            KiranaCard {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                        Text(
+                            text = stringResource(R.string.soundbox_title),
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = stringResource(R.string.soundbox_subtitle),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                        Text(stringResource(R.string.soundbox_enable_label), fontWeight = FontWeight.SemiBold)
+                        Text(
+                            text = stringResource(R.string.soundbox_enable_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = isSoundboxEnabled,
+                        onCheckedChange = { enabled ->
+                            isSoundboxEnabled = enabled
+                            viewModel.setSoundboxEnabled(enabled)
+                        }
+                    )
+                }
+
+                if (isSoundboxEnabled) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(stringResource(R.string.soundbox_lang_label), style = MaterialTheme.typography.labelSmall)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf(
+                            AudioSoundboxManager.LANG_AUTO to stringResource(R.string.soundbox_lang_auto),
+                            AudioSoundboxManager.LANG_HI to stringResource(R.string.soundbox_lang_hi),
+                            AudioSoundboxManager.LANG_EN to stringResource(R.string.soundbox_lang_en)
+                        ).forEach { (code, label) ->
+                            FilterChip(
+                                selected = soundboxLang == code,
+                                onClick = {
+                                    soundboxLang = code
+                                    viewModel.setSoundboxLanguage(code)
+                                },
+                                label = { Text(label) }
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    OutlinedButton(
+                        onClick = {
+                            viewModel.testSoundbox(selectedLanguage)
+                        },
+                        modifier = Modifier.fillMaxWidth().height(44.dp),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Icon(Icons.Default.PlayArrow, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = stringResource(R.string.soundbox_test_btn),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
             }
@@ -659,7 +772,7 @@ fun SettingsScreen(
                         backupPasswordConfirmInput = ""
                         showBackupPasswordDialog = true
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.Security, contentDescription = null)
@@ -684,7 +797,7 @@ fun SettingsScreen(
                             Toast.makeText(context, "Cannot open file picker: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.CloudUpload, contentDescription = null)
@@ -707,7 +820,7 @@ fun SettingsScreen(
                             Toast.makeText(context, "Cannot open file picker: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Icon(Icons.Default.Restore, contentDescription = null)
@@ -786,7 +899,7 @@ fun SettingsScreen(
                     onClick = {
                         updateViewModel?.checkForUpdate(isManual = true)
                     },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                     shape = RoundedCornerShape(10.dp),
                     enabled = updateState.status != UpdateStatus.CHECKING && updateState.status != UpdateStatus.DOWNLOADING
                 ) {
@@ -824,7 +937,77 @@ fun SettingsScreen(
             }
         }
 
-        // 7. System Diagnostic Log Card (only shown if a crash was captured)
+        // 7. Storage & Cache Cleaner Card
+        item {
+            KiranaCard {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.storage_cleaner_title),
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = stringResource(R.string.storage_cleaner_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = if (cacheSizeBytes > 0L) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+                        modifier = Modifier.padding(start = 8.dp)
+                    ) {
+                        Text(
+                            text = StorageCleanerManager.formatSize(cacheSizeBytes),
+                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                            color = if (cacheSizeBytes > 0L) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                OutlinedButton(
+                    onClick = {
+                        val freed = StorageCleanerManager.cleanTemporaryStorage(context)
+                        cacheSizeBytes = StorageCleanerManager.getCacheSizeBytes(context)
+                        if (freed > 0L) {
+                            val freedStr = StorageCleanerManager.formatSize(freed)
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.cache_cleaned_toast, freedStr),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.storage_already_clean),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Icon(Icons.Default.CleaningServices, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.clean_storage_btn),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+        }
+
+        // 8. System Diagnostic Log Card (only shown if a crash was captured)
         if (!crashLogContent.isNullOrBlank()) {
             item {
                 Card(
@@ -842,7 +1025,7 @@ fun SettingsScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "System Diagnostic Log",
+                                text = stringResource(R.string.diagnostic_details_title),
                                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                                 color = MaterialTheme.colorScheme.error
                             )
@@ -857,26 +1040,54 @@ fun SettingsScreen(
                             }
                         }
                         Text(
-                            text = "A previous system error was captured. Tap below to inspect details or copy.",
+                            text = stringResource(R.string.prev_error_captured),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedButton(
                             onClick = { showCrashDialog = true },
-                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 48.dp),
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             Icon(Icons.Default.BugReport, contentDescription = null)
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "View Error Details",
+                                text = stringResource(R.string.view_error_details),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                         }
                     }
                 }
+            }
+        }
+
+        // 9. Footer: Made by Syntaxa
+        item {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.app_made_from_syntaxa),
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Medium
+                    ),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(
+                        R.string.app_version_label,
+                        AppUpdateService.CURRENT_VERSION,
+                        AppUpdateService.CURRENT_BUILD_NUMBER
+                    ),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
             }
         }
     }
@@ -958,7 +1169,7 @@ fun SettingsScreen(
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Set a secure password for this backup. You will need this password to restore your data on any device.",
+                        text = stringResource(R.string.set_secure_backup_pwd),
                         style = MaterialTheme.typography.bodySmall
                     )
                     OutlinedTextField(
@@ -1075,7 +1286,7 @@ fun SettingsScreen(
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
-                        text = "Unlock & Validate",
+                        text = stringResource(R.string.unlock_validate),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -1119,11 +1330,11 @@ fun SettingsScreen(
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text("Backup Summary:", fontWeight = FontWeight.SemiBold)
-                    Text("• Customers: ${validation.customerCount}")
-                    Text("• Transactions: ${validation.transactionCount}")
-                    Text("• Bills: ${validation.billCount}")
-                    Text("• Expenses: ${validation.expenseCount}")
+                    Text(stringResource(R.string.backup_summary_label), fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.backup_summary_customers, validation.customerCount))
+                    Text(stringResource(R.string.backup_summary_txns, validation.transactionCount))
+                    Text(stringResource(R.string.backup_summary_bills, validation.billCount))
+                    Text(stringResource(R.string.backup_summary_expenses, validation.expenseCount))
                 }
             },
             confirmButton = {
@@ -1183,7 +1394,7 @@ fun SettingsScreen(
     if (showCrashDialog && crashLogContent != null) {
         AlertDialog(
             onDismissRequest = { showCrashDialog = false },
-            title = { Text("Diagnostic Details", fontWeight = FontWeight.Bold) },
+            title = { Text(stringResource(R.string.diagnostic_details_title), fontWeight = FontWeight.Bold) },
             text = {
                 LazyColumn(modifier = Modifier.heightIn(max = 350.dp)) {
                     item {
@@ -1209,7 +1420,7 @@ fun SettingsScreen(
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
-                        text = "Copy Log",
+                        text = stringResource(R.string.copy_log_btn),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -1222,7 +1433,7 @@ fun SettingsScreen(
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
-                        text = "Close",
+                        text = stringResource(R.string.close),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

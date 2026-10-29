@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">सिंटैक्सा खाता</string>
-    <string name="tagline">दुकानदारों का डिजिटल बहीखाता</string>
+    <string name="app_name">स्मार्ट खाता</string>
+    <string name="tagline">स्मार्ट बिलिंग और उधार - Syntaxa द्वारा</string>
     <string name="splash_secure_badge">100% ऑफ़लाइन • बिना इंटरनेट • पूर्ण सुरक्षित</string>
     <string name="splash_tap_skip">आगे बढ़ने के लिए कहीं भी टैप करें</string>
 
@@ -179,7 +179,7 @@
     <string name="auto_check_updates">अपडेट के लिए स्वचालित जांच</string>
     <string name="check_for_updates">अपडेट की जांच करें</string>
     <string name="checking_updates">अपडेट की जांच की जा रही है...</string>
-    <string name="up_to_date_message">आप सिंटैक्सा खाता के नवीनतम संस्करण का उपयोग कर रहे हैं।</string>
+    <string name="up_to_date_message">आप स्मार्ट खाता के नवीनतम संस्करण का उपयोग कर रहे हैं।</string>
     <string name="one_tap_update">वन-टैप अपडेट</string>
     <string name="data_safe_notice">स्वचालित सुरक्षा बैकअप: दुकान के रिकॉर्ड सुरक्षित रखने के लिए अपडेट से पहले डेटाबेस स्नैपशॉट बनाया जाता है।</string>
 
@@ -323,9 +323,9 @@
     <string name="terms_fresh_badge">प्रथम बार उपयोग - सहमति पत्र</string>
     <string name="terms_review_badge">कानूनी शर्तें एवं अस्वीकरण</string>
     <string name="terms_machine_disclaimer_title">मशीन एवं सॉफ्टवेयर अस्वीकरण</string>
-    <string name="terms_machine_disclaimer_text">सिंटैक्सा खाता एक स्वचालित मोबाइल सॉफ्टवेयर प्रोग्राम है। किसी भी डिजिटल मशीन या सॉफ्टवेयर की तरह इसमें तकनीकी त्रुटि (गड़बड़ी), ऑपरेटिंग सिस्टम रुकावट, गणना विसंगति या डिवाइस खराबी संभव है। यह सॉफ्टवेयर पूरी तरह \"जैसी है वैसी ही स्थिति\" (AS IS) में उपलब्ध है।</string>
+    <string name="terms_machine_disclaimer_text">स्मार्ट खाता एक स्वचालित मोबाइल सॉफ्टवेयर प्रोग्राम है। किसी भी डिजिटल मशीन या सॉफ्टवेयर की तरह इसमें तकनीकी त्रुटि (गड़बड़ी), ऑपरेटिंग सिस्टम रुकावट, गणना विसंगति या डिवाइस खराबी संभव है। यह सॉफ्टवेयर पूरी तरह \"जैसी है वैसी ही स्थिति\" (AS IS) में उपलब्ध है।</string>
     <string name="terms_liability_title">व्यापारिक नुकसान के लिए कोई देयता नहीं</string>
-    <string name="terms_liability_text">इस ऐप के उपयोग या उपयोग न कर पाने के कारण होने वाले किसी भी प्रत्यक्ष या अप्रत्यक्ष व्यापारिक नुकसान, मुनाफे में कमी, ग्राहकों से विवाद, डूबत कर्ज (उधारी न मिलना) या वित्तीय विसंगतियों के लिए सिंटैक्सा खाता अथवा इसके डेवलपर्स किसी भी प्रकार से उत्तरदायी या जिम्मेदार नहीं होंगे।</string>
+    <string name="terms_liability_text">इस ऐप के उपयोग या उपयोग न कर पाने के कारण होने वाले किसी भी प्रत्यक्ष या अप्रत्यक्ष व्यापारिक नुकसान, मुनाफे में कमी, ग्राहकों से विवाद, डूबत कर्ज (उधारी न मिलना) या वित्तीय विसंगतियों के लिए स्मार्ट खाता अथवा इसके डेवलपर्स किसी भी प्रकार से उत्तरदायी या जिम्मेदार नहीं होंगे।</string>
     <string name="terms_shopkeeper_duty_title">दुकानदार का हिसाब जांचने का कर्तव्य</string>
     <string name="terms_shopkeeper_duty_text">लेन-देन समाप्त करने या हिसाब चुकता करने से पूर्व सभी गणनाओं, उधारी खाते, गल्ले की रकम और रसीदों की व्यक्तिगत रूप से जांच और सत्यापन करने की शत-प्रतिशत जिम्मेदारी स्वयं दुकानदार की है।</string>
     <string name="terms_local_storage_title">100% ऑफ़लाइन स्थानीय डेटा सुरक्षा</string>
@@ -336,4 +336,158 @@
     <string name="terms_checkbox_prompt">आगे बढ़ने के लिए कृपया ऊपर दिए गए चेकबॉक्स पर टिक करें</string>
     <string name="terms_menu_item_title">नियम, शर्तें एवं अस्वीकरण</string>
     <string name="terms_menu_item_subtitle">मशीन त्रुटि अस्वीकरण, शून्य देयता नीति व सेवा शर्तें</string>
+    <!-- Additional Screen Strings (Hindi) -->
+    <string name="sms">एसएमएस (SMS)</string>
+    <string name="email">ईमेल</string>
+    <string name="whatsapp">व्हाट्सएप</string>
+    <string name="all">सभी</string>
+    <string name="view">देखें</string>
+    <string name="pdf">पीडीएफ</string>
+    <string name="share">शेयर करें</string>
+    <string name="print">प्रिंट</string>
+    <string name="items_count">सामान (%1$d)</string>
+    <string name="split_breakdown">विभाजित भुगतान (कुल %1$s होना चाहिए):</string>
+    <string name="split_cash_label">नकद (₹)</string>
+    <string name="split_upi_label">यूपीआई (₹)</string>
+    <string name="total_amount_label">कुल राशि: %1$s</string>
+    <string name="amount_paid_label">प्राप्त राशि: %1$s (%2$s)</string>
+    <string name="udhaar_recorded_label">दर्ज उधारी: %1$s</string>
+    <string name="choose_share_receipt">ग्राहक को रसीद भेजने का माध्यम चुनें:</string>
+    <string name="share_bill_title">बिल साझा करें #%1$s</string>
+    <string name="share_bill_summary">जमा: %1$s | शेष: %2$s</string>
+    <string name="share_bill_instructions">बिल रसीद साझा करने का तरीका चुनें:</string>
+    <string name="share_more">अन्य माध्यम...</string>
+    <string name="txn_ref_label">संदर्भ: #TXN-%1$s</string>
+    <string name="txn_amount_label">रकम: %1$s</string>
+    <string name="txn_note_label">विवरण: %1$s</string>
+    <string name="share_single_txn_title">ग्राहक को लेन-देन की रसीद साझा करें:</string>
+    <string name="message_text_label">संदेश विवरण</string>
+    <string name="reason_optional">कारण (वैकल्पिक)</string>
+    <string name="set_due_date_title">भुगतान की अंतिम तारीख तय करें</string>
+    <string name="clear_due_date">तारीख हटाएं</string>
+    <string name="edit_customer_title">ग्राहक विवरण बदलें</string>
+    <string name="select_customer_label">ग्राहक चुनें</string>
+    <string name="no_expenses_recorded">अभी कोई खर्च दर्ज नहीं है</string>
+    <string name="no_customers_found_query">\'%1$s\' नाम या नंबर का कोई ग्राहक नहीं मिला</string>
+    <string name="no_customers_filter">%1$s फ़िल्टर में कोई ग्राहक नहीं मिला</string>
+    <string name="no_customers_added">अभी कोई ग्राहक नहीं जोड़ा गया</string>
+    <string name="no_archived_customers">कोई आर्काइव ग्राहक नहीं है</string>
+    <string name="due_today_label">आज देय</string>
+    <string name="upcoming_due_label">आगामी</string>
+    <string name="overdue_label">विलंबित (Overdue)</string>
+    <string name="purchase_invoice_total">खरीद बिल की कुल रकम (₹) *</string>
+    <string name="amount_paid_required">भुगतान की गई रकम (₹) *</string>
+    <string name="txn_ref_notes">लेन-देन संदर्भ / टिप्पणी</string>
+    <string name="no_transactions_for_supplier">इस सप्लायर का कोई लेन-देन दर्ज नहीं है।</string>
+    <string name="no_suppliers_found_hint">कोई सप्लायर नहीं मिला। + दबाकर थोक व्यापारी जोड़ें।</string>
+    <string name="no_low_stock_items">कोई कम स्टॉक वाला सामान नहीं है!</string>
+    <string name="no_products_found_hint">कोई सामान नहीं मिला। + दबाकर स्टॉक जोड़ें।</string>
+    <string name="backup_summary_label">बैकअप सारांश:</string>
+    <string name="diagnostic_details_title">निदान विवरण (Diagnostic)</string>
+    <string name="select_paired_printer">पेयर किया गया प्रिंटर चुनें:</string>
+    <string name="pro_active_days">प्रो सक्रिय (%1$d दिन)</string>
+    <string name="pro_monthly_plan">प्रो मासिक प्लान</string>
+    <string name="plan_duration_suite">30 दिन संपूर्ण स्टोर सुइट</string>
+    <string name="best_value">सर्वश्रेष्ठ मूल्य</string>
+    <string name="pay_via_upi_title">किसी भी यूपीआई ऐप से ₹149 भुगतान करें</string>
+    <string name="enter_utr_title">सक्रिय करने के लिए 12-अंकों का UTR दर्ज करें</string>
+    <string name="have_offline_code">क्या आपके पास ऑफ़लाइन लाइसेंस कोड है?</string>
+    <string name="activate_license">लाइसेंस सक्रिय करें</string>
+    <string name="cancel_subscription_btn">सब्सक्रिप्शन रद्द करें (मुफ्त संस्करण पर लौटें)</string>
+    <string name="welcome_pro_title">स्मार्ट खाता PRO में आपका स्वागत है! ✨</string>
+    <string name="start_using_pro">प्रो का उपयोग शुरू करें</string>
+    <string name="cancel_pro_title">प्रो सब्सक्रिप्शन रद्द करें?</string>
+    <string name="yes_cancel_sub">हाँ, रद्द करें</string>
+    <string name="keep_active">सक्रिय रखें</string>
+    <string name="create_bill_customer">बिल बनाएं</string>
+    <string name="customer_colon">ग्राहक: %1$s</string>
+    <string name="due_colon">बकाया: %1$s</string>
+    <string name="quick_custom_expense">त्वरित खर्च दर्ज करें</string>
+    <string name="recorded_expenses_count">दर्ज खर्च (%1$d)</string>
+    <string name="expense_desc_placeholder">उदा. दूध की क्रेट, मरम्मत</string>
+    <string name="purchase_tx_title">खरीद %1$s</string>
+    <string name="payment_made_tx_title">भुगतान किया (%1$s)</string>
+    <string name="low_stock_filter_label">⚠️ केवल कम स्टॉक</string>
+    <string name="sale_price_unit">बिक्री: %1$s / %2$s</string>
+    <string name="cost_price_unit">लागत: %1$s</string>
+    <string name="copy_log_btn">लॉग कॉपी करें</string>
+    <string name="view_error_details">त्रुटि विवरण देखें</string>
+    <string name="prev_error_captured">पिछली सिस्टम त्रुटि दर्ज की गई थी। विवरण देखने या कॉपी करने के लिए नीचे टैप करें।</string>
+    <string name="unlock_validate">अनलॉक और सत्यापित करें</string>
+    <string name="set_secure_backup_pwd">इस बैकअप के लिए एक सुरक्षित पासवर्ड सेट करें। किसी भी डिवाइस पर अपना डेटा रीस्टोर करने के लिए आपको इस पासवर्ड की आवश्यकता होगी।</string>
+    <string name="backup_summary_customers">• ग्राहक: %1$d</string>
+    <string name="backup_summary_txns">• लेन-देन: %1$d</string>
+    <string name="backup_summary_bills">• बिल: %1$d</string>
+    <string name="backup_summary_expenses">• खर्च: %1$d</string>
+    <string name="reconcile_notes_placeholder">उदा. जेब से ₹50 छुट्टे लौटाए</string>
+    <string name="export_csv_title">व्यापारिक सीएसवी रिपोर्ट निर्यात करें</string>
+    <string name="cash_closing_saved_success">दैनिक गल्ला बंद विवरण सफलतापूर्वक सहेजा गया!</string>
+    <string name="error_exporting_csv">सीएसवी निर्यात में त्रुटि: %1$s</string>
+    <string name="whatsapp_direct">व्हाट्सएप (चैट)</string>
+    <string name="share_pdf_whatsapp">व्हाट्सएप (PDF)</string>
+    <string name="old_udhaar_detected_banner">ग्राहक का पुराना उधार: %1$s</string>
+    <string name="add_old_udhaar_option">पुराना उधार जोड़ें (+%1$s)</string>
+    <string name="fresh_bill_only_option">केवल नया बिल</string>
+    <string name="previous_udhaar_balance">पुराना उधार बकाया</string>
+    <string name="today_items_total">आज का सामान</string>
+    <string name="unit">इकाई</string>
+
+    <!-- Virtual Soundbox & Audio Confirmation -->
+    <string name="soundbox_title">वर्चुअल साउंडबॉक्स</string>
+    <string name="soundbox_subtitle">ध्वनि भुगतान घोषणा (पेटीएम / फोनपे साउंडबॉक्स जैसा)</string>
+    <string name="soundbox_enable_label">ऑडियो भुगतान सूचना</string>
+    <string name="soundbox_enable_desc">बिल कटने या ग्राहक भुगतान पर बोलकर सूचना देता है</string>
+    <string name="soundbox_lang_label">आवाज़ की भाषा:</string>
+    <string name="soundbox_lang_auto">स्वतः (ऑटो)</string>
+    <string name="soundbox_lang_hi">हिंदी</string>
+    <string name="soundbox_lang_en">अंग्रेज़ी</string>
+    <string name="soundbox_test_btn">आवाज़ टेस्ट करें</string>
+    <string name="verifying_with_server">सर्वर से सत्यापन हो रहा है…</string>
+
+    <!-- Customer list labels -->
+    <string name="label_due">बकाया</string>
+    <string name="label_advance">अग्रिम</string>
+    <string name="label_settled">चुकता</string>
+    <string name="label_overdue_date">विलंबित: %1$s</string>
+    <string name="label_due_today">आज देय</string>
+    <string name="label_due_date">देय: %1$s</string>
+    <string name="label_last_date">अंतिम: %1$s</string>
+
+    <!-- Billing screen computed labels -->
+    <string name="line_total_preview">कुल: %1$s %2$s × %3$s = %4$s</string>
+    <string name="error_split_mismatch">कैश + UPI मिलाकर (%1$s) होनी चाहिए</string>
+    <string name="dropdown_select_customer_hint">पंजीकृत ग्राहक चुनने के लिए टैप करें…</string>
+
+    <!-- Records / Feature gate -->
+    <string name="inventory_feature_title">इन्वेंटरी और स्टॉक ट्रैकिंग</string>
+    <string name="inventory_feature_desc">शॉप कैटलॉग प्रबंधित करें, कस्टम यूनिट सेट करें और काउंटर बिलिंग पर स्टॉक अपने आप कम करें।</string>
+    <string name="supplier_feature_title">सप्लायर और थोक खाता</string>
+    <string name="supplier_feature_desc">अपनी खरीद और डिस्ट्रीब्यूटर बकाये को ग्राहक लेन-देन से बिल्कुल अलग रखें।</string>
+
+    <!-- Customer Actions & Status -->
+    <string name="customer_archived_success">ग्राहक आर्काइव किया गया</string>
+    <string name="customer_restored_success">ग्राहक बहाल किया गया</string>
+    <string name="customer_updated_success">ग्राहक विवरण अपडेट किया गया</string>
+    <string name="transaction_reversed_success">लेन-देन उलट (रिवर्स) दिया गया</string>
+    <string name="receipt_sent_to_printer">रसीद प्रिंटर को भेज दी गई!</string>
+    <string name="print_error_format">प्रिंट त्रुटि: %1$s</string>
+    <string name="error_with_message">त्रुटि: %1$s</string>
+    <string name="whatsapp_error_format">व्हाट्सएप त्रुटि: %1$s</string>
+    <string name="cannot_open_bt_settings">ब्लूटूथ सेटिंग्स नहीं खुल सकी</string>
+    <string name="due_date_set_format">देय तारीख तय की गई: %1$s</string>
+    <string name="due_date_cleared_success">देय तारीख हटा दी गई</string>
+    <string name="in_3_days">3 दिन में</string>
+    <string name="in_1_week">1 हफ्ते में</string>
+    <string name="in_15_days">15 दिन में</string>
+    <string name="in_30_days">30 दिन में</string>
+
+    <!-- Storage Cleaner -->
+    <string name="storage_cleaner_title">स्टोरेज व कैशे क्लीनर</string>
+    <string name="storage_cleaner_desc">अस्थायी अपडेट फ़ाइलें व PDF रसीदें साफ़ करें। आपका खाता डेटा पूरी तरह सुरक्षित रहेगा।</string>
+    <string name="clean_storage_btn">अस्थायी फ़ाइलें साफ़ करें</string>
+    <string name="cache_cleaned_toast">%1$s अस्थायी फ़ाइलें साफ़ की गईं! स्टोरेज मुक्त हुआ।</string>
+    <string name="storage_already_clean">स्टोरेज पहले से ही साफ़ है (0 KB)।</string>
+
+    <!-- Footer Branding -->
+    <string name="app_made_from_syntaxa">यह ऐप Syntaxa द्वारा बनाया गया है</string>
 </resources>

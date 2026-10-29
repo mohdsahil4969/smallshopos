@@ -251,7 +251,7 @@ fun DailyCashClosingDialog(
                         value = notes,
                         onValueChange = { notes = it },
                         label = { Text(stringResource(R.string.reconcile_notes)) },
-                        placeholder = { Text("e.g. Returned ₹50 change from pocket") },
+                        placeholder = { Text(stringResource(R.string.reconcile_notes_placeholder)) },
                         modifier = Modifier.fillMaxWidth(),
                         maxLines = 2
                     )

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Syntaxa Khata</string>
-    <string name="tagline">Offline Kirana Assistant</string>
+    <string name="app_name">SmartKhata</string>
+    <string name="tagline">Smart Billing &amp; Udhaar by Syntaxa</string>
     <string name="splash_secure_badge">100% Offline • Zero Cloud • Private</string>
     <string name="splash_tap_skip">Tap anywhere to continue</string>
 
@@ -185,7 +185,7 @@
     <string name="auto_check_updates">Auto-check for updates</string>
     <string name="check_for_updates">Check for Updates</string>
     <string name="checking_updates">Checking for updates...</string>
-    <string name="up_to_date_message">You are using the latest version of Syntaxa Khata.</string>
+    <string name="up_to_date_message">You are using the latest version of SmartKhata.</string>
     <string name="one_tap_update">One-Tap Update</string>
     <string name="data_safe_notice">Automatic Safety Backup: Database snapshot is created before updating to preserve shop records.</string>
 
@@ -329,9 +329,9 @@
     <string name="terms_fresh_badge">First-Time Setup Agreement</string>
     <string name="terms_review_badge">Legal Notice &amp; Terms of Use</string>
     <string name="terms_machine_disclaimer_title">Machine &amp; Software Disclaimer</string>
-    <string name="terms_machine_disclaimer_text">Syntaxa Khata is an automated software program running on mobile hardware. Like all computer software and digital devices, unexpected glitches, operating system interruptions, hardware faults, calculation discrepancies, or storage anomalies may occur. The software is provided \"AS IS\" without warranty of any kind.</string>
+    <string name="terms_machine_disclaimer_text">SmartKhata is an automated software program running on mobile hardware. Like all computer software and digital devices, unexpected glitches, operating system interruptions, hardware faults, calculation discrepancies, or storage anomalies may occur. The software is provided \"AS IS\" without warranty of any kind.</string>
     <string name="terms_liability_title">No Liability for Business Losses</string>
-    <string name="terms_liability_text">Under no circumstances shall the creators, developers, owners, or distributors of Syntaxa Khata be held liable for any commercial losses, lost shop revenue, financial disputes with customers, bad debts, inventory loss, tax penalties, or any direct or indirect business damages arising from the use of or inability to use this application.</string>
+    <string name="terms_liability_text">Under no circumstances shall the creators, developers, owners, or distributors of SmartKhata (Syntaxa) be held liable for any commercial losses, lost shop revenue, financial disputes with customers, bad debts, inventory loss, tax penalties, or any direct or indirect business damages arising from the use of or inability to use this application.</string>
     <string name="terms_shopkeeper_duty_title">Shopkeeper\'s Verification Duty</string>
     <string name="terms_shopkeeper_duty_text">The shopkeeper retains 100% responsibility to independently verify all calculations, udhaar ledgers, cash drawer totals, and customer receipts before concluding transactions or settling balances.</string>
     <string name="terms_local_storage_title">100% Offline Local Data Storage</string>
@@ -342,4 +342,159 @@
     <string name="terms_checkbox_prompt">Tick the checkbox above to accept terms and continue</string>
     <string name="terms_menu_item_title">Terms of Service &amp; Disclaimer</string>
     <string name="terms_menu_item_subtitle">Machine disclaimer, zero liability policy &amp; terms of use</string>
+
+    <!-- Additional Screen Strings -->
+    <string name="sms">SMS</string>
+    <string name="email">Email</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="all">All</string>
+    <string name="view">View</string>
+    <string name="pdf">PDF</string>
+    <string name="share">Share</string>
+    <string name="print">Print</string>
+    <string name="items_count">Items (%1$d)</string>
+    <string name="split_breakdown">Split Breakdown (Must sum to %1$s):</string>
+    <string name="split_cash_label">Cash (₹)</string>
+    <string name="split_upi_label">UPI (₹)</string>
+    <string name="total_amount_label">Total Amount: %1$s</string>
+    <string name="amount_paid_label">Amount Paid: %1$s (%2$s)</string>
+    <string name="udhaar_recorded_label">Udhaar Recorded: %1$s</string>
+    <string name="choose_share_receipt">Choose how to share this receipt with your customer:</string>
+    <string name="share_bill_title">Share Bill #%1$s</string>
+    <string name="share_bill_summary">Paid: %1$s | Due: %2$s</string>
+    <string name="share_bill_instructions">Choose how you want to share this bill receipt:</string>
+    <string name="share_more">More...</string>
+    <string name="txn_ref_label">Ref: #TXN-%1$s</string>
+    <string name="txn_amount_label">Amount: %1$s</string>
+    <string name="txn_note_label">Note: %1$s</string>
+    <string name="share_single_txn_title">Share single transaction PDF receipt with customer:</string>
+    <string name="message_text_label">Message Text</string>
+    <string name="reason_optional">Reason (Optional)</string>
+    <string name="set_due_date_title">Set Payment Due Date</string>
+    <string name="clear_due_date">Clear Due Date</string>
+    <string name="edit_customer_title">Edit Customer</string>
+    <string name="select_customer_label">Select Customer</string>
+    <string name="no_expenses_recorded">No expenses recorded yet</string>
+    <string name="no_customers_found_query">No customers found matching \'%1$s\'</string>
+    <string name="no_customers_filter">No customers matching %1$s filter</string>
+    <string name="no_customers_added">No customers added yet</string>
+    <string name="no_archived_customers">No archived customers</string>
+    <string name="due_today_label">Due Today</string>
+    <string name="upcoming_due_label">Upcoming</string>
+    <string name="overdue_label">Overdue</string>
+    <string name="purchase_invoice_total">Purchase Invoice Total (₹) *</string>
+    <string name="amount_paid_required">Amount Paid (₹) *</string>
+    <string name="txn_ref_notes">Transaction Reference / Notes</string>
+    <string name="no_transactions_for_supplier">No transactions recorded yet for this supplier.</string>
+    <string name="no_suppliers_found_hint">No suppliers found. Tap + to add a wholesaler/vendor.</string>
+    <string name="no_low_stock_items">No low stock items!</string>
+    <string name="no_products_found_hint">No products found. Tap + to add stock.</string>
+    <string name="backup_summary_label">Backup Summary:</string>
+    <string name="diagnostic_details_title">Diagnostic Details</string>
+    <string name="select_paired_printer">Select Paired Printer:</string>
+    <string name="pro_active_days">PRO ACTIVE (%1$dd)</string>
+    <string name="pro_monthly_plan">PRO Monthly Plan</string>
+    <string name="plan_duration_suite">30 Days Complete Store Suite</string>
+    <string name="best_value">BEST VALUE</string>
+    <string name="pay_via_upi_title">Pay ₹49 via Any UPI App</string>
+    <string name="enter_utr_title">Enter 12-Digit UTR to Activate</string>
+    <string name="have_offline_code">Have an Offline License Code?</string>
+    <string name="activate_license">Activate License</string>
+    <string name="cancel_subscription_btn">Cancel Subscription (Return to Free)</string>
+    <string name="welcome_pro_title">Welcome to SmartKhata PRO! 🎉</string>
+    <string name="start_using_pro">Start Using PRO</string>
+    <string name="cancel_pro_title">Cancel PRO Subscription?</string>
+    <string name="yes_cancel_sub">Yes, Cancel Subscription</string>
+    <string name="keep_active">Keep Active</string>
+    <string name="create_bill_customer">Create Bill</string>
+    <string name="customer_colon">Customer: %1$s</string>
+    <string name="due_colon">Due: %1$s</string>
+    <string name="quick_custom_expense">Quick Custom Expense</string>
+    <string name="recorded_expenses_count">Recorded Expenses (%1$d)</string>
+    <string name="expense_desc_placeholder">e.g. Milk crate delivery, repairs</string>
+    <string name="purchase_tx_title">Purchase %1$s</string>
+    <string name="payment_made_tx_title">Payment Made (%1$s)</string>
+    <string name="low_stock_filter_label">⚠️ Low Stock Only</string>
+    <string name="sale_price_unit">Sale: %1$s / %2$s</string>
+    <string name="cost_price_unit">Cost: %1$s</string>
+    <string name="copy_log_btn">Copy Log</string>
+    <string name="view_error_details">View Error Details</string>
+    <string name="prev_error_captured">A previous system error was captured. Tap below to inspect details or copy.</string>
+    <string name="unlock_validate">Unlock &amp; Validate</string>
+    <string name="set_secure_backup_pwd">Set a secure password for this backup. You will need this password to restore your data on any device.</string>
+    <string name="backup_summary_customers">• Customers: %1$d</string>
+    <string name="backup_summary_txns">• Transactions: %1$d</string>
+    <string name="backup_summary_bills">• Bills: %1$d</string>
+    <string name="backup_summary_expenses">• Expenses: %1$d</string>
+    <string name="reconcile_notes_placeholder">e.g. Returned ₹50 change from pocket</string>
+    <string name="export_csv_title">Export Business CSV Report</string>
+    <string name="cash_closing_saved_success">Daily cash closing saved successfully!</string>
+    <string name="error_exporting_csv">Error exporting CSV: %1$s</string>
+    <string name="whatsapp_direct">WhatsApp (Chat)</string>
+    <string name="share_pdf_whatsapp">WhatsApp (PDF)</string>
+    <string name="old_udhaar_detected_banner">Customer has Old Udhaar: %1$s</string>
+    <string name="add_old_udhaar_option">Add Old Udhaar (+%1$s)</string>
+    <string name="fresh_bill_only_option">Fresh Bill Only</string>
+    <string name="previous_udhaar_balance">Previous Udhaar Balance</string>
+    <string name="today_items_total">Today\'s Items</string>
+    <string name="unit">Unit</string>
+
+    <!-- Virtual Soundbox & Audio Confirmation -->
+    <string name="soundbox_title">Virtual Soundbox</string>
+    <string name="soundbox_subtitle">Voice payment announcements (Paytm / PhonePe style)</string>
+    <string name="soundbox_enable_label">Audio Payment Confirmation</string>
+    <string name="soundbox_enable_desc">Speaks aloud when customer payments or bills are completed</string>
+    <string name="soundbox_lang_label">Speech Language:</string>
+    <string name="soundbox_lang_auto">Automatic</string>
+    <string name="soundbox_lang_hi">Hindi (हिंदी)</string>
+    <string name="soundbox_lang_en">English</string>
+    <string name="soundbox_test_btn">Test Voice Announcement</string>
+    <string name="verifying_with_server">Verifying with server…</string>
+
+    <!-- Customer list labels -->
+    <string name="label_due">Due</string>
+    <string name="label_advance">Advance</string>
+    <string name="label_settled">Settled</string>
+    <string name="label_overdue_date">Overdue: %1$s</string>
+    <string name="label_due_today">Due Today</string>
+    <string name="label_due_date">Due: %1$s</string>
+    <string name="label_last_date">Last: %1$s</string>
+
+    <!-- Billing screen computed labels -->
+    <string name="line_total_preview">Line Total: %1$s %2$s × %3$s = %4$s</string>
+    <string name="error_split_mismatch">Cash + UPI must equal received amount (%1$s)</string>
+    <string name="dropdown_select_customer_hint">Tap to choose registered customer…</string>
+
+    <!-- Records / Feature gate -->
+    <string name="inventory_feature_title">Inventory &amp; Stock Tracking</string>
+    <string name="inventory_feature_desc">Manage your shop catalog, set custom units, and automatically deduct stock whenever an item is billed at your counter.</string>
+    <string name="supplier_feature_title">Supplier &amp; Wholesaler Khata</string>
+    <string name="supplier_feature_desc">Keep your vendor purchases and distributor payable dues strictly isolated from your customer receivables.</string>
+
+    <!-- Customer Actions & Status -->
+    <string name="customer_archived_success">Customer archived</string>
+    <string name="customer_restored_success">Customer restored</string>
+    <string name="customer_updated_success">Customer details updated</string>
+    <string name="transaction_reversed_success">Transaction reversed</string>
+    <string name="receipt_sent_to_printer">Receipt sent to printer!</string>
+    <string name="print_error_format">Print error: %1$s</string>
+    <string name="error_with_message">Error: %1$s</string>
+    <string name="whatsapp_error_format">WhatsApp error: %1$s</string>
+    <string name="cannot_open_bt_settings">Could not open Bluetooth settings</string>
+    <string name="due_date_set_format">Due date set: %1$s</string>
+    <string name="due_date_cleared_success">Due date cleared</string>
+    <string name="in_3_days">In 3 days</string>
+    <string name="in_1_week">In 1 week</string>
+    <string name="in_15_days">In 15 days</string>
+    <string name="in_30_days">In 30 days</string>
+
+    <!-- Storage Cleaner -->
+    <string name="storage_cleaner_title">Storage &amp; Cache Cleaner</string>
+    <string name="storage_cleaner_desc">Cleans temporary update files and PDF receipts. Customer data &amp; bills remain 100% safe.</string>
+    <string name="clean_storage_btn">Clean Temporary Files</string>
+    <string name="cache_cleaned_toast">Cleaned %1$s temporary files! Storage optimized.</string>
+    <string name="storage_already_clean">Storage is already clean (0 KB).</string>
+
+    <!-- Footer Branding -->
+    <string name="app_made_from_syntaxa">This app is made by Syntaxa</string>
 </resources>

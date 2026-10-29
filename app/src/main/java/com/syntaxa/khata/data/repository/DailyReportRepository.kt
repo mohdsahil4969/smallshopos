@@ -36,7 +36,7 @@ class DailyReportRepository(
             val b = bw.bill
             totalSales += b.totalPaise
             val paid = b.amountPaidPaise
-            val unpaid = b.totalPaise - paid
+            val unpaid = maxOf(0L, b.totalPaise - paid)
             creditSales += unpaid
 
             val (cash, upi, other) = when (b.paymentMethod) {
@@ -141,7 +141,7 @@ class DailyReportRepository(
                 val b = bw.bill
                 totalSales += b.totalPaise
                 val paid = b.amountPaidPaise
-                creditSales += (b.totalPaise - paid)
+                creditSales += maxOf(0L, b.totalPaise - paid)
 
                 val (cash, upi, other) = when (b.paymentMethod) {
                     TransactionConstants.METHOD_CASH -> Triple(paid, 0L, 0L)

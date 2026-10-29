@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">సింటాక్సా ఖాతా</string>
-    <string name="tagline">ఆఫ్‌లైన్ కిరాణా వ్యాపార సహాయకుడు</string>
+    <string name="app_name">స్మార్ట్ ఖాతా</string>
+    <string name="tagline">స్మార్ట్ బిల్లింగ్ &amp; ఉద్దార - Syntaxa ద్వారా</string>
 
     <!-- Navigation -->
     <string name="nav_home">హోమ్</string>

@@ -134,7 +134,7 @@ fun SplashScreen(
 
             // App Name with modern typography
             Text(
-                text = "Syntaxa Khata",
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 30.sp,

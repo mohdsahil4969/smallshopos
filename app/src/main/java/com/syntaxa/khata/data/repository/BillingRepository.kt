@@ -86,7 +86,8 @@ class BillingRepository(
         cashPaidPaise: Long = 0L,
         upiPaidPaise: Long = 0L,
         otherPaidPaise: Long = 0L,
-        idempotencyKey: String = UUID.randomUUID().toString()
+        idempotencyKey: String = UUID.randomUUID().toString(),
+        oldUdhaarIncludedPaise: Long = 0L
     ): Long {
         require(totalPaise >= 0) { "Total bill amount cannot be negative" }
         require(amountPaidPaise in 0..totalPaise) { "Amount paid must be between 0 and total bill amount" }
@@ -111,9 +112,28 @@ class BillingRepository(
                 }
             }
 
-            // 2. Pre-validate stock availability for all catalog-linked items before making any mutations
+            // 2. Pre-resolve catalog-linked products by name if productId was not explicitly attached
+            val resolvedItems = if (productDao != null) {
+                items.map { item ->
+                    if (item.productId == null && item.description.isNotBlank()) {
+                        val cleanName = item.description.substringBefore(" (").trim()
+                        val matchedProduct = productDao.getProductByName(cleanName) ?: productDao.getProductByName(item.description.trim())
+                        if (matchedProduct != null && !matchedProduct.isArchived) {
+                            item.copy(productId = matchedProduct.id)
+                        } else {
+                            item
+                        }
+                    } else {
+                        item
+                    }
+                }
+            } else {
+                items
+            }
+
+            // Pre-validate stock availability for all catalog-linked items before making any mutations
             if (productDao != null) {
-                for (item in items) {
+                for (item in resolvedItems) {
                     if (item.productId != null) {
                         val product = productDao.getProductById(item.productId)
                             ?: throw IllegalArgumentException("Product #${item.productId} ('${item.description}') not found in inventory catalog")
@@ -148,32 +168,71 @@ class BillingRepository(
             )
 
             // 3. Insert bill and bill items
-            val billId = billDao.createBillWithItems(bill, items)
+            val billId = billDao.createBillWithItems(bill, resolvedItems)
 
             // 4. Atomically deduct inventory stock for all catalog-linked items
             if (productDao != null) {
-                for (item in items) {
+                for (item in resolvedItems) {
                     if (item.productId != null) {
                         productDao.adjustStock(item.productId, -item.quantity)
                     }
                 }
             }
 
-            // 5. Atomically record Udhaar ledger entry if unpaid balance exists
-            if (customerId != null && unpaidPaise > 0) {
-                val udhaarTx = FinancialTransactionEntity(
-                    type = TransactionConstants.TYPE_UDHAAR_GIVEN,
-                    customerId = customerId,
-                    amountPaise = unpaidPaise,
-                    paymentMethod = TransactionConstants.METHOD_CREDIT_LEDGER,
-                    description = "Bill #$receiptNumber (Balance due)",
-                    occurredAt = bill.createdAt,
-                    createdAt = System.currentTimeMillis(),
-                    relatedBillId = billId,
-                    idempotencyKey = "BILL-$billId-UDHAAR-$idempotencyKey",
-                    status = TransactionConstants.STATUS_ACTIVE
-                )
-                financialTransactionDao.insertTransaction(udhaarTx)
+            // 5. Atomically record Udhaar ledger entry or Old Udhaar repayment
+            if (customerId != null) {
+                if (oldUdhaarIncludedPaise > 0L) {
+                    val newItemsTotal = maxOf(0L, totalPaise - oldUdhaarIncludedPaise)
+                    val paidForNewItems = minOf(amountPaidPaise, newItemsTotal)
+                    val unpaidNewItems = newItemsTotal - paidForNewItems
+                    val paidForOldUdhaar = if (amountPaidPaise > newItemsTotal) amountPaidPaise - newItemsTotal else 0L
+
+                    if (unpaidNewItems > 0L) {
+                        val udhaarTx = FinancialTransactionEntity(
+                            type = TransactionConstants.TYPE_UDHAAR_GIVEN,
+                            customerId = customerId,
+                            amountPaise = unpaidNewItems,
+                            paymentMethod = TransactionConstants.METHOD_CREDIT_LEDGER,
+                            description = "Bill #$receiptNumber (New Items unpaid)",
+                            occurredAt = bill.createdAt,
+                            createdAt = System.currentTimeMillis(),
+                            relatedBillId = billId,
+                            idempotencyKey = "BILL-$billId-UDHAAR-$idempotencyKey",
+                            status = TransactionConstants.STATUS_ACTIVE
+                        )
+                        financialTransactionDao.insertTransaction(udhaarTx)
+                    }
+
+                    if (paidForOldUdhaar > 0L) {
+                        val paymentTx = FinancialTransactionEntity(
+                            type = TransactionConstants.TYPE_PAYMENT_RECEIVED,
+                            customerId = customerId,
+                            amountPaise = paidForOldUdhaar,
+                            paymentMethod = paymentMethod,
+                            description = "Settlement for Old Udhaar via Bill #$receiptNumber",
+                            occurredAt = bill.createdAt,
+                            createdAt = System.currentTimeMillis() + 1,
+                            relatedBillId = billId,
+                            idempotencyKey = "BILL-$billId-PAYMENT-$idempotencyKey",
+                            status = TransactionConstants.STATUS_ACTIVE
+                        )
+                        financialTransactionDao.insertTransaction(paymentTx)
+                    }
+                } else if (unpaidPaise > 0L) {
+                    val udhaarTx = FinancialTransactionEntity(
+                        type = TransactionConstants.TYPE_UDHAAR_GIVEN,
+                        customerId = customerId,
+                        amountPaise = unpaidPaise,
+                        paymentMethod = TransactionConstants.METHOD_CREDIT_LEDGER,
+                        description = "Bill #$receiptNumber (Balance due)",
+                        occurredAt = bill.createdAt,
+                        createdAt = System.currentTimeMillis(),
+                        relatedBillId = billId,
+                        idempotencyKey = "BILL-$billId-UDHAAR-$idempotencyKey",
+                        status = TransactionConstants.STATUS_ACTIVE
+                    )
+                    financialTransactionDao.insertTransaction(udhaarTx)
+                }
             }
 
             billId
@@ -203,14 +262,13 @@ class BillingRepository(
                 }
             }
 
-            // 3. Reverse any linked active Udhaar transaction in ledger
+            // 3. Reverse any linked active transactions in customer ledger
             val customerId = billWithItems.bill.customerId
             if (customerId != null) {
                 val txs = financialTransactionDao.getTransactionsForCustomer(customerId)
                 for (tx in txs) {
                     if (tx.relatedBillId == billId &&
-                        tx.status == TransactionConstants.STATUS_ACTIVE &&
-                        tx.type == TransactionConstants.TYPE_UDHAAR_GIVEN
+                        tx.status == TransactionConstants.STATUS_ACTIVE
                     ) {
                         financialTransactionDao.executeReversal(
                             targetTransactionId = tx.id,

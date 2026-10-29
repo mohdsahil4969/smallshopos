@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.pm.PackageManager
@@ -50,7 +51,8 @@ class BluetoothPrinterManager(private val context: Context) {
 
     private val bluetoothAdapter: BluetoothAdapter?
         get() = try {
-            BluetoothAdapter.getDefaultAdapter()
+            val manager = context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
+            manager?.adapter ?: @Suppress("DEPRECATION") BluetoothAdapter.getDefaultAdapter()
         } catch (_: Throwable) {
             null
         }
@@ -105,7 +107,7 @@ class BluetoothPrinterManager(private val context: Context) {
             outputStream.write(CMD_ALIGN_CENTER)
             outputStream.write(CMD_BOLD_ON)
             outputStream.write(CMD_LARGE_TEXT)
-            val printShopName = shop.shopName.ifBlank { "Syntaxa Khata" }
+            val printShopName = shop.shopName.ifBlank { "SmartKhata" }
             outputStream.write("${printShopName}\n".toByteArray(Charsets.US_ASCII))
             outputStream.write(CMD_NORMAL_TEXT)
             outputStream.write(CMD_BOLD_OFF)
@@ -132,7 +134,7 @@ class BluetoothPrinterManager(private val context: Context) {
             if (shop.receiptFooter.isNotBlank()) {
                 outputStream.write("${shop.receiptFooter}\n".toByteArray(Charsets.US_ASCII))
             }
-            outputStream.write("Powered by Syntaxa Khata\n\n\n".toByteArray(Charsets.US_ASCII))
+            outputStream.write("Powered by SmartKhata (Syntaxa)\n\n\n".toByteArray(Charsets.US_ASCII))
             outputStream.write(CMD_FEED_CUT)
             outputStream.flush()
 
@@ -168,7 +170,7 @@ class BluetoothPrinterManager(private val context: Context) {
             outputStream.write(CMD_ALIGN_CENTER)
             outputStream.write(CMD_BOLD_ON)
             outputStream.write(CMD_LARGE_TEXT)
-            val printShopName = shop.shopName.ifBlank { "Syntaxa Khata" }
+            val printShopName = shop.shopName.ifBlank { "SmartKhata" }
             outputStream.write("${printShopName}\n".toByteArray(Charsets.US_ASCII))
             outputStream.write(CMD_NORMAL_TEXT)
             outputStream.write(CMD_BOLD_OFF)
@@ -195,9 +197,14 @@ class BluetoothPrinterManager(private val context: Context) {
 
             if (items.isNotEmpty()) {
                 for (item in items) {
+                    val qtyFormatted = if (item.quantity % 1.0 == 0.0) {
+                        item.quantity.toLong().toString()
+                    } else {
+                        String.format(java.util.Locale.US, "%.2f", item.quantity).trimEnd('0').trimEnd('.')
+                    }
                     val line = formatColumns(
                         item.description.take(paperWidth - 16),
-                        String.format("%.1f", item.quantity),
+                        qtyFormatted,
                         CurrencyFormatter.formatPaise(item.lineTotalPaise, showSymbol = false),
                         paperWidth
                     )
@@ -237,7 +244,7 @@ class BluetoothPrinterManager(private val context: Context) {
             if (shop.receiptFooter.isNotBlank()) {
                 outputStream.write("${shop.receiptFooter}\n".toByteArray(Charsets.US_ASCII))
             }
-            outputStream.write("Syntaxa Khata\n\n\n".toByteArray(Charsets.US_ASCII))
+            outputStream.write("SmartKhata by Syntaxa\n\n\n".toByteArray(Charsets.US_ASCII))
             outputStream.write(CMD_FEED_CUT)
             outputStream.flush()
 

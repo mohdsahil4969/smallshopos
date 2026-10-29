@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.5",
-  "versionCode": 6,
+  "latestVersion": "1.0.8",
+  "versionCode": 9,
   "minimumSupportedVersion": "1.0",
-  "releaseDate": 1730012000000,
-  "releaseNotes": "• Added item selection and quick item creation in Create Bill screen\n• Fixed vertical to horizontal numbering layout on Home KPI sales and udhaar metrics\n• Standardized button heights (48dp primary, 40dp action strips, 44dp dialogs) across all screens\n• Enforced single-line text with ellipsis to prevent oversized button distortion across all languages\n• Production Release v1.0.5 (Build 6)",
+  "releaseDate": 1730170000000,
+  "releaseNotes": "• Rebranded to SmartKhata (स्मार्ट खाता) with tagline 'Smart Billing & Udhaar by Syntaxa'\n• Added Gmail Cloud Scanner & automated 24/7 serverless payment verification\n• Automatic clipboard UTR detection and 1-tap paste for Google Pay / PhonePe\n• Fixed Create Bill dialog button overlapping layout\n• Added 'This app is made by Syntaxa' footer branding in Settings\n• Production Release v1.0.8 (Build 9)",
   "android": {
-    "url": "https://raw.githubusercontent.com/mohdsahil4969/smallshopos/main/apk/SyntaxaKhata-v1.0.5-release.apk",
-    "sha256": "a659aef3d5ba69888ae0fce8c458e3ba8f9e1b29c5a2cc8dcb7f573b69a37b9e",
-    "sizeBytes": 4355639
+    "url": "https://raw.githubusercontent.com/mohdsahil4969/smallshopos/main/apk/SmartKhata-v1.0.8-release.apk",
+    "sha256": "111d8da066eb43739ac10d0cdb8266bd1d570845202a5607eca5003dcc0a57dd",
+    "sizeBytes": 4115936
   }
 }

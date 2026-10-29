@@ -66,4 +66,8 @@ class KhataAppContainer(private val context: Context) {
     val subscriptionManager: com.syntaxa.khata.feature.subscription.SubscriptionManager by lazy {
         com.syntaxa.khata.feature.subscription.SubscriptionManager(context)
     }
+
+    val audioSoundboxManager: com.syntaxa.khata.core.audio.AudioSoundboxManager by lazy {
+        com.syntaxa.khata.core.audio.AudioSoundboxManager(context)
+    }
 }

@@ -64,7 +64,7 @@ function doPost(e) {
 function doGet(e) {
   return jsonResponse({
     status: "online",
-    service: "Syntaxa Khata Automated Google Sheets Payment Webhook",
+    service: "SmartKhata Payment Verification Server (Syntaxa)",
     supportedActions: [
       "verify_and_activate",
       "check_status",
@@ -154,19 +154,15 @@ function handleVerifyAndActivate(data) {
     }
   }
 
-  if (matchedPaymentIndex !== -1) {
-    // Mark as USED
-    paymentsSheet.getRange(matchedPaymentIndex, 5).setValue("USED");
-  } else {
-    // Auto-Log mode: Record automatically into Incoming_Payments so owner has complete history
-    paymentsSheet.appendRow([
-      new Date().toISOString(),
-      utr,
-      amount,
-      phone ? "UPI / " + phone : "UPI App",
-      "USED"
-    ]);
+  if (matchedPaymentIndex === -1) {
+    return jsonResponse({
+      success: false,
+      message: "UTR not found in server payment records. Please ensure you have completed the ₹49 payment and entered the exact 12-digit UTR from your UPI app."
+    });
   }
+
+  // Mark as USED in incoming payments log
+  paymentsSheet.getRange(matchedPaymentIndex, 5).setValue("USED");
 
   // 4. Calculate Expiry Date (30 days)
   const now = new Date();
@@ -208,6 +204,8 @@ function handleVerifyAndActivate(data) {
 
   return jsonResponse({
     success: true,
+    verified: true,
+    verificationStatus: "CONFIRMED_INCOMING_PAYMENT",
     message: "Pro Plan activated successfully until " + expiry.toLocaleDateString() + "!",
     expiryDate: expiryIso,
     signature: signature,
@@ -219,19 +217,65 @@ function handleVerifyAndActivate(data) {
 }
 
 /**
- * Checks if a device has an active license
+ * Helper to build signed license JSON response
+ */
+function buildLicenseResponse(deviceId, plan, utr, expiryDate) {
+  const expiryIso = expiryDate.toISOString();
+  const version = "1";
+  const issuedIso = new Date().toISOString();
+  const licenseId = "LIC-" + new Date().getTime().toString(16).toUpperCase();
+  const paymentRef = utr;
+  const canonicalPayload = "SYNTAXA_LIC:" + version + ":" + licenseId + ":" + plan + ":" + expiryIso + ":" + deviceId + ":" + paymentRef + ":" + issuedIso;
+  
+  let signature = "";
+  const privateKey = getPrivateKey();
+  if (privateKey) {
+    try {
+      const rawSigBytes = Utilities.computeRsaSha256Signature(canonicalPayload, privateKey);
+      signature = Utilities.base64Encode(rawSigBytes);
+    } catch (e) {
+      signature = computeSha256(canonicalPayload + ":SYNTAXA_FALLBACK");
+    }
+  } else {
+    signature = computeSha256(canonicalPayload + ":SYNTAXA_FALLBACK");
+  }
+
+  return jsonResponse({
+    isPro: true,
+    verified: true,
+    verificationStatus: "CONFIRMED_INCOMING_PAYMENT",
+    tier: plan,
+    expiryDate: expiryIso,
+    signature: signature,
+    utr: utr,
+    version: version,
+    licenseId: licenseId,
+    issuedAt: issuedIso
+  });
+}
+
+/**
+ * Checks if a device has an active license, or auto-claims a fresh incoming payment for this device.
  */
 function handleCheckStatus(data) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const licensesSheet = ss.getSheetByName("Activated_Licenses");
+  let licensesSheet = ss.getSheetByName("Activated_Licenses");
+  let paymentsSheet = ss.getSheetByName("Incoming_Payments");
+
   if (!licensesSheet) {
-    return jsonResponse({ isPro: false, message: "No licenses found." });
+    licensesSheet = ss.insertSheet("Activated_Licenses");
+    licensesSheet.appendRow(["Timestamp", "Device_ID", "Plan", "Amount", "UTR", "Expiry_Date", "Phone", "Shop_Name", "Status"]);
+  }
+  if (!paymentsSheet) {
+    paymentsSheet = ss.insertSheet("Incoming_Payments");
+    paymentsSheet.appendRow(["Timestamp", "UTR", "Amount", "Payer_UPI", "Status"]);
   }
 
   const deviceId = String(data.deviceId || "").trim();
-  const rows = licensesSheet.getDataRange().getValues();
   const now = new Date();
 
+  // 1. Check if device already has an ACTIVE, non-expired license
+  const rows = licensesSheet.getDataRange().getValues();
   for (let i = rows.length - 1; i >= 1; i--) {
     const rowDevice = String(rows[i][1] || "").trim();
     const rowPlan = String(rows[i][2] || "").trim();
@@ -240,37 +284,55 @@ function handleCheckStatus(data) {
     const rowStatus = String(rows[i][8] || "").trim();
 
     if (rowDevice === deviceId && rowStatus === "ACTIVE" && rowExpiry > now) {
-      const expiryIso = rowExpiry.toISOString();
-      const version = "1";
-      const issuedIso = new Date().toISOString();
-      const licenseId = "LIC-" + new Date().getTime().toString(16).toUpperCase();
-      const paymentRef = rowUtr;
-      const canonicalPayload = "SYNTAXA_LIC:" + version + ":" + licenseId + ":" + rowPlan + ":" + expiryIso + ":" + deviceId + ":" + paymentRef + ":" + issuedIso;
-      
-      let signature = "";
-      const privateKey = getPrivateKey();
-      if (privateKey) {
-        try {
-          const rawSigBytes = Utilities.computeRsaSha256Signature(canonicalPayload, privateKey);
-          signature = Utilities.base64Encode(rawSigBytes);
-        } catch (e) {
-          signature = computeSha256(canonicalPayload + ":SYNTAXA_FALLBACK");
-        }
-      } else {
-        signature = computeSha256(canonicalPayload + ":SYNTAXA_FALLBACK");
-      }
-
-      return jsonResponse({
-        isPro: true,
-        tier: rowPlan,
-        expiryDate: expiryIso,
-        signature: signature,
-        utr: rowUtr,
-        version: version,
-        licenseId: licenseId,
-        issuedAt: issuedIso
-      });
+      return buildLicenseResponse(deviceId, rowPlan, rowUtr, rowExpiry);
     }
+  }
+
+  // 2. AUTO-DETECTION: Check if there is an UNUSED incoming payment from Gmail scanner
+  // that arrived within the last 30 minutes
+  const paymentRows = paymentsSheet.getDataRange().getValues();
+  let matchedPaymentIndex = -1;
+  let matchedUtr = "";
+  let matchedAmount = 49.0;
+
+  for (let j = paymentRows.length - 1; j >= 1; j--) {
+    const pUtr = String(paymentRows[j][1] || "").trim();
+    const pAmount = Number(paymentRows[j][2] || 0);
+    const pStatus = String(paymentRows[j][4] || "UNUSED").trim().toUpperCase();
+    const pTime = new Date(paymentRows[j][0]);
+
+    const isRecent = (now.getTime() - pTime.getTime()) < (30 * 60 * 1000);
+    if (pStatus === "UNUSED" && pUtr.length === 12 && (pAmount >= 49.0 || pAmount === 0 || isRecent)) {
+      matchedPaymentIndex = j + 1; // 1-indexed for Sheets
+      matchedUtr = pUtr;
+      matchedAmount = pAmount > 0 ? pAmount : 49.0;
+      break;
+    }
+  }
+
+  // If a fresh payment was found, claim it for this waiting device!
+  if (matchedPaymentIndex !== -1 && deviceId) {
+    // Mark as USED in Incoming_Payments so it cannot be claimed twice
+    paymentsSheet.getRange(matchedPaymentIndex, 5).setValue("USED by " + deviceId);
+
+    const durationDays = Number(data.durationDays || 30);
+    const expiry = new Date(now.getTime() + (durationDays * 24 * 60 * 60 * 1000));
+    const expiryIso = expiry.toISOString();
+    const plan = String(data.plan || "proMonthly").trim();
+
+    licensesSheet.appendRow([
+      now.toISOString(),
+      deviceId,
+      plan,
+      matchedAmount,
+      matchedUtr,
+      expiryIso,
+      String(data.phone || ""),
+      String(data.shopName || "SmartKhata Store"),
+      "ACTIVE"
+    ]);
+
+    return buildLicenseResponse(deviceId, plan, matchedUtr, expiry);
   }
 
   return jsonResponse({ isPro: false });
@@ -406,7 +468,7 @@ function handleRecordIncomingPayment(data) {
 }
 
 /**
- * OPTIONAL: Cloud-native 24/7 Gmail Scanner Trigger.
+ * Cloud-native 24/7 Gmail Scanner Trigger.
  * Runs on Google Cloud every 1 minute without needing any phone or laptop.
  * Scans your Gmail for incoming FamPay / UPI payment notifications and logs them automatically.
  */
@@ -418,19 +480,33 @@ function autoScanGmailIncomingPayments() {
     paymentsSheet.appendRow(["Timestamp", "UTR", "Amount", "Payer_UPI", "Status"]);
   }
 
-  const threads = GmailApp.search('subject:("credited" OR "received" OR "FamPay" OR "UPI") newer_than:1d', 0, 10);
+  // Broad search query covering FamPay, bank credit alerts, and UPI payments
+  const query = '("credited" OR "received" OR "FamPay" OR "UPI" OR "payment" OR "Rs. 49" OR "₹49") newer_than:2d';
+  const threads = GmailApp.search(query, 0, 15);
+  
   for (let i = 0; i < threads.length; i++) {
     const messages = threads[i].getMessages();
     for (let j = 0; j < messages.length; j++) {
       const body = messages[j].getPlainBody();
-      
-      const utrMatch = body.match(/(?:UTR|Ref|Reference|Txn\s*ID)[:\s#]*([0-9]{12})/i) || body.match(/\b([0-9]{12})\b/);
-      const amountMatch = body.match(/(?:Rs\.?|INR|₹)\s*([0-9]+(?:\.[0-9]{1,2})?)/i);
+      const subject = messages[j].getSubject();
+      const combined = subject + "\n" + body;
+
+      // Extract 12-digit UTR / Reference
+      const utrMatch = combined.match(/(?:UTR|Ref|Reference|Txn\s*ID|Ref\s*No|RRN|UPI\s*Ref)[:\s#/]*([0-9]{12})/i)
+                    || combined.match(/(?:UPI\/|UPI:)([0-9]{12})/i)
+                    || combined.match(/\b([0-9]{12})\b/);
+
+      // Extract Amount
+      const amountMatch = combined.match(/(?:Rs\.?|INR|₹)\s*([0-9]+(?:\.[0-9]{1,2})?)/i)
+                       || combined.match(/([0-9]+(?:\.[0-9]{1,2})?)\s*(?:Rs|INR|₹)/i);
 
       if (utrMatch) {
         const utr = utrMatch[1];
+        if (utr === "000000000000" || utr === "123456789012") continue;
+
         const amount = amountMatch ? parseFloat(amountMatch[1]) : 49.0;
-        
+
+        // Check if already logged
         const rows = paymentsSheet.getDataRange().getValues();
         let exists = false;
         for (let r = 1; r < rows.length; r++) {
@@ -439,19 +515,56 @@ function autoScanGmailIncomingPayments() {
             break;
           }
         }
-        
+
         if (!exists) {
           paymentsSheet.appendRow([
             new Date().toISOString(),
             utr,
             amount,
-            "Gmail Cloud Auto-Scan",
+            subject.slice(0, 50),
             "UNUSED"
           ]);
+          Logger.log("Logged incoming payment: UTR " + utr + " Amount: ₹" + amount);
         }
       }
     }
   }
+}
+
+/**
+ * 1-CLICK ENABLE TRIGGER:
+ * Select this function in the Apps Script toolbar dropdown and click "Run".
+ * It installs the 1-minute automatic background trigger on Google Cloud!
+ */
+function enableGmailCloudScanner() {
+  // Delete existing scanner triggers to avoid duplicate runs
+  const triggers = ScriptApp.getProjectTriggers();
+  for (let i = 0; i < triggers.length; i++) {
+    if (triggers[i].getHandlerFunction() === "autoScanGmailIncomingPayments") {
+      ScriptApp.deleteTrigger(triggers[i]);
+    }
+  }
+
+  // Create new 1-minute trigger
+  ScriptApp.newTrigger("autoScanGmailIncomingPayments")
+    .timeBased()
+    .everyMinutes(1)
+    .create();
+
+  // Run initial scan right now
+  autoScanGmailIncomingPayments();
+
+  Logger.log("SUCCESS: Gmail Cloud Scanner enabled! Runs every 1 minute automatically on Google Cloud.");
+}
+
+/**
+ * TEST SCAN:
+ * Select this function and click "Run" to test your Gmail connection immediately.
+ */
+function testScanGmailNow() {
+  Logger.log("Starting test scan of Gmail...");
+  autoScanGmailIncomingPayments();
+  Logger.log("Test scan complete. Check 'Incoming_Payments' tab in your Google Sheet.");
 }
 
 function computeSha256(input) {

@@ -83,6 +83,13 @@ class SettingsViewModel(
         return backupManager.restoreVerifiedData(data)
     }
 
+    // Virtual Soundbox Audio Confirmation
+    fun isSoundboxEnabled(): Boolean = container.audioSoundboxManager.isEnabled()
+    fun setSoundboxEnabled(enabled: Boolean) = container.audioSoundboxManager.setEnabled(enabled)
+    fun getSoundboxLanguage(): String = container.audioSoundboxManager.getSpeechLanguage()
+    fun setSoundboxLanguage(lang: String) = container.audioSoundboxManager.setSpeechLanguage(lang)
+    fun testSoundbox(languageCode: String?) = container.audioSoundboxManager.playTestAnnouncement(languageCode)
+
     class Factory(
         private val container: KhataAppContainer,
         private val context: Context

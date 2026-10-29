@@ -45,7 +45,7 @@ data class AppUpdateInfo(
                 "releaseNotes",
                 json.optString("release_notes", "Performance improvements and bug fixes.")
             )
-            val title = json.optString("title", "Syntaxa Khata v$rawVersion Available")
+            val title = json.optString("title", "SmartKhata v$rawVersion Available")
 
             var chosenUrl = json.optString("download_url", "").trim()
             var chosenSha = if (json.has("sha256")) json.optString("sha256").trim() else ""

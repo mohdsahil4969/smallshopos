@@ -51,8 +51,8 @@ val termsSections = listOf(
         icon = Icons.Default.PrecisionManufacturing,
         titleEn = "Machine & Software Nature Disclaimer",
         titleHi = "मशीन एवं सॉफ्टवेयर की प्रकृति व अस्वीकरण",
-        contentEn = "Syntaxa Khata is an automated electronic software program running on mobile hardware. Like any computer software, operating system, or machine, computational errors, operating system pauses, software bugs, storage failures, or unexpected device crashes can occur. The software is provided strictly on an \"AS IS\" and \"AS AVAILABLE\" basis without warranties of any kind.",
-        contentHi = "सिंटैक्सा खाता एक स्वचालित इलेक्ट्रॉनिक सॉफ्टवेयर प्रोग्राम है जो मोबाइल हार्डवेयर पर चलता है। किसी भी कंप्यूटर सॉफ्टवेयर या मशीन की भांति इसमें सॉफ्टवेयर बग, सिस्टम रुकावट, गणना विसंगति, मेमोरी खराबी या अप्रत्याशित डिवाइस क्रैश हो सकता है। यह सॉफ्टवेयर पूर्णतः \"जैसी है वैसी\" (AS IS) स्थिति में बिना किसी वारंटी के प्रदान किया जाता है।",
+        contentEn = "SmartKhata is an automated electronic software program running on mobile hardware. Like any computer software, operating system, or machine, computational errors, operating system pauses, software bugs, storage failures, or unexpected device crashes can occur. The software is provided strictly on an \"AS IS\" and \"AS AVAILABLE\" basis without warranties of any kind.",
+        contentHi = "स्मार्ट खाता एक स्वचालित इलेक्ट्रॉनिक सॉफ्टवेयर प्रोग्राम है जो मोबाइल हार्डवेयर पर चलता है। किसी भी कंप्यूटर सॉफ्टवेयर या मशीन की भांति इसमें सॉफ्टवेयर बग, सिस्टम रुकावट, गणना विसंगति, मेमोरी खराबी या अप्रत्याशित डिवाइस क्रैश हो सकता है। यह सॉफ्टवेयर पूर्णतः \"जैसी है वैसी\" (AS IS) स्थिति में बिना किसी वारंटी के प्रदान किया जाता है।",
         isCritical = true
     ),
     TermsSection(
@@ -60,8 +60,8 @@ val termsSections = listOf(
         icon = Icons.Default.Gavel,
         titleEn = "Strict Limitation of Liability for Business Losses",
         titleHi = "व्यापारिक नुकसान के लिए शून्य देयता नीति",
-        contentEn = "Under no circumstances shall Syntaxa Khata, its developers, authors, contributors, or distributors be held legally or financially liable for any direct, indirect, special, incidental, punitive, or consequential commercial or business losses, loss of profits, commercial disputes, customer misunderstandings, inventory shortages, tax penalties, or unrecovered credit/udhaar. Use of this application is at your sole discretion and risk.",
-        contentHi = "इस एप्लिकेशन के उपयोग या किसी विसंगति के कारण होने वाले किसी भी प्रत्यक्ष, अप्रत्यक्ष, व्यावसायिक नुकसान, व्यापार घाटे, दुकान के मुनाफे में कमी, ग्राहकों से विवाद, सामान की कमी, कर संबंधी समस्याओं या न मिलने वाले उधार के लिए सिंटैक्सा खाता अथवा इसके डेवलपर्स किसी भी प्रकार से जिम्मेदार या उत्तरदायी नहीं होंगे। ऐप का उपयोग पूरी तरह आपके स्वयं के विवेक पर निर्भर है।",
+        contentEn = "Under no circumstances shall SmartKhata, its developers, authors, contributors, or distributors (Syntaxa) be held legally or financially liable for any direct, indirect, special, incidental, punitive, or consequential commercial or business losses, loss of profits, commercial disputes, customer misunderstandings, inventory shortages, tax penalties, or unrecovered credit/udhaar. Use of this application is at your sole discretion and risk.",
+        contentHi = "इस एप्लिकेशन के उपयोग या किसी विसंगति के कारण होने वाले किसी भी प्रत्यक्ष, अप्रत्यक्ष, व्यावसायिक नुकसान, व्यापार घाटे, दुकान के मुनाफे में कमी, ग्राहकों से विवाद, सामान की कमी, कर संबंधी समस्याओं या न मिलने वाले उधार के लिए स्मार्ट खाता अथवा इसके डेवलपर्स किसी भी प्रकार से जिम्मेदार या उत्तरदायी नहीं होंगे। ऐप का उपयोग पूरी तरह आपके स्वयं के विवेक पर निर्भर है।",
         isCritical = true
     ),
     TermsSection(
@@ -87,7 +87,7 @@ val termsSections = listOf(
         icon = Icons.Default.CloudUpload,
         titleEn = "Mandatory Merchant Backup Duty",
         titleHi = "नियमित बैकअप लेने की अनिवार्य जिम्मेदारी",
-        contentEn = "Because Syntaxa Khata does not upload your records to any remote server, it is the shopkeeper's sole responsibility to create periodic encrypted backups (via Settings -> Backup & Restore) and save them to Google Drive or external storage to prevent permanent data loss in case of phone theft, water damage, or hardware crash.",
+        contentEn = "Because SmartKhata does not upload your records to any remote server, it is the shopkeeper's sole responsibility to create periodic encrypted backups (via Settings -> Backup & Restore) and save them to Google Drive or external storage to prevent permanent data loss in case of phone theft, water damage, or hardware crash.",
         contentHi = "क्योंकि ऐप आपका डेटा किसी सर्वर पर स्टोर नहीं करता, इसलिए फ़ोन खोने, खराब होने या पानी में गिरने की स्थिति में डेटा के स्थायी नुकसान से बचने हेतु समय-समय पर पासवर्ड-सुरक्षित बैकअप (सेटिंग्स से) बनाकर सुरक्षित स्थान पर रखने की जिम्मेदारी दुकानदार की है।",
         isCritical = false
     )
@@ -218,9 +218,9 @@ fun TermsAndConditionsScreen(
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = if (isHindi)
-                                "सिंटैक्सा खाता का उपयोग करने से पूर्व कृपया इन आवश्यक परिचालन एवं कानूनी शर्तों को ध्यानपूर्वक पढ़ें।"
+                                "स्मार्ट खाता का उपयोग करने से पूर्व कृपया इन आवश्यक परिचालन एवं कानूनी शर्तों को ध्यानपूर्वक पढ़ें।"
                             else
-                                "Please carefully review these operational and legal terms before using Syntaxa Khata for your retail shop.",
+                                "Please carefully review these operational and legal terms before using SmartKhata for your retail shop.",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -270,9 +270,9 @@ fun TermsAndConditionsScreen(
 
                             Text(
                                 text = if (isHindi)
-                                    "• सिंटैक्सा खाता एक कंप्यूटर/मोबाइल सॉफ्टवेयर है। मशीन और डिजिटल प्रोग्राम होने के कारण इसमें तकनीकी त्रुटि, बग्स या गणना विसंगति की सम्भावना हो सकती है।\n\n• इस ऐप के उपयोग से उत्पन्न किसी भी व्यापारिक नुकसान (Business Loss), मुनाफे में कमी या वित्तीय विवाद के लिए सिंटैक्सा खाता या इसके डेवलपर्स जिम्मेदार नहीं होंगे।\n\n• हिसाब-किताब के सही होने की अंतिम जांच करना पूर्णतः दुकानदार की अपनी जिम्मेदारी है।"
+                                    "• स्मार्ट खाता एक कंप्यूटर/मोबाइल सॉफ्टवेयर है। मशीन और डिजिटल प्रोग्राम होने के कारण इसमें तकनीकी त्रुटि, बग्स या गणना विसंगति की सम्भावना हो सकती है।\n\n• इस ऐप के उपयोग से उत्पन्न किसी भी व्यापारिक नुकसान (Business Loss), मुनाफे में कमी या वित्तीय विवाद के लिए स्मार्ट खाता या इसके डेवलपर्स (Syntaxa) जिम्मेदार नहीं होंगे।\n\n• हिसाब-किताब के सही होने की अंतिम जांच करना पूर्णतः दुकानदार की अपनी जिम्मेदारी है।"
                                 else
-                                    "• Syntaxa Khata is a computer/mobile software tool. As with any software program or machine, technical bugs, unexpected errors, or calculation glitches may occur.\n\n• Neither Syntaxa Khata nor its creators/developers shall bear any liability for business losses, commercial disputes, lost profits, or financial discrepancies.\n\n• The shopkeeper is solely responsible for verifying the accuracy of all ledger balances and transactions.",
+                                    "• SmartKhata is a computer/mobile software tool. As with any software program or machine, technical bugs, unexpected errors, or calculation glitches may occur.\n\n• Neither SmartKhata nor its creators/developers (Syntaxa) shall bear any liability for business losses, commercial disputes, lost profits, or financial discrepancies.\n\n• The shopkeeper is solely responsible for verifying the accuracy of all ledger balances and transactions.",
                                 style = MaterialTheme.typography.bodySmall.copy(lineHeight = 18.sp),
                                 color = MaterialTheme.colorScheme.onErrorContainer
                             )
@@ -281,7 +281,11 @@ fun TermsAndConditionsScreen(
                 }
 
                 // Section Cards
-                items(termsSections, key = { it.id }) { section ->
+                items(
+                    items = termsSections,
+                    key = { it.id },
+                    contentType = { "term_section" }
+                ) { section ->
                     KiranaCard {
                         Row(
                             verticalAlignment = Alignment.Top,
@@ -393,7 +397,7 @@ fun TermsAndConditionsScreen(
                                 onClick = onAccepted,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(48.dp),
+                                    .defaultMinSize(minHeight = 48.dp),
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = KiranaGreenPrimary,

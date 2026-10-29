@@ -63,7 +63,7 @@ fun SupplierScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { viewModel.setQuery(it) },
-                label = { Text("Search Suppliers / Wholesalers") },
+                label = { Text(stringResource(R.string.search_suppliers_hint)) },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = {
                     if (searchQuery.isNotBlank()) {
@@ -86,7 +86,7 @@ fun SupplierScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No suppliers found. Tap + to add a wholesaler/vendor.",
+                        text = stringResource(R.string.no_suppliers_found_hint),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -99,7 +99,7 @@ fun SupplierScreen(
                     contentPadding = PaddingValues(top = 4.dp, bottom = 88.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(suppliers, key = { it.id }) { supplier ->
+                    items(suppliers, key = { it.id }, contentType = { "supplier_item" }) { supplier ->
                         SupplierItemCard(
                             supplier = supplier,
                             onRecordPurchase = {
@@ -361,7 +361,7 @@ private fun RecordSupplierPurchaseDialog(
                 CurrencyInputField(
                     value = amountInput,
                     onValueChange = { amountInput = it },
-                    label = "Purchase Invoice Total (₹) *",
+                    label = stringResource(R.string.purchase_invoice_total),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
@@ -423,7 +423,7 @@ private fun RecordSupplierPaymentDialog(
                 CurrencyInputField(
                     value = amountInput,
                     onValueChange = { amountInput = it },
-                    label = "Amount Paid (₹) *",
+                    label = stringResource(R.string.amount_paid_required),
                     modifier = Modifier.fillMaxWidth()
                 )
                 FlowRow(
@@ -444,7 +444,7 @@ private fun RecordSupplierPaymentDialog(
                 OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("Transaction Reference / Notes") },
+                    label = { Text(stringResource(R.string.txn_ref_notes)) },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -484,9 +484,9 @@ private fun SupplierStatementDialog(
         onDismissRequest = onDismiss,
         title = {
             Column {
-                Text("${supplier.name} — Statement", fontWeight = FontWeight.Bold)
+                Text("${supplier.name} — ${stringResource(R.string.supplier_statement)}", fontWeight = FontWeight.Bold)
                 Text(
-                    "Current Due: ${CurrencyFormatter.formatPaise(supplier.balancePaise)}",
+                    stringResource(R.string.due_colon, CurrencyFormatter.formatPaise(supplier.balancePaise)),
                     style = MaterialTheme.typography.bodySmall,
                     color = if (supplier.balancePaise > 0) KiranaDebitRed else KiranaCreditGreen
                 )
@@ -494,7 +494,7 @@ private fun SupplierStatementDialog(
         },
         text = {
             if (transactions.isEmpty()) {
-                Text("No transactions recorded yet for this supplier.")
+                Text(stringResource(R.string.no_transactions_for_supplier))
             } else {
                 LazyColumn(
                     modifier = Modifier
@@ -502,7 +502,7 @@ private fun SupplierStatementDialog(
                         .heightIn(max = 400.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    items(transactions, key = { it.id }) { tx ->
+                    items(transactions, key = { it.id }, contentType = { "supplier_tx" }) { tx ->
                         Surface(
                             shape = RoundedCornerShape(6.dp),
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
@@ -517,7 +517,11 @@ private fun SupplierStatementDialog(
                             ) {
                                 Column {
                                     Text(
-                                        text = if (tx.type == "PURCHASE") "Purchase ${if (tx.billInvoiceNumber.isNotBlank()) "#${tx.billInvoiceNumber}" else ""}" else "Payment Made (${tx.paymentMethod})",
+                                        text = if (tx.type == "PURCHASE") {
+                                            stringResource(R.string.purchase_tx_title, if (tx.billInvoiceNumber.isNotBlank()) "#${tx.billInvoiceNumber}" else "")
+                                        } else {
+                                            stringResource(R.string.payment_made_tx_title, tx.paymentMethod)
+                                        },
                                         fontWeight = FontWeight.SemiBold,
                                         style = MaterialTheme.typography.bodyMedium
                                     )

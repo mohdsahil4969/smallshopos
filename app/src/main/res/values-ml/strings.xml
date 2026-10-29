@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">സിന്റാക്സ ഖാത</string>
-    <string name="tagline">ഓഫ്‌ലൈൻ കട സഹായി</string>
+    <string name="app_name">സ്മാർട്ട് ഖാത</string>
+    <string name="tagline">സ്മാർട്ട് ബില്ലിംഗ് &amp; കടം - Syntaxa വഴി</string>
 
     <!-- Navigation -->
     <string name="nav_home">ഹോം</string>

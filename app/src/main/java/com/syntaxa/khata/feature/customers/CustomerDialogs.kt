@@ -36,6 +36,7 @@ fun AddCustomerDialog(
     var notes by remember { mutableStateOf("") }
     var isPhoneDuplicate by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    val nameRequiredMsg = stringResource(R.string.error_customer_name_required)
     val coroutineScope = rememberCoroutineScope()
 
     AlertDialog(
@@ -101,7 +102,7 @@ fun AddCustomerDialog(
             Button(
                 onClick = {
                     if (name.isBlank()) {
-                        errorMessage = "Customer name is required"
+                        errorMessage = nameRequiredMsg
                     } else {
                         onSave(name.trim(), phone.trim(), notes.trim())
                     }
@@ -146,11 +147,12 @@ fun EditCustomerDialog(
     var notes by remember { mutableStateOf(initialNotes) }
     var isPhoneDuplicate by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    val nameRequiredMsg = stringResource(R.string.error_customer_name_required)
     val coroutineScope = rememberCoroutineScope()
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit Customer", fontWeight = FontWeight.Bold) },
+        title = { Text(stringResource(R.string.edit_customer_title), fontWeight = FontWeight.Bold) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
@@ -211,7 +213,7 @@ fun EditCustomerDialog(
             Button(
                 onClick = {
                     if (name.isBlank()) {
-                        errorMessage = "Customer name is required"
+                        errorMessage = nameRequiredMsg
                     } else {
                         onSave(name.trim(), phone.trim(), notes.trim())
                     }
@@ -264,7 +266,7 @@ fun AddUdhaarDialog(
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 // Customer Selector
                 if (preselectedCustomerId == null) {
-                    Text("Select Customer", style = MaterialTheme.typography.labelMedium)
+                    Text(stringResource(R.string.select_customer_label), style = MaterialTheme.typography.labelMedium)
                     CustomerDropdown(
                         customers = customers,
                         selectedCustomer = selectedCustomer,
@@ -272,7 +274,7 @@ fun AddUdhaarDialog(
                     )
                 } else {
                     Text(
-                        text = "Customer: ${selectedCustomer?.name ?: ""}",
+                        text = stringResource(R.string.customer_colon, selectedCustomer?.name ?: ""),
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
                 }
@@ -367,7 +369,7 @@ fun ReceivePaymentDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (preselectedCustomerId == null) {
-                    Text("Select Customer", style = MaterialTheme.typography.labelMedium)
+                    Text(stringResource(R.string.select_customer_label), style = MaterialTheme.typography.labelMedium)
                     CustomerDropdown(
                         customers = customers,
                         selectedCustomer = selectedCustomer,
@@ -381,7 +383,7 @@ fun ReceivePaymentDialog(
                         ) {
                             Text(c.name, style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold))
                             Text(
-                                "Due: ${CurrencyFormatter.formatPaise(c.balancePaise)}",
+                                stringResource(R.string.due_colon, CurrencyFormatter.formatPaise(c.balancePaise)),
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = if (c.balancePaise > 0) KiranaDebitRed else KiranaCreditGreen
@@ -491,7 +493,7 @@ fun CustomerDropdown(
         onExpandedChange = { expanded = !expanded }
     ) {
         OutlinedTextField(
-            value = selectedCustomer?.let { "${it.name} (Due: ${CurrencyFormatter.formatPaise(it.balancePaise)})" } ?: "Select",
+            value = selectedCustomer?.let { "${it.name} (${stringResource(R.string.due_colon, CurrencyFormatter.formatPaise(it.balancePaise))})" } ?: stringResource(R.string.select_customer_label),
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },

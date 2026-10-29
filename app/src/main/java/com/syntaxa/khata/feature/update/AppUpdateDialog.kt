@@ -106,7 +106,7 @@ fun AppUpdateDialog(
                     Column {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text = "Syntaxa Khata Update",
+                                text = "SmartKhata Update",
                                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                             )
                         }
@@ -244,7 +244,7 @@ fun AppUpdateDialog(
                             }
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                "Android requires you to allow 'Install unknown apps' for Syntaxa Khata before installing.",
+                                "Android requires you to allow 'Install unknown apps' for SmartKhata before installing.",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onErrorContainer
                             )

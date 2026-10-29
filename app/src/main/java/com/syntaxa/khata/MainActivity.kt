@@ -18,7 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -32,6 +34,7 @@ import java.util.Locale
 import com.syntaxa.khata.core.preferences.UserGuidePreferences
 import com.syntaxa.khata.core.security.AppLockScreen
 import com.syntaxa.khata.core.security.PinSecurityManager
+import com.syntaxa.khata.core.util.StorageCleanerManager
 import com.syntaxa.khata.core.ui.navigation.Screen
 import com.syntaxa.khata.core.ui.navigation.bottomNavScreens
 import com.syntaxa.khata.core.ui.theme.SyntaxaKhataTheme
@@ -252,16 +255,19 @@ fun MainAppScaffold(
     var showAddUdhaarDialog by remember { mutableStateOf(false) }
     var showReceivePaymentDialog by remember { mutableStateOf(false) }
     var dialogPreselectedCustomerId by remember { mutableStateOf<Long?>(null) }
+    var billingPreselectedCustomerId by remember { mutableStateOf<Long?>(null) }
     var recordsInitialTab by remember { mutableIntStateOf(0) }
 
     val activeCustomers by customerViewModel.activeCustomers.collectAsState()
     val updateState by appUpdateViewModel.updateState.collectAsState()
+    val context = LocalContext.current
 
-    // Silent background check on app startup if auto-check is enabled
+    // Silent background check and auto-cleaning on app startup
     LaunchedEffect(Unit) {
         if (appUpdateViewModel.isAutoCheckEnabled()) {
             appUpdateViewModel.checkForUpdate(isManual = false)
         }
+        StorageCleanerManager.autoCleanOnStartup(context)
     }
 
     Scaffold(
@@ -274,18 +280,33 @@ fun MainAppScaffold(
                         label = {
                             Text(
                                 text = stringResource(screen.titleRes),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontSize = 11.sp,
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                                ),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                         },
                         selected = isSelected,
                         onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                            if (screen.route == Screen.Home.route) {
+                                navController.navigate(Screen.Home.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        inclusive = false
+                                        saveState = false
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = false
                                 }
-                                launchSingleTop = true
-                                restoreState = true
+                            } else {
+                                navController.navigate(screen.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             }
                         }
                     )
@@ -306,14 +327,35 @@ fun MainAppScaffold(
                 composable(Screen.Home.route) {
                     HomeScreen(
                         viewModel = homeViewModel,
-                        onNavigateToKhata = { navController.navigate(Screen.Khata.route) },
+                        onNavigateToKhata = {
+                            navController.navigate(Screen.Khata.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
                         onNavigateToBilling = {
+                            billingPreselectedCustomerId = null
                             recordsInitialTab = 0
-                            navController.navigate(Screen.Records.route)
+                            navController.navigate(Screen.Records.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         onNavigateToExpenses = {
                             recordsInitialTab = 1
-                            navController.navigate(Screen.Records.route)
+                            navController.navigate(Screen.Records.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         onOpenAddCustomerDialog = { showAddCustomerDialog = true },
                         onOpenAddUdhaarDialog = {
@@ -326,7 +368,20 @@ fun MainAppScaffold(
                         },
                         subscriptionManager = subscriptionManager,
                         onNavigateToPaywall = { navController.navigate("subscription_paywall") },
-                        onOpenUserGuide = { navController.navigate("user_guide") }
+                        onOpenUserGuide = { navController.navigate("user_guide") },
+                        onNavigateToReports = {
+                            recordsInitialTab = 4
+                            navController.navigate(Screen.Records.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        onSelectCustomer = { customerId ->
+                            navController.navigate("customer_profile/$customerId")
+                        }
                     )
                 }
 
@@ -358,6 +413,17 @@ fun MainAppScaffold(
                         onOpenReceivePayment = { cId ->
                             dialogPreselectedCustomerId = cId
                             showReceivePaymentDialog = true
+                        },
+                        onNavigateToBilling = { cId ->
+                            billingPreselectedCustomerId = cId
+                            recordsInitialTab = 0
+                            navController.navigate(Screen.Records.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         }
                     )
                 }
@@ -372,7 +438,9 @@ fun MainAppScaffold(
                         supplierViewModel = supplierViewModel,
                         subscriptionManager = subscriptionManager,
                         onNavigateToPaywall = { navController.navigate("subscription_paywall") },
-                        initialTab = recordsInitialTab
+                        initialTab = recordsInitialTab,
+                        billingPreselectedCustomerId = billingPreselectedCustomerId,
+                        onOpenAddCustomerDialog = { showAddCustomerDialog = true }
                     )
                 }
 
@@ -430,7 +498,9 @@ fun MainAppScaffold(
                             onSuccess = {
                                 showAddCustomerDialog = false
                             },
-                            onError = { }
+                            onError = { err ->
+                                Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+                            }
                         )
                     },
                     checkDuplicatePhone = { phone ->
@@ -450,7 +520,9 @@ fun MainAppScaffold(
                             amountPaise = amountPaise,
                             description = desc,
                             onSuccess = { showAddUdhaarDialog = false },
-                            onError = { }
+                            onError = { err ->
+                                Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+                            }
                         )
                     }
                 )
@@ -468,7 +540,9 @@ fun MainAppScaffold(
                             paymentMethod = method,
                             description = desc,
                             onSuccess = { showReceivePaymentDialog = false },
-                            onError = { }
+                            onError = { err ->
+                                Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+                            }
                         )
                     }
                 )

@@ -90,12 +90,12 @@ fun InventoryScreen(
                 FilterChip(
                     selected = !onlyLowStock,
                     onClick = { if (onlyLowStock) viewModel.toggleLowStockFilter() },
-                    label = { Text("All Products (${products.size})") }
+                    label = { Text(stringResource(R.string.all_products_count, products.size)) }
                 )
                 FilterChip(
                     selected = onlyLowStock,
                     onClick = { viewModel.toggleLowStockFilter() },
-                    label = { Text("⚠️ Low Stock Only") },
+                    label = { Text(stringResource(R.string.low_stock_filter_label)) },
                     colors = FilterChipDefaults.filterChipColors(
                         selectedContainerColor = KiranaDebitRed.copy(alpha = 0.15f),
                         selectedLabelColor = KiranaDebitRed
@@ -113,7 +113,7 @@ fun InventoryScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = if (onlyLowStock) "No low stock items!" else "No products found. Tap + to add stock.",
+                        text = if (onlyLowStock) stringResource(R.string.no_low_stock_items) else stringResource(R.string.no_products_found_hint),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -126,7 +126,7 @@ fun InventoryScreen(
                     contentPadding = PaddingValues(top = 4.dp, bottom = 88.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(products, key = { it.id }) { product ->
+                    items(products, key = { it.id }, contentType = { "product_item" }) { product ->
                         ProductItemCard(
                             product = product,
                             onEdit = {
@@ -203,12 +203,12 @@ private fun ProductItemCard(
                 Spacer(modifier = Modifier.height(2.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Sale: ${CurrencyFormatter.formatPaise(product.sellingPricePaise)} / ${product.unit}",
+                        text = stringResource(R.string.sale_price_unit, CurrencyFormatter.formatPaise(product.sellingPricePaise), product.unit),
                         style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                     )
                     if (product.costPricePaise > 0) {
                         Text(
-                            text = " • Cost: ${CurrencyFormatter.formatPaise(product.costPricePaise)}",
+                            text = " • " + stringResource(R.string.cost_price_unit, CurrencyFormatter.formatPaise(product.costPricePaise)),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

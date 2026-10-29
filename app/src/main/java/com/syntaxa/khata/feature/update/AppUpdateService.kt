@@ -129,6 +129,22 @@ class AppUpdateService(private val context: Context) {
 
     private var pendingApkFile: File? = null
 
+    init {
+        cleanResidualUpdateFiles()
+    }
+
+    /**
+     * Cleans up temporary downloaded update APKs from app cache so no phone storage is wasted.
+     */
+    fun cleanResidualUpdateFiles() {
+        try {
+            val updatesDir = File(context.cacheDir, "updates")
+            if (updatesDir.exists()) {
+                updatesDir.listFiles()?.forEach { it.delete() }
+            }
+        } catch (_: Exception) {}
+    }
+
     fun isAutoCheckEnabled(): Boolean {
         return prefs.getBoolean(PREF_AUTO_CHECK_KEY, true)
     }
@@ -139,6 +155,7 @@ class AppUpdateService(private val context: Context) {
 
     fun dismissUpdate() {
         _updateState.value = AppUpdateState(status = UpdateStatus.IDLE)
+        cleanResidualUpdateFiles()
     }
 
     /**
@@ -200,11 +217,12 @@ class AppUpdateService(private val context: Context) {
                 if (hasUpdate) {
                     _updateState.value = AppUpdateState(
                         status = UpdateStatus.AVAILABLE,
-                        message = "Syntaxa Khata update v${info.version} (Build ${info.buildNumber}) is available!",
+                        message = "SmartKhata update v${info.version} (Build ${info.buildNumber}) is available!",
                         updateInfo = info
                     )
                     return@withContext info
                 } else {
+                    cleanResidualUpdateFiles()
                     _updateState.value = AppUpdateState(
                         status = UpdateStatus.UP_TO_DATE,
                         message = "You're on the latest version (v${CURRENT_VERSION})."

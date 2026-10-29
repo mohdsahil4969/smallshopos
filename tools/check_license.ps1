@@ -3,7 +3,7 @@ param(
     [string]$DeviceId
 )
 
-$WebhookUrl = "https://script.google.com/macros/s/AKfycbyHdJVvXx4o6Afvqrakm4GT9frKcnJjcIlRvAKKJ8Dhwjzi0mAzvi1GB4LbwJLiLHsK/exec"
+$WebhookUrl = "https://script.google.com/macros/s/AKfycbyn2XGiekYBTKgODflwhl5OuCxD_6dNLkoO7qeAJrpN1s4A-C4lIJjIPPkm0g5WE654/exec"
 
 $body = @{
     action = "check_status"

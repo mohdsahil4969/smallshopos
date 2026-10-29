@@ -53,6 +53,8 @@ fun HomeScreen(
     subscriptionManager: SubscriptionManager? = null,
     onNavigateToPaywall: () -> Unit = {},
     onOpenUserGuide: () -> Unit = {},
+    onNavigateToReports: () -> Unit = {},
+    onSelectCustomer: (Long) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val shopProfile by viewModel.shopProfile.collectAsState()
@@ -75,6 +77,17 @@ fun HomeScreen(
     var transactionToReverse by remember { mutableStateOf<FinancialTransactionEntity?>(null) }
     var reversalReason by remember { mutableStateOf("") }
 
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                viewModel.refreshTodayIfNeeded()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -92,48 +105,28 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = shopProfile?.shopName?.takeIf { it.isNotBlank() } ?: stringResource(R.string.app_name),
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    color = KiranaGreenPrimary
-                                )
-                            )
-                            if (subStatus.isPro) {
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Surface(
-                                    color = Color(0xFFFEF3C7),
-                                    shape = RoundedCornerShape(6.dp),
-                                    border = BorderStroke(1.dp, Color(0xFFF59E0B))
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.WorkspacePremium,
-                                            contentDescription = "PRO",
-                                            tint = Color(0xFFB45309),
-                                            modifier = Modifier.size(12.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(2.dp))
-                                        Text(
-                                            text = "PRO",
-                                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.ExtraBold),
-                                            color = Color(0xFFB45309),
-                                            fontSize = 10.sp
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
+                    ) {
+                        Text(
+                            text = shopProfile?.shopName?.takeIf { it.isNotBlank() } ?: stringResource(R.string.app_name),
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp,
+                                color = KiranaGreenPrimary
+                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = DateTimeUtils.formatDate(System.currentTimeMillis()),
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                     Row(
@@ -146,9 +139,13 @@ fun HomeScreen(
                         ) {
                             Text(
                                 text = stringResource(R.string.offline_mode_badge),
-                                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 10.sp
+                                ),
                                 color = MaterialTheme.colorScheme.onPrimaryContainer,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.5.dp),
+                                maxLines = 1
                             )
                         }
                         Surface(
@@ -159,30 +156,35 @@ fun HomeScreen(
                         ) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.5.dp)
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.WorkspacePremium,
                                     contentDescription = "PRO",
                                     tint = if (subStatus.isPro) Color(0xFFB45309) else Color(0xFF6B7280),
-                                    modifier = Modifier.size(14.dp)
+                                    modifier = Modifier.size(13.dp)
                                 )
                                 Spacer(modifier = Modifier.width(3.dp))
                                 Text(
-                                    text = if (subStatus.isPro) "PRO ACTIVE" else "₹49",
-                                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                    color = if (subStatus.isPro) Color(0xFFB45309) else MaterialTheme.colorScheme.onSurfaceVariant
+                                    text = if (subStatus.isPro) "PRO" else "₹49",
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 10.5.sp
+                                    ),
+                                    color = if (subStatus.isPro) Color(0xFFB45309) else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    maxLines = 1
                                 )
                             }
                         }
                         IconButton(
                             onClick = onOpenUserGuide,
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(28.dp)
                         ) {
                             Icon(
                                 Icons.AutoMirrored.Filled.HelpOutline,
                                 contentDescription = stringResource(R.string.user_guide_help),
-                                tint = MaterialTheme.colorScheme.primary
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(20.dp)
                             )
                         }
                     }
@@ -207,7 +209,12 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 8.dp)
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.WorkspacePremium,
                                 contentDescription = null,
@@ -215,20 +222,24 @@ fun HomeScreen(
                                 modifier = Modifier.size(18.dp)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Column {
+                            Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = "Syntaxa PRO Plan Active",
                                     style = MaterialTheme.typography.labelMedium.copy(
                                         fontWeight = FontWeight.Bold,
                                         color = Color(0xFFFDE68A)
-                                    )
+                                    ),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                                 Text(
                                     text = "${subStatus.daysRemaining} days remaining • All features unlocked",
                                     style = MaterialTheme.typography.bodySmall.copy(
                                         fontSize = 11.sp,
                                         color = Color(0xFFD1FAE5)
-                                    )
+                                    ),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                             }
                         }
@@ -244,6 +255,7 @@ fun HomeScreen(
                                     fontSize = 9.sp,
                                     color = Color(0xFF86EFAC)
                                 ),
+                                maxLines = 1,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                             )
                         }
@@ -260,7 +272,9 @@ fun HomeScreen(
             ) {
                 // Today's Sales
                 Card(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { onNavigateToReports() },
                     shape = RoundedCornerShape(12.dp),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
                 ) {
@@ -277,7 +291,7 @@ fun HomeScreen(
                             text = CurrencyFormatter.formatPaise(dailySummary.totalSalesPaise),
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 19.sp
+                                fontSize = 18.sp
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             maxLines = 1,
@@ -289,7 +303,9 @@ fun HomeScreen(
 
                 // Market Udhaar Owed
                 Card(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { onNavigateToKhata() },
                     shape = RoundedCornerShape(12.dp),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
                 ) {
@@ -306,7 +322,7 @@ fun HomeScreen(
                             text = CurrencyFormatter.formatPaise(dailySummary.totalMarketUdhaarOwedPaise),
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 19.sp
+                                fontSize = 18.sp
                             ),
                             color = KiranaDebitRed,
                             maxLines = 1,
@@ -372,6 +388,7 @@ fun HomeScreen(
 
                     // Today's Expenses
                     Row(
+                        modifier = Modifier.clickable { onNavigateToExpenses() },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
@@ -497,9 +514,16 @@ fun HomeScreen(
                 }
             }
         } else {
-            items(recentTransactions, key = { it.id }) { tx ->
+            items(
+                items = recentTransactions,
+                key = { it.id },
+                contentType = { "transaction" }
+            ) { tx ->
                 TransactionItemRow(
                     transaction = tx,
+                    onClick = {
+                        tx.customerId?.let { onSelectCustomer(it) }
+                    },
                     onReverseClick = { transactionToReverse = tx }
                 )
             }
@@ -523,7 +547,7 @@ fun HomeScreen(
                     OutlinedTextField(
                         value = reversalReason,
                         onValueChange = { reversalReason = it },
-                        label = { Text("Reason (Optional)") },
+                        label = { Text(stringResource(R.string.reason_optional)) },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -567,6 +591,7 @@ fun HomeScreen(
 @Composable
 fun TransactionItemRow(
     transaction: FinancialTransactionEntity,
+    onClick: () -> Unit = {},
     onReverseClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -577,7 +602,8 @@ fun TransactionItemRow(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = 4.dp)
+            .clickable(enabled = transaction.customerId != null) { onClick() },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isReversed) MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)

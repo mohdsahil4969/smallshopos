@@ -33,7 +33,7 @@ class SubscriptionManager(
 ) {
     companion object {
         const val DEFAULT_UPI_ID = "9766291190@fam"
-        const val DEFAULT_MERCHANT_NAME = "Syntaxa Khata"
+        const val DEFAULT_MERCHANT_NAME = "SmartKhata by Syntaxa"
         const val PRO_MONTHLY_PRICE_INR = 49
         const val PRO_DURATION_DAYS = 30
         const val MILLIS_PER_DAY = 24L * 60L * 60L * 1000L
@@ -47,11 +47,11 @@ class SubscriptionManager(
         private const val KEY_LICENSE_ID = "sub_license_id"
         private const val OFFLINE_SALT = "SYNTAXA_OFFLINE_PRO_SALT_2026"
         private const val OFFLINE_YEAR_SALT = "SYNTAXA_OFFLINE_PRO_YEAR_2026"
-        val MASTER_LIFETIME_CODES = setOf("OWNER2026", "OWNERPRO", "LIFETIME")
-        val MASTER_YEAR_CODES = setOf("SYNTAXA365", "VIP365", "PRO1YEAR")
+        val MASTER_LIFETIME_CODES = setOf("SYNTAXA_SEC_LIFETIME_2026")
+        val MASTER_YEAR_CODES = setOf("SYNTAXA_SEC_VIP_365_2026")
 
         const val DEFAULT_WEBHOOK_URL =
-            "https://script.google.com/macros/s/AKfycbyHdJVvXx4o6Afvqrakm4GT9frKcnJjcIlRvAKKJ8Dhwjzi0mAzvi1GB4LbwJLiLHsK/exec"
+            "https://script.google.com/macros/s/AKfycbyn2XGiekYBTKgODflwhl5OuCxD_6dNLkoO7qeAJrpN1s4A-C4lIJjIPPkm0g5WE654/exec"
     }
 
     @SuppressLint("HardwareIds")
@@ -120,7 +120,7 @@ class SubscriptionManager(
         return SubscriptionStatus(
             isPro = effectiveIsPro,
             tier = if (effectiveIsPro) SubscriptionTier.PRO_MONTHLY else SubscriptionTier.FREE,
-            tierName = if (effectiveIsPro) "Syntaxa PRO" else "Free Starter",
+            tierName = if (effectiveIsPro) "SmartKhata PRO" else "Free Starter",
             expiryDateEpoch = expiryEpoch,
             daysRemaining = daysRemaining,
             paymentRef = paymentRef,
@@ -172,7 +172,22 @@ class SubscriptionManager(
     }
 
     /**
-     * Verifies Indian 12-digit UPI UTR with the live Google Sheets Apps Script Webhook.
+     * Rejects obvious dummy, sequential, or repeated digits UTR inputs.
+     */
+    fun isDummyOrInvalidUtr(utr: String): Boolean {
+        val clean = utr.trim().replace(" ", "").replace("-", "")
+        if (clean.length != 12 || !clean.all { it.isDigit() }) return true
+        if (clean.all { it == clean[0] }) return true
+        val testPatterns = setOf(
+            "123456789012", "012345678901", "987654321098", "210987654321",
+            "121212121212", "123123123123", "000000000001", "123456654321"
+        )
+        if (clean in testPatterns) return true
+        return false
+    }
+
+    /**
+     * Verifies Indian 12-digit UPI UTR with the live payment verification server webhook.
      * Prevents duplicate redemption, checks incoming bank payment log, and signs 30-day PRO license.
      */
     suspend fun verifyUtrWithServer(
@@ -184,6 +199,10 @@ class SubscriptionManager(
         val cleanUtr = utr.trim().replace(" ", "").replace("-", "")
         if (cleanUtr.length != 12 || !cleanUtr.all { it.isDigit() }) {
             return@withContext UtrVerificationResult.Failure("Please enter a valid 12-digit numeric UPI UTR number.")
+        }
+
+        if (isDummyOrInvalidUtr(cleanUtr)) {
+            return@withContext UtrVerificationResult.Failure("Invalid or dummy UTR number. Please enter the authentic 12-digit reference from your UPI payment receipt.")
         }
 
         val usedUtrs = prefs.getStringSet(KEY_USED_UTRS, emptySet())?.toMutableSet() ?: mutableSetOf()
@@ -207,9 +226,10 @@ class SubscriptionManager(
             val responseObj = JSONObject(responseJsonText)
 
             val success = responseObj.optBoolean("success", false)
+            val isVerified = responseObj.optBoolean("verified", false) || responseObj.optString("verificationStatus") == "CONFIRMED_INCOMING_PAYMENT"
             val message = responseObj.optString("message", "")
 
-            if (success) {
+            if (success && isVerified) {
                 val expiryIso = responseObj.optString("expiryDate", "")
                 val signature = responseObj.optString("signature", "")
                 val licenseId = responseObj.optString("licenseId", "")
@@ -238,17 +258,20 @@ class SubscriptionManager(
 
                 refresh()
                 return@withContext UtrVerificationResult.Success(
-                    message = message.ifBlank { "Syntaxa PRO activated successfully!" },
+                    message = message.ifBlank { "SmartKhata PRO activated successfully!" },
                     expiryDateEpoch = expiryEpoch
                 )
             } else {
-                return@withContext UtrVerificationResult.Failure(
-                    message = message.ifBlank { "UTR verification rejected by Google Sheets payment server." }
-                )
+                val failureReason = if (!isVerified && success) {
+                    "Payment not found in verified server records. Please ensure ₹49 was paid via UPI and that the 12-digit UTR is authentic."
+                } else {
+                    message.ifBlank { "UTR verification rejected by payment verification server." }
+                }
+                return@withContext UtrVerificationResult.Failure(message = failureReason)
             }
         } catch (e: Exception) {
             return@withContext UtrVerificationResult.Failure(
-                message = "Could not reach Google Sheets verification server. Please verify your internet connection, or activate using your Offline License Code."
+                message = "Could not reach payment verification server. Please verify your internet connection, or activate using your Offline License Code."
             )
         }
     }
@@ -271,11 +294,12 @@ class SubscriptionManager(
             val responseObj = JSONObject(responseJsonText)
 
             val isPro = responseObj.optBoolean("isPro", false)
+            val isVerified = responseObj.optBoolean("verified", false) || responseObj.optString("verificationStatus") == "CONFIRMED_INCOMING_PAYMENT"
             val signature = responseObj.optString("signature", "")
             val expiryIso = responseObj.optString("expiryDate", "")
             val utr = responseObj.optString("utr", "AUTO_UPI_VERIFIED")
 
-            if (isPro && signature.isNotBlank()) {
+            if (isPro && isVerified && signature.isNotBlank()) {
                 val expiryEpoch = try {
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                         java.time.Instant.parse(expiryIso).toEpochMilli()
@@ -416,7 +440,7 @@ class SubscriptionManager(
      */
     fun buildUpiPaymentUri(amountRupees: Int = PRO_MONTHLY_PRICE_INR): String {
         val merchantNameEncoded = java.net.URLEncoder.encode(DEFAULT_MERCHANT_NAME, "UTF-8")
-        val note = java.net.URLEncoder.encode("Syntaxa PRO 1 Month - DevID ${hardwareDeviceId.take(6)}", "UTF-8")
+        val note = java.net.URLEncoder.encode("SmartKhata PRO 1 Month (Syntaxa) - DevID ${hardwareDeviceId.take(6)}", "UTF-8")
         return "upi://pay?pa=$DEFAULT_UPI_ID&pn=$merchantNameEncoded&am=$amountRupees.00&cu=INR&tn=$note"
     }
 
